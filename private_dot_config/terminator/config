@@ -1,0 +1,76 @@
+[global_config]
+  suppress_multiple_term_dialog = True
+  smart_copy = False
+[keybindings]
+  zoom_normal = F1
+  layout_launcher = <Alt>p
+[profiles]
+  [[default]]
+    background_color = "#300a24"
+    foreground_color = "#ffffff"
+    scrollback_infinite = True
+    use_theme_colors = True
+    title_transmit_bg_color = "#8b3f01"
+[layouts]
+  [[default]]
+    [[[child0]]]
+      type = Window
+      parent = ""
+      order = 0
+      position = 0:27
+      maximised = True
+      fullscreen = False
+      size = 1464, 800
+      title = maxime@maxime-ThinkPad-T14s-Gen-1:~
+      last_active_term = 40bc7323-3b27-45aa-a3fa-e42a6e43cd99
+      last_active_window = True
+    [[[child1]]]
+      type = HPaned
+      parent = child0
+      order = 0
+      position = 730
+      ratio = 0.5003427004797807
+    [[[child2]]]
+      type = VPaned
+      parent = child1
+      order = 0
+      position = 398
+      ratio = 0.5006289308176101
+    [[[terminal3]]]
+      type = Terminal
+      parent = child2
+      order = 0
+      profile = default
+      uuid = 40bc7323-3b27-45aa-a3fa-e42a6e43cd99
+    [[[terminal4]]]
+      type = Terminal
+      parent = child2
+      order = 1
+      profile = default
+      uuid = 927050f6-f56e-4253-9792-8f0ae4373175
+    [[[child5]]]
+      type = VPaned
+      parent = child1
+      order = 1
+      position = 398
+      ratio = 0.5006289308176101
+    [[[terminal6]]]
+      type = Terminal
+      parent = child5
+      order = 0
+      profile = default
+      uuid = 27c62044-0217-44e8-b81b-e9f810683616
+    [[[terminal7]]]
+      type = Terminal
+      parent = child5
+      order = 1
+      profile = default
+      uuid = 5800b4e9-37e4-464e-8aa5-b4493146e277
+  [[default1]]
+    [[[window0]]]
+      type = Window
+      parent = ""
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+[plugins]
