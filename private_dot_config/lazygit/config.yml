@@ -1,0 +1,24 @@
+gui:
+  sidePanelWidth: 0.3 # gives you more space to show things side-by-side
+  experimentalShowBranchHeads: true
+git:
+  paging:
+    colorArg: always
+    pager: delta --dark --paging=never
+keybinding:
+  universal:
+    appendNewline: '<tab>'
+customCommands:
+  - key: 'I'
+    command: "git-absorb -b {{.SelectedLocalCommit.Sha}}"
+    context: 'commits'
+    description: 'git absorb'
+  - key: 'B'
+    command: "git checkout -b \"{{.SelectedLocalBranch.Name}}_$(date +\"%D.%Hh%M\")\"  \"{{.SelectedLocalBranch.FullRefName}}\" "
+    context: 'localBranches'
+    description: 'Backup branch' 
+
+  - key: 'u'
+    command: "GIT_EDITOR=\"sed -i '1s/^/break \\n /'\" git rebase --interactive --update-refs --autostash --keep-empty --empty=keep --no-autosquash {{.SelectedLocalBranch.Name}}"
+    context: 'localBranches'
+    description: 'REBASE (interactive and updating refs)'

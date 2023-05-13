@@ -1,0 +1,24 @@
+customCommands:
+  containers:
+    - name: bash normal
+      attach: true
+      command: 'docker exec -it {{ .Container.ID }} /bin/bash'
+      serviceNames: []
+    - name: bash root
+      attach: true
+      command: 'docker exec -it -u 0 {{ .Container.ID }} /bin/bash'
+      serviceNames: []
+ 
+  images:
+    - name: bash normal
+      attach: true
+      command: 'docker run -it {{ .Image.ID }} /bin/bash'
+      serviceNames: []
+    - name: bash root
+      attach: true
+      command: 'docker run -it -u 0 {{ .Image.ID }} /bin/bash'
+      serviceNames: []
+    - name: dive into img 
+      attach: true
+      command: 'dive {{ .Image.ID }}'
+      serviceNames: []

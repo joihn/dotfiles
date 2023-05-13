@@ -1,0 +1,17 @@
+[user]
+	email = maxime.gardoni@ecorobotix.com
+	name = Maxime Gardoni
+	user = maxime 
+[merge]
+	ff = no  # perform a merge commit even if a ff could be done. Useful to mark a merge as is.
+	commit = no  # but before applying the commit, it let git stops and let you chose to apply the commit, cancel it or edit it.
+[pull]
+	ff = yes  # force to fast-forward by default when pulling
+[core]
+	excludesfile = /home/maxime/.gitignore_global
+	editor = vim
+[alias]
+    s = status
+[delta]
+    side-by-side = true
+
