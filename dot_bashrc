@@ -140,7 +140,7 @@ export orangip=89.145.167.184
 export slothip=85.217.160.255
 export snakeip=91.92.117.181
 export lizardip=194.182.171.230
-export octopusip=10.194.24.65
+export octopusip=10.194.24.173
 
 export chickenname=smallGpu4test4npi
 export monkeyname=erx-1-gpu-p100-1
