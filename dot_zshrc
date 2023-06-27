@@ -151,7 +151,11 @@ export orangip=89.145.167.184
 export slothip=85.217.160.255
 export snakeip=91.92.117.181
 export lizardip=194.182.171.230
-export octopusip=10.194.24.65
+
+export duckip=10.194.25.26
+export octopusip=10.194.24.173
+export dolphinip=10.194.24.171
+export fiship=10.194.24.172
 
 export chickenname=smallGpu4test4npi
 export monkeyname=erx-1-gpu-p100-1
@@ -160,7 +164,11 @@ export orangname=erx-1-gpu-p100-3
 export slothname=erx-1-gpu-p100-4
 export snakename=erx-2-gpu-a40-1
 export lizardname=erx-2-gpu-a40-2
+
+export duckname=erx-2-gpu-GTX1080-1
 export octopusname=erx-2-gpu-rtx3090ti-1
+export dolphinname=erx-2-gpu-rtx3090ti-2
+export fishname=erx-2-gpu-rtx3090ti-3
 
 export gamingip=192.168.0.248
 export homeip=77.57.209.47
