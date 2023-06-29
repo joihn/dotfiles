@@ -157,4 +157,11 @@ export octopusname=erx-2-gpu-rtx3090ti-1
 export VAULT_ERX_ML_TOKEN="***REMOVED***"
 source /home/maxime/.config/broot/launcher/bash/br
 export TRAINING_USER="maxime"
+cp_to_new_folder() {
+  if [ "$#" -ne 2 ]; then
+    echo "You need to provide exactly two arguments: source directory and target directory"
+    return 1
+  fi
 
+  mkdir -p "$2" && cp -r "$1"/* "$2/"
+}

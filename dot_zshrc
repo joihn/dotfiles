@@ -209,7 +209,19 @@ export LESS="IRS"
 
 
 alias ld="lazydocker"
+alias cl="clear"
 #better jump
 export ZSHZ_UNCOMMON=1
 
 source /home/maxime/.config/broot/launcher/bash/br
+cp_to_new_folder() {
+  if [ "$#" -ne 2 ]; then
+    echo "You need to provide exactly two arguments: source directory and target directory"
+    return 1
+  fi
+
+  mkdir -p "$2" && cp -r "$1"/* "$2/"
+}
+alias html="w3m -dump"
+export EDITOR=vim
+export VISUAL=vim
