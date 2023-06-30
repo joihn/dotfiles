@@ -225,3 +225,4 @@ cp_to_new_folder() {
 alias html="w3m -dump"
 export EDITOR=vim
 export VISUAL=vim
+alias ssy="ssh maxime@$yvip"
