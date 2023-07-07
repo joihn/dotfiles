@@ -226,3 +226,4 @@ alias html="w3m -dump"
 export EDITOR=vim
 export VISUAL=vim
 alias ssy="ssh maxime@$yvip"
+alias keyd_reload="sudo cp ~/.config/keyd/default.conf /etc/keyd/default.conf && sudo keyd reload"
