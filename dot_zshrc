@@ -175,7 +175,7 @@ export homeip=77.57.209.47
 export yvip=10.194.25.71
 
 
-export VAULT_ERX_ML_TOKEN="***REMOVED***"
+source /home/maxime/.secretrc
 alias subl="/home/maxime/Documents/code/sublime.sh"
 alias ccc="xclip -sel clip"
 ccc2(){ echo -n $1 | xclip -selection clipboard; }
@@ -235,3 +235,4 @@ alias htop="htop -t"
 alias keyd_reload="sudo cp ~/.config/keyd/default.conf /etc/keyd/default.conf && sudo keyd reload"
 alias down="cd ~/Downloads"
 alias editzsh="chezmoi edit ~/.zshrc"
+alias editkey="chezmoi edit ~/.config/keyd/default.conf"

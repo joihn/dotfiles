@@ -1,22 +1,367 @@
 [global_config]
+  enabled_plugins = LaunchpadBugURLHandler, LaunchpadCodeURLHandler, APTURLHandler, TerminatorThemes
   suppress_multiple_term_dialog = True
-  smart_copy = False
 [keybindings]
   zoom_in = <Primary>equal
   zoom_out = <Primary>minus
-  zoom_normal = ""
-  full_screen = ""
-  layout_launcher = <Alt>p
-  help = ""
 [profiles]
   [[default]]
-    background_color = "#300a24"
-    font = Ubuntu Mono 11
+    background_color = "#2b2b2b"
+    cursor_bg_color = "#ffffff"
+    font = Ubuntu Mono 12
+    foreground_color = "#e6e1dc"
+    scrollback_infinite = True
+    palette = "#000000:#cc0000:#4e9a06:#c4a000:#3465a4:#75507b:#06989a:#d3d7cf:#555753:#ef2929:#8ae234:#fce94f:#729fcf:#ad7fa8:#34e2e2:#eeeeec"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[Highway]]
+    background_color = "#222225"
+    cursor_bg_color = "#e0d9b9"
+    font = Ubuntu Mono 12
+    foreground_color = "#ededed"
+    scrollback_infinite = True
+    palette = "#000000:#d00e18:#138034:#ffcb3e:#006bb3:#6b2775:#384564:#ededed:#5d504a:#f07e18:#b1d130:#fff120:#4fc2fd:#de0071:#5d504a:#ffffff"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[idleToes]]
+    background_color = "#323232"
+    cursor_bg_color = "#d6d6d6"
+    font = Ubuntu Mono 12
     foreground_color = "#ffffff"
     scrollback_infinite = True
+    palette = "#323232:#d25252:#7fe173:#ffc66d:#4099ff:#f680ff:#bed6ff:#eeeeec:#535353:#f07070:#9dff91:#ffe48b:#5eb7f7:#ff9dff:#dcf4ff:#ffffff"
     use_system_font = False
-    use_theme_colors = True
-    title_transmit_bg_color = "#8b3f01"
+    title_transmit_bg_color = "#8b4003"
+  [[Jellybeans]]
+    background_color = "#121212"
+    cursor_bg_color = "#ffa560"
+    font = Ubuntu Mono 12
+    foreground_color = "#dedede"
+    scrollback_infinite = True
+    palette = "#929292:#e27373:#94b979:#ffba7b:#97bedc:#e1c0fa:#00988e:#dedede:#bdbdbd:#ffa1a1:#bddeab:#ffdca0:#b1d8f6:#fbdaff:#1ab2a8:#ffffff"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[LiquidCarbon]]
+    background_color = "#303030"
+    cursor_bg_color = "#ffffff"
+    font = Ubuntu Mono 12
+    foreground_color = "#afc2c2"
+    scrollback_infinite = True
+    palette = "#000000:#ff3030:#559a70:#ccac00:#0099cc:#cc69c8:#7ac4cc:#bccccc:#000000:#ff3030:#559a70:#ccac00:#0099cc:#cc69c8:#7ac4cc:#bccccc"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[LiquidCarbonTransparent]]
+    cursor_bg_color = "#ffffff"
+    font = Ubuntu Mono 12
+    foreground_color = "#afc2c2"
+    scrollback_infinite = True
+    palette = "#000000:#ff3030:#559a70:#ccac00:#0099cc:#cc69c8:#7ac4cc:#bccccc:#000000:#ff3030:#559a70:#ccac00:#0099cc:#cc69c8:#7ac4cc:#bccccc"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[LiquidCarbonTransparentInverse]]
+    cursor_bg_color = "#ffffff"
+    font = Ubuntu Mono 12
+    foreground_color = "#afc2c2"
+    scrollback_infinite = True
+    palette = "#bccccd:#ff3030:#559a70:#ccac00:#0099cc:#cc69c8:#7ac4cc:#000000:#ffffff:#ff3030:#559a70:#ccac00:#0099cc:#cc69c8:#7ac4cc:#000000"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[Medallion]]
+    background_color = "#1d1908"
+    cursor_bg_color = "#d3ba30"
+    font = Ubuntu Mono 12
+    foreground_color = "#cac296"
+    scrollback_infinite = True
+    palette = "#000000:#b64c00:#7c8b16:#d3bd26:#616bb0:#8c5a90:#916c25:#cac29a:#5e5219:#ff9149:#b2ca3b:#ffe54a:#acb8ff:#ffa0ff:#ffbc51:#fed698"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[Miu]]
+    background_color = "#0d1926"
+    cursor_bg_color = "#d7dee4"
+    font = Ubuntu Mono 12
+    foreground_color = "#d9e6f2"
+    scrollback_infinite = True
+    palette = "#000000:#b87a7a:#7ab87a:#b8b87a:#7a7ab8:#b87ab8:#7ab8b8:#d9d9d9:#262626:#dbbdbd:#bddbbd:#dbdbbd:#bdbddb:#dbbddb:#bddbdb:#ffffff"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[Monokai dark]]
+    background_color = "#272822"
+    cursor_bg_color = "#ffffff"
+    font = Ubuntu Mono 12
+    foreground_color = "#f8f8f2"
+    scrollback_infinite = True
+    palette = "#75715e:#f92672:#a6e22e:#f4bf75:#66d9ef:#ae81ff:#2aa198:#f9f8f5:#838383:#f92672:#a6e22e:#f4bf75:#66d9ef:#ae81ff:#2aa198:#f9f8f5"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[MonaLisa]]
+    background_color = "#120b0d"
+    cursor_bg_color = "#c46c32"
+    font = Ubuntu Mono 12
+    foreground_color = "#f7d66a"
+    scrollback_infinite = True
+    palette = "#351b0e:#9b291c:#636232:#c36e28:#515c5d:#9b1d29:#588056:#f7d75c:#874228:#ff4331:#b4b264:#ff9566:#9eb2b4:#ff5b6a:#8acd8f:#ffe598"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[Monokai Vivid]]
+    background_color = "#121212"
+    cursor_bg_color = "#fb0007"
+    font = Ubuntu Mono 12
+    foreground_color = "#f9f9f9"
+    scrollback_infinite = True
+    palette = "#121212:#fa2934:#98e123:#fff30a:#0443ff:#f800f8:#01b6ed:#ffffff:#838383:#f6669d:#b1e05f:#fff26d:#0443ff:#f200f6:#51ceff:#ffffff"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[Monokai Soda]]
+    background_color = "#1a1a1a"
+    cursor_bg_color = "#f6f7ec"
+    font = Ubuntu Mono 12
+    foreground_color = "#c4c5b5"
+    scrollback_infinite = True
+    palette = "#1a1a1a:#f4005f:#98e024:#fa8419:#9d65ff:#f4005f:#58d1eb:#c4c5b5:#625e4c:#f4005f:#98e024:#e0d561:#9d65ff:#f4005f:#58d1eb:#f6f6ef"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[N0tch2k]]
+    background_color = "#222222"
+    cursor_bg_color = "#aa9175"
+    font = Ubuntu Mono 12
+    foreground_color = "#a0a0a0"
+    scrollback_infinite = True
+    palette = "#383838:#a95551:#666666:#a98051:#657d3e:#767676:#c9c9c9:#d0b8a3:#474747:#a97775:#8c8c8c:#a99175:#98bd5e:#a3a3a3:#dcdcdc:#d8c8bb"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[Nebula]]
+    background_color = "#23262e"
+    cursor_bg_color = "#00e8c6"
+    font = Ubuntu Mono 12
+    foreground_color = "#ffffff"
+    scrollback_infinite = True
+    palette = "#2e3436:#ff007a:#84ff39:#f3d56e:#7cb7ff:#c74ded:#00e8c6:#d3d7cf:#555753:#ff007a:#84ff39:#f3d56e:#7cb7ff:#c74ded:#00e8c6:#eeeeec"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[Neopolitan]]
+    background_color = "#271f19"
+    cursor_bg_color = "#ffffff"
+    font = Ubuntu Mono 12
+    foreground_color = "#ffffff"
+    scrollback_infinite = True
+    palette = "#000000:#800000:#61ce3c:#fbde2d:#253b76:#ff0080:#8da6ce:#f8f8f8:#000000:#800000:#61ce3c:#fbde2d:#253b76:#ff0080:#8da6ce:#f8f8f8"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[Neutron]]
+    background_color = "#1c1e22"
+    cursor_bg_color = "#f6f7ec"
+    font = Ubuntu Mono 12
+    foreground_color = "#e6e8ef"
+    scrollback_infinite = True
+    palette = "#23252b:#b54036:#5ab977:#deb566:#6a7c93:#a4799d:#3f94a8:#e6e8ef:#23252b:#b54036:#5ab977:#deb566:#6a7c93:#a4799d:#3f94a8:#ebedf2"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[Night Owl]]
+    background_color = "#011627"
+    cursor_bg_color = "#80a4c2"
+    font = Ubuntu Mono 12
+    foreground_color = "#d6deeb"
+    scrollback_infinite = True
+    palette = "#2e3436:#ef5350:#80cbc4:#ffeb95:#82aaff:#c792ea:#addb67:#d3d7cf:#555753:#ef5350:#80cbc4:#ffeb95:#82aaff:#c792ea:#addb67:#eeeeec"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[Obsidian]]
+    background_color = "#283033"
+    cursor_bg_color = "#c0cad0"
+    font = Ubuntu Mono 12
+    foreground_color = "#cdcdcd"
+    scrollback_infinite = True
+    palette = "#000000:#a60001:#00bb00:#fecd22:#3a9bdb:#bb00bb:#00bbbb:#bbbbbb:#555555:#ff0003:#93c863:#fef874:#a1d7ff:#ff55ff:#55ffff:#ffffff"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[OceanicMaterial]]
+    background_color = "#1c262b"
+    cursor_bg_color = "#b3b8c3"
+    font = Ubuntu Mono 12
+    foreground_color = "#c2c8d7"
+    scrollback_infinite = True
+    palette = "#000000:#ee2b2a:#40a33f:#ffea2e:#1e80f0:#8800a0:#16afca:#a4a4a4:#777777:#dc5c60:#70be71:#fff163:#54a4f3:#aa4dbc:#42c7da:#ffffff"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[Ollie]]
+    background_color = "#222125"
+    cursor_bg_color = "#5b6ea7"
+    font = Ubuntu Mono 12
+    foreground_color = "#8a8dae"
+    scrollback_infinite = True
+    palette = "#000000:#ac2e31:#31ac61:#ac4300:#2d57ac:#b08528:#1fa6ac:#8a8eac:#5b3725:#ff3d48:#3bff99:#ff5e1e:#4488ff:#ffc21d:#1ffaff:#5b6ea7"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[OneHalfDark]]
+    background_color = "#282c34"
+    cursor_bg_color = "#a3b3cc"
+    font = Ubuntu Mono 12
+    foreground_color = "#dcdfe4"
+    scrollback_infinite = True
+    palette = "#282c34:#e06c75:#98c379:#e5c07b:#61afef:#c678dd:#56b6c2:#dcdfe4:#282c34:#e06c75:#98c379:#e5c07b:#61afef:#c678dd:#56b6c2:#dcdfe4"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[PaulMillr]]
+    cursor_bg_color = "#4d4d4d"
+    font = Ubuntu Mono 12
+    foreground_color = "#f2f2f2"
+    scrollback_infinite = True
+    palette = "#2a2a2a:#ff0000:#79ff0f:#e7bf00:#396bd7:#b449be:#66ccff:#bbbbbb:#666666:#ff0080:#66ff66:#f3d64e:#709aed:#db67e6:#7adff2:#ffffff"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[Peppermint]]
+    background_color = "#2b2b2b"
+    cursor_bg_color = "#BBBBBB"
+    font = Ubuntu Mono 12
+    foreground_color = "#c7c7c7"
+    scrollback_infinite = True
+    palette = "#353535:#E64569:#89D287:#DAB752:#439ECF:#D961DC:#64AAAF:#B3B3B3:#535353:#E4859A:#A2CCA1:#E1E387:#6FBBE2:#E586E7:#96DCDA:#DEDEDE"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[Red Planet]]
+    background_color = "#222222"
+    cursor_bg_color = "#c2b790"
+    font = Ubuntu Mono 12
+    foreground_color = "#c2b790"
+    scrollback_infinite = True
+    palette = "#202020:#8c3432:#728271:#e8bf6a:#69819e:#896492:#5b8390:#b9aa99:#676767:#b55242:#869985:#ebeb91:#60827e:#de4974:#38add8:#d6bfb8"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[Relaxed]]
+    background_color = "#353a44"
+    cursor_bg_color = "#d9d9d9"
+    font = Ubuntu Mono 12
+    foreground_color = "#d9d9d9"
+    scrollback_infinite = True
+    palette = "#151515:#bc5653:#909d63:#ebc17a:#6a8799:#b06698:#c9dfff:#d9d9d9:#636363:#bc5653:#a0ac77:#ebc17a:#7eaac7:#b06698:#acbbd0:#f7f7f7"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[Rippedcasts]]
+    background_color = "#2b2b2b"
+    cursor_bg_color = "#7f7f7f"
+    font = Ubuntu Mono 12
+    foreground_color = "#ffffff"
+    scrollback_infinite = True
+    palette = "#000000:#cdaf95:#a8ff60:#bfbb1f:#75a5b0:#ff73fd:#5a647e:#bfbfbf:#666666:#eecbad:#bcee68:#e5e500:#86bdc9:#e500e5:#8c9bc4:#e5e5e5"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[Royal]]
+    background_color = "#100815"
+    cursor_bg_color = "#524966"
+    font = Ubuntu Mono 12
+    foreground_color = "#514968"
+    scrollback_infinite = True
+    palette = "#241f2b:#91284c:#23801c:#b49d27:#6580b0:#674d96:#8aaabe:#524966:#312d3d:#d5356c:#2cd946:#fde83b:#90baf9:#a479e3:#acd4eb:#9e8cbd"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[Seti]]
+    background_color = "#111213"
+    cursor_bg_color = "#e3bf21"
+    font = Ubuntu Mono 12
+    foreground_color = "#cacecd"
+    scrollback_infinite = True
+    palette = "#323232:#c22832:#8ec43d:#e0c64f:#43a5d5:#8b57b5:#8ec43d:#eeeeee:#323232:#c22832:#8ec43d:#e0c64f:#43a5d5:#8b57b5:#8ec43d:#ffffff"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[Shel]]
+    background_color = "#2a201f"
+    cursor_bg_color = "#6192d2"
+    font = Ubuntu Mono 12
+    foreground_color = "#4882cd"
+    scrollback_infinite = True
+    palette = "#2c2423:#ab2463:#6ca323:#ab6423:#2c64a2:#6c24a2:#2ca363:#918988:#918988:#f588b9:#c2ee86:#f5ba86:#8fbaec:#c288ec:#8feeb9:#f5eeec"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[Violet Dark]]
+    background_color = "#1c1d1f"
+    cursor_bg_color = "#708284"
+    font = Ubuntu Mono 12
+    foreground_color = "#708284"
+    scrollback_infinite = True
+    palette = "#56595c:#c94c22:#85981c:#b4881d:#2e8bce:#d13a82:#32a198:#c9c6bd:#45484b:#bd3613:#738a04:#a57705:#2176c7:#c61c6f:#259286:#c9c6bd"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[Wryan]]
+    background_color = "#101010"
+    cursor_bg_color = "#9e9ecb"
+    font = Ubuntu Mono 12
+    foreground_color = "#999993"
+    scrollback_infinite = True
+    palette = "#333333:#8c4665:#287373:#7c7c99:#395573:#5e468c:#31658c:#899ca1:#3d3d3d:#bf4d80:#53a6a6:#9e9ecb:#477ab3:#7e62b3:#6096bf:#c0c0c0"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[Zenburn]]
+    background_color = "#3f3f3f"
+    cursor_bg_color = "#73635a"
+    font = Ubuntu Mono 12
+    foreground_color = "#dcdccc"
+    scrollback_infinite = True
+    palette = "#4d4d4d:#705050:#60b48a:#f0dfaf:#506070:#dc8cc3:#8cd0d3:#dcdccc:#709080:#dca3a3:#c3bf9f:#e0cf9f:#94bff3:#ec93d3:#93e0e3:#ffffff"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[Vaughn]]
+    background_color = "#25234f"
+    cursor_bg_color = "#ff5555"
+    font = Ubuntu Mono 12
+    foreground_color = "#dcdccc"
+    scrollback_infinite = True
+    palette = "#25234f:#705050:#60b48a:#dfaf8f:#5555ff:#f08cc3:#8cd0d3:#709080:#709080:#dca3a3:#60b48a:#f0dfaf:#5555ff:#ec93d3:#93e0e3:#ffffff"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[Spiderman]]
+    background_color = "#1b1d1e"
+    cursor_bg_color = "#2c3fff"
+    font = Ubuntu Mono 12
+    foreground_color = "#e3e3e3"
+    scrollback_infinite = True
+    palette = "#1b1d1e:#e60813:#e22928:#e24756:#2c3fff:#2435db:#3256ff:#fffef6:#505354:#ff0325:#ff3338:#fe3a35:#1d50ff:#747cff:#6184ff:#fffff9"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[SoftServer]]
+    background_color = "#242626"
+    cursor_bg_color = "#d2e0de"
+    font = Ubuntu Mono 12
+    foreground_color = "#99a3a2"
+    scrollback_infinite = True
+    palette = "#000000:#a2686a:#9aa56a:#a3906a:#6b8fa3:#6a71a3:#6ba58f:#99a3a2:#666c6c:#dd5c60:#bfdf55:#deb360:#62b1df:#606edf:#64e39c:#d2e0de"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[Sick]]
+    background_color = "#272935"
+    cursor_bg_color = "#aaaaaa"
+    font = Ubuntu Mono 12
+    foreground_color = "#aeaeb1"
+    scrollback_infinite = True
+    palette = "#2e3436:#f47375:#6bf1be:#e5f081:#6aa1fd:#c481ff:#6de4fd:#d3d7cf:#555753:#f47375:#6bf1be:#e5f081:#6aa1fd:#c481ff:#6de4fd:#eeeeec"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[Snazzy]]
+    background_color = "#242424"
+    cursor_bg_color = "#97979b"
+    font = Ubuntu Mono 12
+    foreground_color = "#eff0eb"
+    scrollback_infinite = True
+    palette = "#282a36:#ff5c57:#5af78e:#f3f99d:#57c7ff:#ff6ac1:#9aedfe:#f1f1f0:#686868:#ff5c57:#5af78e:#f3f99d:#57c7ff:#ff6ac1:#9aedfe:#eff0eb"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[FishTank]]
+    background_color = "#232537"
+    cursor_bg_color = "#fecd5e"
+    font = Ubuntu Mono 12
+    foreground_color = "#ecf0fe"
+    scrollback_infinite = True
+    palette = "#03073c:#c6004a:#acf157:#fecd5e:#525fb8:#986f82:#968763:#ecf0fc:#6c5b30:#da4b8a:#dbffa9:#fee6a9:#b2befa:#fda5cd:#a5bd86:#f6ffec"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[CrayonPonyFish]]
+    background_color = "#150707"
+    cursor_bg_color = "#68525a"
+    font = Ubuntu Mono 12
+    foreground_color = "#68525a"
+    scrollback_infinite = True
+    palette = "#2b1b1d:#91002b:#579524:#ab311b:#8c87b0:#692f50:#e8a866:#68525a:#3d2b2e:#c5255d:#8dff57:#c8381d:#cfc9ff:#fc6cba:#ffceaf:#b0949d"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
 [layouts]
   [[default]]
     [[[child0]]]
