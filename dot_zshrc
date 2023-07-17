@@ -175,7 +175,7 @@ export homeip=77.57.209.47
 export yvip=10.194.25.71
 
 
-export VAULT_ERX_ML_TOKEN="***REMOVED***"
+source /home/maxime/.secretrc
 alias subl="/home/maxime/Documents/code/sublime.sh"
 alias ccc="xclip -sel clip"
 ccc2(){ echo -n $1 | xclip -selection clipboard; }
