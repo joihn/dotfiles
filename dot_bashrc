@@ -164,5 +164,13 @@ cp_to_new_folder() {
 
   mkdir -p "$2" && cp -r "$1"/* "$2/"
 }
-bind 'set show-all-if-ambiguous on'
-bind 'TAB:menu-complete'
+
+
+bind "TAB:menu-complete"
+bind "set show-all-if-ambiguous on"
+bind "set menu-complete-display-prefix on"
+
+if [[ $- == *i* ]]; then
+    bind '"\e[5~": history-search-backward'
+    bind '"\e[6~": history-search-forward'
+fi
