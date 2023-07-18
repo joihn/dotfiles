@@ -153,8 +153,9 @@ export octopusname=erx-2-gpu-rtx3090ti-1
 
 
 
-source /home/maxime/.secretrc
-source /home/maxime/.config/broot/launcher/bash/br
+source /home/maxime/.secretrc || echo ""
+source /home/maxime/.config/broot/launcher/bash/br || echo ""
+
 export TRAINING_USER="maxime"
 cp_to_new_folder() {
   if [ "$#" -ne 2 ]; then
