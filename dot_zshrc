@@ -236,4 +236,5 @@ alias keyd_reload="sudo cp ~/.config/keyd/default.conf /etc/keyd/default.conf &&
 alias down="cd ~/Downloads"
 alias editzsh="chezmoi edit ~/.zshrc"
 alias editkey="chezmoi edit ~/.config/keyd/default.conf"
-autoload -U compinit && compinit
+autoload -U compinit && compinit #conda complete
+alias latest="find $1 -type f -print0 | xargs -0 stat --format '%Y :%y %n' | sort -nr | cut -d: -f2- | head"
