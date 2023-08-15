@@ -225,7 +225,8 @@ cp_to_new_folder() {
 alias html="w3m -dump"
 export EDITOR=vim
 export VISUAL=vim
-alias ssy="ssh maxime@$yvip"
+#alias ssy="ssh maxime@$yvip"
+alias ssy='autossh -M 0 -o "ServerAliveInterval 30" -o "ServerAliveCountMax 3" maxime@10.194.25.71'
 alias ai="cd /home/maxime/Documents/code/erx-ai"
 alias torch="cd /home/maxime/Documents/code/erx-torch"
 alias model="cd /home/maxime/Documents/code/erx-model"
