@@ -241,3 +241,13 @@ alias editkey="chezmoi edit ~/.config/keyd/default.conf"
 autoload -U compinit && compinit #conda complete
 alias latest="find $1 -type f -print0 | xargs -0 stat --format '%Y :%y %n' | sort -nr | cut -d: -f2- | head"
 alias pycharm="pycharm-professional"
+mansubl() {
+  if [ "$#" -ne 1 ]; then
+    echo "You need to provide exactly 1 arguments"
+    return 1
+  fi
+
+  man "$1" | col -b > /tmp/ls_man.txt && subl /tmp/ls_man.txt
+}
+
+
