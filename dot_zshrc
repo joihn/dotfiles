@@ -249,5 +249,8 @@ mansubl() {
 
   man "$1" | col -b > /tmp/ls_man.txt && subl /tmp/ls_man.txt
 }
+pycal(){
+    python -c "print($1)"
+}
 
 
