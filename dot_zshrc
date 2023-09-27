@@ -232,6 +232,7 @@ alias torch="cd /home/maxime/Documents/code/erx-torch"
 alias model="cd /home/maxime/Documents/code/erx-model"
 alias code="cd /home/maxime/Documents/code"
 alias torchexo="cd /home/maxime/Documents/code/erx-torch/external/erx-ai/Exoscale"
+alias torchdep="cd /home/maxime/Documents/code/erx-torch/external/erx-ai/deploy"
 alias setup="cd /media/maxime/ssd_2to/erx_setup"
 alias htop="htop -t"
 alias keyd_reload="sudo cp ~/.config/keyd/default.conf /etc/keyd/default.conf && sudo keyd reload"
@@ -253,4 +254,4 @@ pycal(){
     python -c "print($1)"
 }
 
-
+alias bluco='echo -e "connect CC:F8:26:AE:A5:6C \nquit" | bluetoothctl'
