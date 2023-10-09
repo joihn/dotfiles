@@ -96,6 +96,8 @@ let NERDTreeShowHidden=1
 " (i.e. delete 'x' and 'D'):
 " let g:yankring_n_keys = 'Y D x X'
 
+let mapleader = ","
+let g:mapleader = ","
 nnoremap x "_x
 nnoremap X "_X
 nnoremap d "_d
@@ -114,8 +116,6 @@ else
   vnoremap <leader>d "*d
 endif
 
-let mapleader = ","
-let g:mapleader = ","
 " better cursor
 let &t_SI = "\e[6 q"
 let &t_EI = "\e[2 q"
