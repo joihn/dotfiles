@@ -4,6 +4,8 @@
 [keybindings]
   zoom_in = <Primary>equal
   zoom_out = <Primary>minus
+  page_up = <Primary>k
+  page_down_half = <Primary>j
 [profiles]
   [[default]]
     background_color = "#2b2b2b"
