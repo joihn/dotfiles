@@ -156,6 +156,7 @@ export duckip=10.194.25.26
 export octopusip=10.194.24.173
 export dolphinip=10.194.24.171
 export fiship=10.194.24.172
+export bacalhauip=10.194.25.202
 
 export chickenname=smallGpu4test4npi
 export monkeyname=erx-1-gpu-p100-1
@@ -228,11 +229,13 @@ export VISUAL=vim
 #alias ssy="ssh maxime@$yvip"
 alias ssy='autossh -M 0 -o "ServerAliveInterval 30" -o "ServerAliveCountMax 3" maxime@10.194.25.71'
 alias ai="cd /home/maxime/Documents/code/erx-ai"
-alias torch="cd /home/maxime/Documents/code/erx-torch"
+alias torch="cd /home/maxime/Documents/code/erx-torch/erxtorch"
 alias model="cd /home/maxime/Documents/code/erx-model"
 alias code="cd /home/maxime/Documents/code"
 alias torchexo="cd /home/maxime/Documents/code/erx-torch/external/erx-ai/Exoscale"
 alias torchdep="cd /home/maxime/Documents/code/erx-torch/external/erx-ai/deploy"
+alias torchdepp="cd /home/maxime/Documents/code/erx-torch/erxtorch/external/erx-ai/deploy"
+
 alias setup="cd /media/maxime/ssd_2to/erx_setup"
 alias htop="htop -t"
 alias keyd_reload="sudo cp ~/.config/keyd/default.conf /etc/keyd/default.conf && sudo keyd reload"
@@ -253,9 +256,6 @@ mansubl() {
 
   man "$1" | col -b > /tmp/ls_man.txt && subl /tmp/ls_man.txt
 }
-
-
-
 pycal(){
     python -c "print($1)"
 }
