@@ -242,6 +242,9 @@ alias editkey="chezmoi edit ~/.config/keyd/default.conf"
 autoload -U compinit && compinit #conda complete
 alias latest="find $1 -type f -print0 | xargs -0 stat --format '%Y :%y %n' | sort -nr | cut -d: -f2- | head"
 alias pycharm="pycharm-professional"
+alias monitor_off="gnome-extensions disable system-monitor-next@paradoxxx.zero.gmail.com"
+alias monitor_on="gnome-extensions enable system-monitor-next@paradoxxx.zero.gmail.com"
+
 mansubl() {
   if [ "$#" -ne 1 ]; then
     echo "You need to provide exactly 1 arguments"
@@ -250,8 +253,19 @@ mansubl() {
 
   man "$1" | col -b > /tmp/ls_man.txt && subl /tmp/ls_man.txt
 }
+
+
+
 pycal(){
     python -c "print($1)"
 }
 
 alias bluco='echo -e "connect CC:F8:26:AE:A5:6C \nquit" | bluetoothctl'
+journalsubl() {
+  journalctl -k --since today |uniq | col -b > /tmp/ls_man.txt && subl /tmp/ls_man.txt
+}
+
+gosubl() {
+  cat | col -b > /tmp/ls_man.txt && subl /tmp/ls_man.txt
+}
+
