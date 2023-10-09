@@ -1,0 +1,15 @@
+source ~/.vimrc
+nnoremap x "_x
+nnoremap X "_X
+nnoremap d "_d
+nnoremap D "_D
+vnoremap d "_d
+
+set clipboard=unnamed,unnamedplus
+nnoremap <leader>d "+d
+nnoremap <leader>D "+D
+vnoremap <leader>d "+d
+
+
+
+
