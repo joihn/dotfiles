@@ -83,8 +83,6 @@ set shiftwidth  =4
 set expandtab
  
 :set nu! rnu!
-" leader key (for user param) should be single ' instead of backslack
-let mapleader = "'"
 set ttimeoutlen=10
 
 let NERDTreeShowHidden=1
@@ -129,3 +127,8 @@ autocmd VimEnter * silent !echo -ne "\e[2 q"
 augroup END
 "no mouse select triggering visual mode
 set mouse-=a
+nnoremap <Tab> >>_
+nnoremap <S-Tab> <<_
+inoremap <S-Tab> <C-D>
+vnoremap <Tab> >gv
+vnoremap <S-Tab> <gv
