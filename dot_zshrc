@@ -157,6 +157,9 @@ export octopusip=10.194.24.173
 export dolphinip=10.194.24.171
 export fiship=10.194.24.172
 export bacalhauip=10.194.25.202
+export gitlabip=10.194.25.252
+export xavierip=10.194.25.128
+
 
 export chickenname=smallGpu4test4npi
 export monkeyname=erx-1-gpu-p100-1
@@ -249,6 +252,7 @@ alias monitor_off="gnome-extensions disable system-monitor-next@paradoxxx.zero.g
 alias monitor_on="gnome-extensions enable system-monitor-next@paradoxxx.zero.gmail.com"
 #apply the changes whenever you save the file.
 alias chezvim="chezmoi edit --watch $1"
+
 mansubl() {
   if [ "$#" -ne 1 ]; then
     echo "You need to provide exactly 1 arguments"
