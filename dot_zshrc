@@ -203,6 +203,7 @@ scaling(){dconf write /org/gnome/desktop/interface/text-scaling-factor $1}
 alias lg="lazygit"
 alias ch="setxkbmap ch -variant fr -option && setxkbmap ch -variant fr -option caps:escape"
 alias eur="setxkbmap maximekey -option && setxkbmap maximekey -option lv3:lsgt_switch -option caps:escape"
+
 #vim mode in cli
 bindkey -v
 VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true
@@ -210,6 +211,19 @@ VI_MODE_SET_CURSOR=true
 KEYTIMEOUT=15
 #less program option #i: case insentive seach #R color #S line truncation instead of wrapping 
 export LESS="IRS"
+# Yank to the system clipboard
+function vi-yank-xclip {
+    zle vi-yank
+   echo "$CUTBUFFER" | ccc
+}
+
+zle -N vi-yank-xclip
+bindkey -M vicmd 'y' vi-yank-xclip
+
+
+
+
+
 
 
 alias ld="lazydocker"
