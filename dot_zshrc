@@ -261,7 +261,7 @@ alias editzsh="chezmoi edit ~/.zshrc"
 alias editkey="chezmoi edit ~/.config/keyd/default.conf"
 autoload -U compinit && compinit #conda complete
 alias latest="find $1 -type f -print0 | xargs -0 stat --format '%Y :%y %n' | sort -nr | cut -d: -f2- | head"
-alias pycharm="pycharm-professional"
+alias pycharm="screen -dmS pycharm-\$(date +%s%N) pycharm-professional"
 alias monitor_off="gnome-extensions disable system-monitor-next@paradoxxx.zero.gmail.com"
 alias monitor_on="gnome-extensions enable system-monitor-next@paradoxxx.zero.gmail.com"
 #apply the changes whenever you save the file.
