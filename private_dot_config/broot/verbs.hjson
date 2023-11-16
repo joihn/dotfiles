@@ -73,6 +73,14 @@ verbs: [
         execution: "cp -r {file} {parent}/{file-stem}-{version}{file-dot-extension}"
     }
 
+    {
+        key: ctrl-o
+        #auto_exec: true
+        internal: ":toggle_preview"
+    }
+
+
+
     # This verb lets you launch a terminal on ctrl-T
     # (on exit you'll be back in broot)
     {
