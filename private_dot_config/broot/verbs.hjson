@@ -48,6 +48,12 @@ verbs: [
     }
 
     {
+        invocation: touch {subpath}
+        execution: "touch {directory}/{subpath}"
+        leave_broot: false
+    }
+
+    {
         invocation: git_diff
         shortcut: gd
         leave_broot: false
