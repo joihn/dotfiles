@@ -235,7 +235,7 @@ alias ld="lazydocker"
 alias cl="clear"
 #better jump
 export ZSHZ_UNCOMMON=1
-
+alias broot="broot -c :start_end_panel\;:toggle_preview\;:panel_left"
 source /home/maxime/.config/broot/launcher/bash/br
 cp_to_new_folder() {
   if [ "$#" -ne 2 ]; then
