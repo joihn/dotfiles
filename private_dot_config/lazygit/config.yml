@@ -1,5 +1,5 @@
 gui:
-  sidePanelWidth: 0.3 # gives you more space to show things side-by-side
+  sidePanelWidth: 0.23 # gives you more space to show things side-by-side
   experimentalShowBranchHeads: true
 git:
   paging:
