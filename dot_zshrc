@@ -271,7 +271,7 @@ alias monitor_off="gnome-extensions disable system-monitor-next@paradoxxx.zero.g
 alias monitor_on="gnome-extensions enable system-monitor-next@paradoxxx.zero.gmail.com"
 #apply the changes whenever you save the file.
 alias chezvim="chezmoi edit --watch $1"
-
+alias history="history -E"
 mansubl() {
   if [ "$#" -ne 1 ]; then
     echo "You need to provide exactly 1 arguments"
