@@ -93,11 +93,17 @@ verbs: [
     
     {
         invocation: "path_copy"
-        execution: "echo -n {file} | xclip -selection clipboard;" 
-        from_shell: true
-        #leave_broot: false
+        execution: "bash -c \"echo -n {file} | xclip -selection clipboard;\"" 
+        from_shell: false
+        leave_broot: false
     }
-
+    
+   {
+        invocation: "run {exec}"
+        shortcut: r
+        execution: "{exec} {file}"
+        leave_broot: false
+    }
     # Here's an example of a shortcut bringing you to your home directory
     # {
     #     invocation: home
