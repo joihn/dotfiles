@@ -269,6 +269,7 @@ alias latest="find $1 -type f -print0 | xargs -0 stat --format '%Y :%y %n' | sor
 alias pycharm="screen -dmS pycharm-\$(date +%s%N) pycharm-professional"
 alias monitor_off="gnome-extensions disable system-monitor-next@paradoxxx.zero.gmail.com"
 alias monitor_on="gnome-extensions enable system-monitor-next@paradoxxx.zero.gmail.com"
+alias unzipdir='f() { mkdir -p "${1%.*}" && unzip "$1" -d "${1%.*}"; }; f'
 #apply the changes whenever you save the file.
 alias chezvim="chezmoi edit --watch $1"
 alias history="history -E"
