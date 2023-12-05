@@ -273,6 +273,8 @@ alias unzipdir='f() { mkdir -p "${1%.*}" && unzip "$1" -d "${1%.*}"; }; f'
 #apply the changes whenever you save the file.
 alias chezvim="chezmoi edit --watch $1"
 alias history="history -E"
+export PATH="$PATH:/home/maxime/.local/bin"
+
 mansubl() {
   if [ "$#" -ne 1 ]; then
     echo "You need to provide exactly 1 arguments"
