@@ -295,3 +295,5 @@ gosubl() {
   cat | col -b > /tmp/ls_man.txt && subl /tmp/ls_man.txt
 }
 
+
+eval $(thefuck --alias)
