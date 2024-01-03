@@ -13,6 +13,7 @@ customCommands:
     command: "git-absorb -b {{.SelectedLocalCommit.Sha}}"
     context: 'commits'
     description: 'git absorb'
+    showOutput: true
   - key: 'B'
     command: "git checkout -b \"{{.SelectedLocalBranch.Name}}_$(date +\"%D.%Hh%M\")\"  \"{{.SelectedLocalBranch.FullRefName}}\" "
     context: 'localBranches'
@@ -22,3 +23,9 @@ customCommands:
     command: "GIT_EDITOR=\"sed -i '1s/^/break \\n /'\" git rebase --interactive --update-refs --autostash --keep-empty --empty=keep --no-autosquash {{.SelectedLocalBranch.Name}}"
     context: 'localBranches'
     description: 'REBASE (interactive and updating refs)'
+
+  - key: 'b'
+    command: "black ."
+    context: 'files'
+    description: 'apply black at the root of repo'
+    showOutput: true
