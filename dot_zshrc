@@ -64,6 +64,24 @@ ZSH_THEME="agnoster"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
+##########
+# HISTORY
+##########
+
+HISTFILE=$HOME/.zsh_history
+HISTSIZE=50000
+SAVEHIST=50000
+
+setopt INC_APPEND_HISTORY     # Immediately append to history file.
+setopt EXTENDED_HISTORY       # Record timestamp in history.
+setopt HIST_EXPIRE_DUPS_FIRST # Expire duplicate entries first when trimming history.
+setopt HIST_IGNORE_DUPS       # Dont record an entry that was just recorded again.
+setopt HIST_IGNORE_ALL_DUPS   # Delete old recorded entry if new entry is a duplicate.
+setopt HIST_FIND_NO_DUPS      # Do not display a line previously found.
+setopt HIST_IGNORE_SPACE      # Dont record an entry starting with a space.
+setopt HIST_SAVE_NO_DUPS      # Dont write duplicate entries in the history file.
+setopt SHARE_HISTORY          # Share history between all sessions.
+unsetopt HIST_VERIFY          # Execute commands using history (e.g.: using !$) immediately
 
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
@@ -251,7 +269,11 @@ export VISUAL=vim
 #alias ssy="ssh maxime@$yvip"
 alias ssy='autossh -M 0 -o "ServerAliveInterval 30" -o "ServerAliveCountMax 3" -o "ForwardX11 yes" maxime@10.194.25.71'
 alias ai="cd /home/maxime/Documents/code/erx-ai"
-alias torch="cd /home/maxime/Documents/code/erx-torch/erxtorch"
+alias torch="cd /home/maxime/Documents/code/erx-ai/erxtorch"
+alias tf="cd /home/maxime/Documents/code/erx-ai/erxtf"
+alias torchdep="cd /home/maxime/Documents/code/erx-ai/erxtorch/deploy"
+alias torchconf="cd /home/maxime/Documents/code/erx-ai/erxtorch/src/erxtorch/configs"
+
 alias model="cd /home/maxime/Documents/code/erx-model"
 alias code="cd /home/maxime/Documents/code"
 alias torchexo="cd /home/maxime/Documents/code/erx-torch/external/erx-ai/Exoscale"
