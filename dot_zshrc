@@ -311,6 +311,10 @@ pycal(){
 
 alias bluco='echo -e "connect CC:F8:26:AE:A5:6C \nquit" | bluetoothctl'
 alias bluco='echo -e "connect AC:80:0A:7E:44:BB \nquit" | bluetoothctl'
+alias restart_audio_stack='systemctl --user restart pipewire; systemctl --user restart wireplumber; systemctl --user restart pipewire-pulse; sleep 2s; systemctl --user status pipewire pipewire-pulse wireplumber'
+
+
+
 journalsubl() {
   journalctl -k --since today |uniq | col -b > /tmp/ls_man.txt && subl /tmp/ls_man.txt
 }
