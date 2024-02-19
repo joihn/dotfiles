@@ -168,6 +168,8 @@ cp_to_new_folder() {
 
 
 bind "TAB:menu-complete"
+# And Shift-Tab should cycle backwards
+bind '"\e[Z": menu-complete-backward'
 bind "set show-all-if-ambiguous on"
 bind "set menu-complete-display-prefix on"
 
