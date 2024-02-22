@@ -315,6 +315,8 @@ alias restart_audio_stack='systemctl --user restart pipewire; systemctl --user r
 
 alias repair_trackpoint="sudo rmmod psmouse && sudo modprobe psmouse && xinput --set-prop 'Elan TrackPoint' 'Device Enabled' 0 && sleep 1 && xinput --set-prop 'Elan TrackPoint' 'Device Enabled' 1 && sleep 1 && xinput --set-prop 'Elan TrackPoint' 'libinput Accel Speed' -0.5 && xinput --set-prop 'Elan TrackPoint' 'libinput Scrolling Pixel Distance' 25"
 
+alias clean_repo="find . -type d -name '__pycache__' -exec rm -r {} + && sudo find . -type d -name '*.egg-info' && sudo find . -type d -name '*.eggs' -exec rm -rf {} + && find . -type d -empty -delete"
+
 journalsubl() {
   journalctl -k --since today |uniq | col -b > /tmp/ls_man.txt && subl /tmp/ls_man.txt
 }
