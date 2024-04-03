@@ -15,7 +15,7 @@ customCommands:
     description: 'git absorb'
     showOutput: true
   - key: 'B'
-    command: "git checkout -b \"{{.SelectedLocalBranch.Name}}_$(date +\"%D.%Hh%M\")\"  \"{{.SelectedLocalBranch.FullRefName}}\" "
+    command: "git branch \"{{.SelectedLocalBranch.Name}}_$(date +\"%D.%Hh%M\")\"  \"{{.SelectedLocalBranch.FullRefName}}\" "
     context: 'localBranches'
     description: 'Backup branch' 
 
