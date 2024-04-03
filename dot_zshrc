@@ -181,7 +181,7 @@ export dolphinip=10.194.24.171
 export fiship=10.194.24.172
 export bacalhauip=10.194.25.202
 export gitlabip=10.194.25.252
-export xavierip=10.194.25.128
+export xavierip=10.194.26.135
 
 
 export chickenname=smallGpu4test4npi
