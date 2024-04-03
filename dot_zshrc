@@ -312,8 +312,7 @@ pycal(){
 alias bluco='echo -e "connect CC:F8:26:AE:A5:6C \nquit" | bluetoothctl'
 alias bluco='echo -e "connect AC:80:0A:7E:44:BB \nquit" | bluetoothctl'
 alias restart_audio_stack='systemctl --user restart pipewire; systemctl --user restart wireplumber; systemctl --user restart pipewire-pulse; sleep 2s; systemctl --user status pipewire pipewire-pulse wireplumber'
-
-alias repair_trackpoint="sudo rmmod psmouse && sudo modprobe psmouse && xinput --set-prop 'Elan TrackPoint' 'Device Enabled' 0 && sleep 1 && xinput --set-prop 'Elan TrackPoint' 'Device Enabled' 1 && sleep 1 && xinput --set-prop 'Elan TrackPoint' 'libinput Accel Speed' -0.5 && xinput --set-prop 'Elan TrackPoint' 'libinput Scrolling Pixel Distance' 25"
+alias grep='grep -i'
 
 alias clean_repo="find . -type d -name '__pycache__' -exec rm -r {} + && sudo find . -type d -name '*.egg-info' && sudo find . -type d -name '*.eggs' -exec rm -rf {} + && find . -type d -empty -delete"
 
@@ -327,3 +326,5 @@ gosubl() {
 
 
 eval $(thefuck --alias)
+export SYSTEMD_LESS="FRSi-+X"
+
