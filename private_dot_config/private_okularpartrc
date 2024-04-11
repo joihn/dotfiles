@@ -1,0 +1,26 @@
+[Dlg Accessibility]
+RecolorBackground=46,52,54
+RecolorForeground=211,215,207
+
+[Document]
+ChangeColors=true
+PaperColor=234,189,118
+RenderMode=Paper
+
+[General]
+ShellOpenFileInTabs=true
+ttsEngine=flite
+
+[Main View]
+ShowBottomBar=false
+SplitterSizes=327,1510
+
+[Nav Panel]
+SidebarIconSize=22
+SidebarShowText=false
+
+[PageView]
+ViewColumns=2
+
+[Reviews]
+AnnotationTools=<tool id="1" type="note-linked"><engine color="#ffffff00" hoverIcon="tool-note" type="PickPoint"><annotation color="#ffffff00" type="Text" icon="Note"/></engine><shortcut>1</shortcut></tool>,<tool id="2" type="note-inline"><engine color="#ffffff00" hoverIcon="tool-note-inline" type="PickPoint" block="true"><annotation color="#ffffff00" type="FreeText"/></engine><shortcut>2</shortcut></tool>,<tool id="3" type="highlight"><engine color="#ff8ae234" type="TextSelector"><annotation color="#ff8ae234" type="Highlight"/></engine><shortcut>3</shortcut></tool>,<tool id="4" type="highlight"><engine color="#ffffff00" type="TextSelector"><annotation color="#ffffff00" type="Highlight"/></engine><shortcut>4</shortcut></tool>,<tool id="5" type="straight-line"><engine color="#ffffe000" points="2" type="PolyLine"><annotation color="#ffffe000" width="1" type="Line"/></engine><shortcut>5</shortcut></tool>,<tool id="6" type="polygon"><engine color="#ff007eee" points="-1" type="PolyLine"><annotation color="#ff007eee" width="1" type="Line"/></engine><shortcut>6</shortcut></tool>,<tool id="7" type="stamp"><engine size="64" hoverIcon="okular" type="PickPoint" block="true"><annotation type="Stamp" icon="okular"/></engine><shortcut>7</shortcut></tool>,<tool id="8" type="underline"><engine color="#ff000000" type="TextSelector"><annotation color="#ff000000" type="Underline"/></engine><shortcut>8</shortcut></tool>,<tool id="9" type="ellipse"><engine color="#ff00ffff" type="PickPoint" block="true"><annotation color="#ff00ffff" width="5" type="GeomCircle"/></engine><shortcut>9</shortcut></tool>,<tool id="10" type="typewriter"><engine type="PickPoint" block="true"><annotation color="#00ffffff" width="0" type="Typewriter" textColor="#ff000000"/></engine></tool>
