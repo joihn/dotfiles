@@ -280,6 +280,7 @@ alias torchexo="cd /home/maxime/Documents/code/erx-torch/external/erx-ai/Exoscal
 alias torchdep="cd /home/maxime/Documents/code/erx-torch/external/erx-ai/deploy"
 alias torchdepp="cd /home/maxime/Documents/code/erx-torch/erxtorch/external/erx-ai/deploy"
 
+alias fpc="fp . | ccc"
 alias setup="cd /media/maxime/ssd_2to/erx_setup"
 alias htop="htop -t"
 alias keyd_reload="sudo cp ~/.config/keyd/default.conf /etc/keyd/default.conf && sudo keyd reload"
