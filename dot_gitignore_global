@@ -5,3 +5,4 @@ docker/.JetBrains-system/*
 docker/.JetBrains-plugins/*
 docker/.JetBrains/*
 **/*maximecustom*
+.idea
