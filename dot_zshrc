@@ -349,3 +349,6 @@ alias csshfs=csshfs
 eval $(thefuck --alias)
 export SYSTEMD_LESS="FRSi-+X"
 
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
