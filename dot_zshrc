@@ -199,7 +199,7 @@ export fishname=erx-2-gpu-rtx3090ti-3
 
 export gamingip=192.168.0.248
 export homeip=77.57.209.47
-export yvip=10.194.25.71
+export yvip=10.194.25.62
 
 
 source /home/maxime/.secretrc
@@ -267,8 +267,7 @@ alias html="w3m -dump"
 export EDITOR=vim
 export VISUAL=vim
 #alias ssy="ssh maxime@$yvip"
-
-alias ssy='autossh -M 0 -o "ServerAliveInterval 30" -o "ServerAliveCountMax 3" -o "ForwardX11 yes" maxime@10.194.25.71'
+alias ssy='autossh -M 0 -o "ServerAliveInterval 30" -o "ServerAliveCountMax 3" -o "ForwardX11 yes" maxime@10.194.25.62'
 alias ai="cd /home/maxime/Documents/code/erx-ai"
 alias torch="cd /home/maxime/Documents/code/erx-ai/erxtorch"
 alias tf="cd /home/maxime/Documents/code/erx-ai/erxtf"
