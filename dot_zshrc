@@ -326,7 +326,25 @@ journalsubl() {
 gosubl() {
   cat | col -b > /tmp/ls_man.txt && subl /tmp/ls_man.txt
 }
+function csshfs() {
+    local server_name="${1%%.*}" # extract hostname before dot
+    
+    local mount_point="/mnt/${server_name}"
+    
+    # Check if the mount point exists, if not create it, change ownership, and mount
+    if [[ ! -d "$mount_point" ]]; then
+        echo "Mount point $mount_point does not exist. Creating it now..."
+        # Creating mount point and changing its owner to 'maxime'
+        sudo mkdir "$mount_point"
+        sudo chown maxime "$mount_point"
+    fi
+    
+    echo sshfs -o allow_other "maxime@$1:/" "$mount_point"
+    #                  ,default_permissions,uid=1007,gid=10000
+    sshfs -o allow_other "maxime@$1:/" "$mount_point"
+}
 
+alias csshfs=csshfs
 
 eval $(thefuck --alias)
 export SYSTEMD_LESS="FRSi-+X"
