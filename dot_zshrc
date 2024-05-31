@@ -267,6 +267,7 @@ alias html="w3m -dump"
 export EDITOR=vim
 export VISUAL=vim
 #alias ssy="ssh maxime@$yvip"
+
 alias ssy='autossh -M 0 -o "ServerAliveInterval 30" -o "ServerAliveCountMax 3" -o "ForwardX11 yes" maxime@10.194.25.71'
 alias ai="cd /home/maxime/Documents/code/erx-ai"
 alias torch="cd /home/maxime/Documents/code/erx-ai/erxtorch"
@@ -330,4 +331,7 @@ gosubl() {
 
 eval $(thefuck --alias)
 export SYSTEMD_LESS="FRSi-+X"
+
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
