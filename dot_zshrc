@@ -1,6 +1,5 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
-
 # Path to your oh-my-zsh installation.
 export ZSH="/home/maxime/.oh-my-zsh"
 
@@ -253,7 +252,8 @@ alias ld="lazydocker"
 alias cl="clear"
 #better jump
 export ZSHZ_UNCOMMON=1
-alias broot="broot -c :start_end_panel\;:toggle_preview\;:panel_left"
+#alias broot="broot -c :start_end_panel\;:toggle_preview\;:panel_left"
+alias broot="broot -c :toggle_preview"
 source /home/maxime/.config/broot/launcher/bash/br
 cp_to_new_folder() {
   if [ "$#" -ne 2 ]; then
@@ -280,7 +280,9 @@ alias torchexo="cd /home/maxime/Documents/code/erx-torch/external/erx-ai/Exoscal
 alias torchdep="cd /home/maxime/Documents/code/erx-torch/external/erx-ai/deploy"
 alias torchdepp="cd /home/maxime/Documents/code/erx-torch/erxtorch/external/erx-ai/deploy"
 
-alias fpc="fp . | ccc"
+fpc(){
+     readlink -f $1 | xclip -sel clip
+}
 alias setup="cd /media/maxime/ssd_2to/erx_setup"
 alias htop="htop -t"
 alias keyd_reload="sudo cp ~/.config/keyd/default.conf /etc/keyd/default.conf && sudo keyd reload"
