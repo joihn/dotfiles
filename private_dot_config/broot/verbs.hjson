@@ -92,7 +92,7 @@ verbs: [
     }
     
     {
-        invocation: "path_copy"
+        invocation: "fpc"
         execution: "bash -c \"echo -n {file} | xclip -selection clipboard;\"" 
         from_shell: false
         leave_broot: false
