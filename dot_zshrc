@@ -205,6 +205,9 @@ source /home/maxime/.secretrc
 alias subl="/home/maxime/Documents/code/sublime.sh"
 alias ccc="xclip -sel clip"
 ccc2(){ echo -n $1 | xclip -selection clipboard; }
+alias cccimg="xclip -selection clipboard -t image/png -i"
+
+
 mkcd ()
 {
     mkdir -p -- "$1" &&
@@ -353,4 +356,4 @@ export SYSTEMD_LESS="FRSi-+X"
 
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
+alias xrandr_repair="xrandr --output HDMI-1 --off && xrandr --output HDMI-1 --mode 1920x1080 --left-of DP-2"
