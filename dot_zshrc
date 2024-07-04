@@ -147,6 +147,12 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+HOSTNAME=$(hostname)
+if [[ "$HOSTNAME" == "maximeComputer" ]]; then
+    conda activate base2
+fi
+
+
 #%%%% for docker 
 export GIDs=$GID 
 export UIDs=$UID 
@@ -246,11 +252,6 @@ zle -N vi-yank-xclip
 bindkey -M vicmd 'y' vi-yank-xclip
 
 
-
-
-
-
-
 alias ld="lazydocker"
 alias cl="clear"
 #better jump
@@ -282,11 +283,25 @@ alias code="cd /home/maxime/Documents/code"
 alias torchexo="cd /home/maxime/Documents/code/erx-torch/external/erx-ai/Exoscale"
 alias torchdep="cd /home/maxime/Documents/code/erx-torch/external/erx-ai/deploy"
 alias torchdepp="cd /home/maxime/Documents/code/erx-torch/erxtorch/external/erx-ai/deploy"
-
-fpc(){
-     readlink -f $1 | xclip -sel clip
+abspath() {
+    if [ -z "$1" ]; then
+        echo "Usage: abspath <relative-path>"
+        return 1
+    fi
+    local rel_path="$1"
+    local abs_path
+    # Use readlink or realpath if available
+    # Manual conversion
+    abs_path=$(cd "$(dirname "$rel_path")" && pwd)/$(basename "$rel_path")
+    echo "$abs_path"
 }
-alias setup="cd /media/maxime/ssd_2to/erx_setup"
+fpc(){
+     #readlink -f $1 | xclip -sel clip # will resolve symlink, undesired
+     abspath $1 | xclip -sel clip
+    
+}
+alias setup="cd /mnt/home/maxime/setup"
+alias setup2="cd /mnt/erx/setup"
 alias htop="htop -t"
 alias keyd_reload="sudo cp ~/.config/keyd/default.conf /etc/keyd/default.conf && sudo keyd reload"
 alias down="cd ~/Downloads"
