@@ -293,7 +293,7 @@ abspath() {
     # Use readlink or realpath if available
     # Manual conversion
     abs_path=$(cd "$(dirname "$rel_path")" && pwd)/$(basename "$rel_path")
-    echo "$abs_path"
+    echo -n "$abs_path"
 }
 fpc(){
      #readlink -f $1 | xclip -sel clip # will resolve symlink, undesired
