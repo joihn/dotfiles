@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Load the clipboard content into a variable
+clipboard_content=$(xclip -o -selection clipboard)
+
+# Remove trailing whitespace
+cleaned_content=$(echo -n "$clipboard_content" | sed 's/[ \t]*$//')
+
+# Place the cleaned content back into the clipboard
+echo -n "$cleaned_content" | xclip -selection clipboard
+
