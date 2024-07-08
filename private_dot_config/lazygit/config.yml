@@ -8,6 +8,7 @@ git:
 keybinding:
   universal:
     appendNewline: '<tab>'
+
 customCommands:
   - key: 'I'
     command: "git-absorb -b {{.SelectedLocalCommit.Sha}}"
@@ -19,13 +20,27 @@ customCommands:
     context: 'localBranches'
     description: 'Backup branch' 
 
-  - key: 'u'
-    command: "GIT_EDITOR=\"sed -i '1s/^/break \\n /'\" git rebase --interactive --update-refs --autostash --keep-empty --empty=keep --no-autosquash {{.SelectedLocalBranch.Name}}"
-    context: 'localBranches'
-    description: 'REBASE (interactive and updating refs)'
+#  - key: 'u'
+#    command: "GIT_EDITOR=\"sed -i '1s/^/break \\n /'\" git rebase --interactive --update-refs --autostash --keep-empty --empty=keep --no-autosquash {{.SelectedLocalBranch.Name}}"
+#    context: 'localBranches'
+#    description: 'REBASE (interactive and updating refs)'
 
   - key: 'b'
     command: "black ."
     context: 'files'
     description: 'apply black at the root of repo'
     showOutput: true
+  - key: 'u'
+    command: "GIT_PAGER='delta --dark --paging=never' git diff {{.SelectedLocalCommit.Sha}}"
+    context: 'commits'
+    description: 'diff with worktree'
+    #showOutput: true
+    subprocess: true 
+
+
+
+
+
+
+theme:
+  border: rounded
