@@ -30,10 +30,11 @@ customCommands:
     context: 'files'
     description: 'apply black at the root of repo'
     showOutput: true
+
   - key: 'u'
     command: "GIT_PAGER='delta --dark --paging=never' git diff {{.SelectedLocalCommit.Sha}}"
     context: 'commits'
-    description: 'diff with worktree'
+    description: 'diff with worktree (select 1 commit before)'
     #showOutput: true
     subprocess: true 
 
