@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Check if a PDF file is provided as an argument
+if [ $# -eq 0 ]; then
+    echo "Usage: $0 <pdf_file>"
+    exit 1
+fi
+
+# Check if pdftotext is installed
+if ! command -v pdftotext &> /dev/null; then
+    echo "Error: pdftotext is not installed. Please install poppler-utils."
+    exit 1
+fi
+
+# Get the PDF filename from the argument
+pdf_file="$1"
+
+# Check if the file exists
+if [ ! -f "$pdf_file" ]; then
+    echo "Error: File '$pdf_file' not found."
+    exit 1
+fi
+
+# Extract the text and print it to stdout
+pdftotext -layout "$pdf_file" - | xclip -sel clip
