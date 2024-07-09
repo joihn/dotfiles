@@ -2,6 +2,6 @@
 "pane_group:navigate_prev": ctrl-shift-tab
 "pane_group:toggle_maximize_pane": ctrl-shift-X
 "input:search_command_history": ctrl-r
-"pane_group:navigate_next": ctrl-tab
 "workspace:show_command_search": none
 "workspace:increase_font_size": ctrl-=
+"pane_group:navigate_next": ctrl-tab
