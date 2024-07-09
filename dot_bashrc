@@ -151,10 +151,7 @@ export lizardname=erx-2-gpu-a40-2
 export octopusname=erx-2-gpu-rtx3090ti-1
 
 
-
-
 source /home/maxime/.secretrc || echo ""
-source /home/maxime/.config/broot/launcher/bash/br || echo ""
 
 export TRAINING_USER="maxime"
 cp_to_new_folder() {
@@ -172,12 +169,13 @@ bind "TAB:menu-complete"
 bind '"\e[Z": menu-complete-backward'
 bind "set show-all-if-ambiguous on"
 bind "set menu-complete-display-prefix on"
+# after ctrl R, pageup/pagedown to iterate
+#if [[ $- == *i* ]]; then
+#    bind '"\e[5~": history-search-backward'
+#    bind '"\e[6~": history-search-forward'
+#fi
 
-if [[ $- == *i* ]]; then
-    bind '"\e[5~": history-search-backward'
-    bind '"\e[6~": history-search-forward'
-fi
-
+# after ctrl R, ctrl R to go previous, ctrl S to go to next
 stty -ixon
 
 
@@ -195,3 +193,94 @@ export HISTTIMEFORMAT="[%F %T] "
 # Force prompt to write history after every command.
 # http://superuser.com/questions/20900/bash-history-loss
 PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
+# f12 equivqalent to ctrl R, then ctrl R ctrl S to oscillate
+bind '"\e[24~":"\C-a\C-r\C-y\C-r"'
+
+# ___________ alias ________________
+
+abspath() { 
+    if [ -z "$1" ]; then
+        echo "Usage: abspath <relative-path>"
+        return 1
+    fi
+    local rel_path="$1"
+    local abs_path
+    # Use readlink or realpath if available
+    # Manual conversion
+    abs_path=$(cd "$(dirname "$rel_path")" && pwd)/$(basename "$rel_path")
+    echo -n "$abs_path"
+}
+fpc(){
+     #readlink -f $1 | xclip -sel clip # will resolve symlink, undesired
+     abspath $1 | xclip -sel clip
+
+}
+alias setup="cd /mnt/home/maxime/setup"
+alias setup2="cd /mnt/erx/setup"
+alias htop="htop -t"
+alias keyd_reload="sudo cp ~/.config/keyd/default.conf /etc/keyd/default.conf && sudo keyd reload"
+alias down="cd ~/Downloads"
+alias editzsh="chezmoi edit ~/.zshrc"
+alias editkey="chezmoi edit ~/.config/keyd/default.conf"
+alias latest="find $1 -type f -print0 | xargs -0 stat --format '%Y :%y %n' | sort -nr | cut -d: -f2- | head"
+alias pycharm="screen -dmS pycharm-\$(date +%s%N) pycharm-professional"
+alias monitor_off="gnome-extensions disable system-monitor-next@paradoxxx.zero.gmail.com"
+alias monitor_on="gnome-extensions enable system-monitor-next@paradoxxx.zero.gmail.com"
+alias unzipdir='f() { mkdir -p "${1%.*}" && unzip "$1" -d "${1%.*}"; }; f'
+#apply the changes whenever you save the file.
+alias chezvim="chezmoi edit --watch $1"
+export PATH="$PATH:/home/maxime/.local/bin"
+
+mansubl() {
+  if [ "$#" -ne 1 ]; then
+    echo "You need to provide exactly 1 arguments"
+    return 1
+  fi
+
+  man "$1" | col -b > /tmp/ls_man.txt && subl /tmp/ls_man.txt
+}
+pycal(){
+    python -c "print($1)"
+}
+vpycal(){
+    python -c "print(f\"$1 = {$1}\")"
+}
+
+alias bluco='echo -e "connect AC:80:0A:7E:44:BB \nquit" | bluetoothctl'
+alias restart_audio_stack='systemctl --user restart pipewire; systemctl --user restart wireplumber; systemctl --user restart pipewire-pulse; sleep 2s; systemctl --user status pipewire pipewire-pulse wireplumber'
+alias grep='grep -i'
+
+alias clean_repo="find . -type d -name '__pycache__' -exec sudo rm -r {} + && find . -type d -name '*.egg-info' -exec sudo rm -rf {} + && find . -type d -name '*.eggs' -exec sudo rm -rf {} + && find . -type d -empty -exec sudo rm -rf {} +"
+
+journalsubl() {
+  journalctl -k --since today |uniq | col -b > /tmp/ls_man.txt && subl /tmp/ls_man.txt
+}
+
+gosubl() {
+  cat | col -b > /tmp/ls_man.txt && subl /tmp/ls_man.txt
+}
+function csshfs() {
+    local server_name="${1%%.*}" # extract hostname before dot
+
+    local mount_point="/mnt/${server_name}"
+
+    # Check if the mount point exists, if not create it, change ownership, and mount
+    if [[ ! -d "$mount_point" ]]; then
+        echo "Mount point $mount_point does not exist. Creating it now..."
+        # Creating mount point and changing its owner to 'maxime'
+        sudo mkdir "$mount_point"
+        sudo chown maxime "$mount_point"
+    fi
+
+    echo sshfs -o allow_other "maxime@$1:/" "$mount_point"
+    #                  ,default_permissions,uid=1007,gid=10000
+    sshfs -o allow_other "maxime@$1:/" "$mount_point"
+}
+
+alias csshfs=csshfs
+export SYSTEMD_LESS="FRSi-+X"
+alias xrandr_repair="xrandr --output HDMI-1 --off && xrandr --output HDMI-1 --mode 1920x1080 --left-of DP-2"
+alias res="reset"
+alias hide_git="git config --add oh-my-zsh.hide-status 1 && git config --add oh-my-zsh.hide-dirty 1"
+alias chezlg="lazygit -p ~/.local/share/chezmoi"
+
