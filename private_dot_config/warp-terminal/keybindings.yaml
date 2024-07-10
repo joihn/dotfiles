@@ -1,7 +1,9 @@
 ---
-"pane_group:navigate_prev": ctrl-shift-tab
-"pane_group:toggle_maximize_pane": ctrl-shift-X
-"input:search_command_history": ctrl-r
-"workspace:show_command_search": none
-"workspace:increase_font_size": ctrl-=
 "pane_group:navigate_next": ctrl-tab
+"workspace:increase_font_size": ctrl-=
+"workspace:show_command_search": none
+"pane_group:navigate_prev": ctrl-shift-tab
+"input:search_command_history": ctrl-r
+"input:open_completion_suggestions": tab
+"terminal:paste": shift-insert
+"pane_group:toggle_maximize_pane": ctrl-shift-X
