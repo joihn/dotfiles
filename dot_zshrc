@@ -87,7 +87,7 @@ unsetopt HIST_VERIFY          # Execute commands using history (e.g.: using !$) 
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git z zsh-autosuggestions docker-compose  k web-search fast-syntax-highlighting vi-mode conda-zsh-completion)
+plugins=(git z zsh-autosuggestions docker-compose  k web-search fast-syntax-highlighting zsh-vi-mode conda-zsh-completion)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -236,21 +236,74 @@ alias ch="setxkbmap ch -variant fr -option && setxkbmap ch -variant fr -option c
 alias eur="setxkbmap maximekey -option && setxkbmap maximekey -option lv3:lsgt_switch -option caps:escape"
 
 #vim mode in cli
-bindkey -v
-VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true
-VI_MODE_SET_CURSOR=true
+#bindkey -v
+#VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true
+#VI_MODE_SET_CURSOR=true
 KEYTIMEOUT=15
 #less program option #i: case insentive seach #R color #S line truncation instead of wrapping 
 export LESS="IRS"
-# Yank to the system clipboard
-function vi-yank-xclip {
-    zle vi-yank
-   echo "$CUTBUFFER" | ccc
+
+# _____zsh original vi plugin vanilla_____
+#function vi-yank-xclip {
+#    zle vi-yank
+#   echo "$CUTBUFFER" | ccc
+#}
+
+#zle -N vi-yank-xclip
+#bindkey -M vicmd 'y' vi-yank-xclip
+# ___zsh new vim plugin github___
+
+alias cbread='xclip -selection c'
+alias cbprint='xclip -o -selection clipboard'
+my_zvm_vi_yank() {
+  zvm_vi_yank
+  echo -en "${CUTBUFFER}" | cbread
 }
 
-zle -N vi-yank-xclip
-bindkey -M vicmd 'y' vi-yank-xclip
+my_zvm_vi_delete() {
+  zvm_vi_delete
+  echo -en "${CUTBUFFER}" | cbread
+}
 
+my_zvm_vi_change() {
+  zvm_vi_change
+  echo -en "${CUTBUFFER}" | cbread
+}
+
+my_zvm_vi_change_eol() {
+  zvm_vi_change_eol
+  echo -en "${CUTBUFFER}" | cbread
+}
+
+my_zvm_vi_put_after() {
+  CUTBUFFER=$(cbprint)
+  zvm_vi_put_after
+  zvm_highlight clear # zvm_vi_put_after introduces weird highlighting for me
+}
+
+my_zvm_vi_put_before() {
+  CUTBUFFER=$(cbprint)
+  zvm_vi_put_before
+  zvm_highlight clear # zvm_vi_put_before introduces weird highlighting for me
+}
+
+zvm_after_lazy_keybindings() {
+  zvm_define_widget my_zvm_vi_yank
+  zvm_define_widget my_zvm_vi_delete
+  zvm_define_widget my_zvm_vi_change
+  zvm_define_widget my_zvm_vi_change_eol
+  zvm_define_widget my_zvm_vi_put_after
+  zvm_define_widget my_zvm_vi_put_before
+
+  zvm_bindkey visual 'y' my_zvm_vi_yank
+  zvm_bindkey visual 'd' my_zvm_vi_delete
+  zvm_bindkey visual 'x' my_zvm_vi_delete
+  zvm_bindkey vicmd  'C' my_zvm_vi_change_eol
+  zvm_bindkey visual 'c' my_zvm_vi_change
+  zvm_bindkey vicmd  'p' my_zvm_vi_put_after
+  zvm_bindkey vicmd  'P' my_zvm_vi_put_before
+}
+#________________
 
 alias ld="lazydocker"
 alias cl="clear"
@@ -283,11 +336,13 @@ alias code="cd /home/maxime/Documents/code"
 alias torchexo="cd /home/maxime/Documents/code/erx-torch/external/erx-ai/Exoscale"
 alias torchdep="cd /home/maxime/Documents/code/erx-torch/external/erx-ai/deploy"
 alias torchdepp="cd /home/maxime/Documents/code/erx-torch/erxtorch/external/erx-ai/deploy"
+
 abspath() {
     if [ -z "$1" ]; then
         echo "Usage: abspath <relative-path>"
         return 1
     fi
+
     local rel_path="$1"
     local abs_path
 
