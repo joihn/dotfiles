@@ -167,11 +167,12 @@ export EDITOR='vim'
 
 
 # HSTR configuration - add this to ~/.zshrc
-alias hh=hstr                    # hh to be alias for hstr
-setopt histignorespace           # skip cmds w/ leading space from history
-export HSTR_CONFIG=hicolor,raw-history-view      # get more colors
-bindkey -s "\C-r" "\C-a hstr -- \C-j"     # bind hstr to Ctrl-r (for Vi mode check doc)
-
+function zvm_after_init() { # to avoid vim mode erasing this
+  alias hh=hstr                    # hh to be alias for hstr
+  setopt histignorespace           # skip cmds w/ leading space from history
+  export HSTR_CONFIG=hicolor,raw-history-view      # get more colors
+  bindkey -s "\C-r" "\C-a hstr -- \C-j"     # bind hstr to Ctrl-r (for Vi mode check doc)
+}
 export ANSIBLE_NOCOWS=1
 export monkeyip=194.182.163.58
 export pandaip=89.145.166.246
@@ -361,6 +362,11 @@ fpc(){
 }
 alias setup="cd /mnt/home/maxime/setup"
 alias setup2="cd /mnt/erx/setup"
+alias setup_dol="cd /mnt/dolphin/mnt/home/maxime/setup"
+alias setup_oct="cd /mnt/octopus/mnt/home/maxime/setup"
+alias setup_fish="cd /mnt/fish/mnt/home/maxime/setup"
+alias setup_whale="cd /mnt/whale/mnt/home/maxime/setup"
+
 alias htop="htop -t"
 alias keyd_reload="sudo cp ~/.config/keyd/default.conf /etc/keyd/default.conf && sudo keyd reload"
 alias down="cd ~/Downloads"
@@ -434,3 +440,4 @@ alias xrandr_repair="xrandr --output HDMI-1 --off && xrandr --output HDMI-1 --mo
 alias res="reset"
 alias hide_git="git config --add oh-my-zsh.hide-status 1 && git config --add oh-my-zsh.hide-dirty 1"
 alias chezlg="lazygit -p ~/.local/share/chezmoi"
+
