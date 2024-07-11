@@ -290,9 +290,13 @@ abspath() {
     fi
     local rel_path="$1"
     local abs_path
-    # Use readlink or realpath if available
-    # Manual conversion
-    abs_path=$(cd "$(dirname "$rel_path")" && pwd)/$(basename "$rel_path")
+
+    if [ "$rel_path" = "." ]; then
+        abs_path=$(cd "$(dirname "$rel_path")" && pwd)
+    else
+        abs_path=$(cd "$(dirname "$rel_path")" && pwd)/$(basename "$rel_path")
+    fi
+
     echo -n "$abs_path"
 }
 fpc(){
