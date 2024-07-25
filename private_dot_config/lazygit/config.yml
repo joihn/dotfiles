@@ -1,10 +1,13 @@
 gui:
   sidePanelWidth: 0.23 # gives you more space to show things side-by-side
   experimentalShowBranchHeads: true
+
 git:
   paging:
     colorArg: always
     pager: delta --dark --paging=never
+  parseEmoji: true
+
 keybinding:
   universal:
     appendNewline: '<tab>'
@@ -37,7 +40,6 @@ customCommands:
     description: 'diff with worktree (select 1 commit before)'
     #showOutput: true
     subprocess: true 
-
 
 
 
