@@ -45,15 +45,6 @@
     palette = "#929292:#e27373:#94b979:#ffba7b:#97bedc:#e1c0fa:#00988e:#dedede:#bdbdbd:#ffa1a1:#bddeab:#ffdca0:#b1d8f6:#fbdaff:#1ab2a8:#ffffff"
     use_system_font = False
     title_transmit_bg_color = "#8b4003"
-  [[LiquidCarbon]]
-    background_color = "#303030"
-    cursor_bg_color = "#ffffff"
-    font = Ubuntu Mono 12
-    foreground_color = "#afc2c2"
-    scrollback_infinite = True
-    palette = "#000000:#ff3030:#559a70:#ccac00:#0099cc:#cc69c8:#7ac4cc:#bccccc:#000000:#ff3030:#559a70:#ccac00:#0099cc:#cc69c8:#7ac4cc:#bccccc"
-    use_system_font = False
-    title_transmit_bg_color = "#8b4003"
   [[LiquidCarbonTransparent]]
     cursor_bg_color = "#ffffff"
     font = Ubuntu Mono 12
@@ -364,6 +355,78 @@
     foreground_color = "#68525a"
     scrollback_infinite = True
     palette = "#2b1b1d:#91002b:#579524:#ab311b:#8c87b0:#692f50:#e8a866:#68525a:#3d2b2e:#c5255d:#8dff57:#c8381d:#cfc9ff:#fc6cba:#ffceaf:#b0949d"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[Apple Classic]]
+    background_color = "#2c2b2b"
+    cursor_bg_color = "#c7c7c7"
+    font = Ubuntu Mono 12
+    foreground_color = "#d5a200"
+    scrollback_infinite = True
+    palette = "#000000:#c91b00:#00c200:#c7c400:#0225c7:#ca30c7:#00c5c7:#c7c7c7:#686868:#ff6e67:#5ffa68:#fffc67:#6871ff:#ff77ff:#60fdff:#ffffff"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[Thayer Bright]]
+    background_color = "#1b1d1e"
+    cursor_bg_color = "#fc971f"
+    font = Ubuntu Mono 12
+    foreground_color = "#f8f8f8"
+    scrollback_infinite = True
+    palette = "#1b1d1e:#f92672:#4df840:#f4fd22:#2757d6:#8c54fe:#38c8b5:#ccccc6:#505354:#ff5995:#b6e354:#feed6c:#3f78ff:#9e6ffe:#23cfd5:#f8f8f2"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[Bright Lights]]
+    background_color = "#191919"
+    cursor_bg_color = "#f34b00"
+    font = Ubuntu Mono 12
+    foreground_color = "#b3c9d7"
+    scrollback_infinite = True
+    palette = "#191919:#ff355b:#b7e876:#ffc251:#76d4ff:#ba76e7:#6cbfb5:#c2c8d7:#191919:#ff355b:#b7e876:#ffc251:#76d5ff:#ba76e7:#6cbfb5:#c2c8d7"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[Highway]]
+    background_color = "#222225"
+    cursor_bg_color = "#e0d9b9"
+    font = Ubuntu Mono 12
+    foreground_color = "#ededed"
+    scrollback_infinite = True
+    palette = "#000000:#d00e18:#138034:#ffcb3e:#006bb3:#6b2775:#384564:#ededed:#5d504a:#f07e18:#b1d130:#fff120:#4fc2fd:#de0071:#5d504a:#ffffff"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[LiquidCarbon]]
+    background_color = "#303030"
+    cursor_bg_color = "#ffffff"
+    font = Ubuntu Mono 12
+    foreground_color = "#afc2c2"
+    scrollback_infinite = True
+    palette = "#000000:#ff3030:#559a70:#ccac00:#0099cc:#cc69c8:#7ac4cc:#bccccc:#000000:#ff3030:#559a70:#ccac00:#0099cc:#cc69c8:#7ac4cc:#bccccc"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[Darkside]]
+    background_color = "#222324"
+    cursor_bg_color = "#bbbbbb"
+    font = Ubuntu Mono 12
+    foreground_color = "#bababa"
+    scrollback_infinite = True
+    palette = "#000000:#e8341c:#68c256:#f2d42c:#1c98e8:#8e69c9:#1c98e8:#bababa:#000000:#e05a4f:#77b869:#efd64b:#387cd3:#957bbe:#3d97e2:#bababa"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[Broadcast]]
+    background_color = "#2b2b2b"
+    cursor_bg_color = "#ffffff"
+    font = Ubuntu Mono 12
+    foreground_color = "#e6e1dc"
+    scrollback_infinite = True
+    palette = "#000000:#da4939:#519f50:#ffd24a:#6d9cbe:#d0d0ff:#6e9cbe:#ffffff:#323232:#ff7b6b:#83d182:#ffff7c:#9fcef0:#ffffff:#a0cef0:#ffffff"
+    use_system_font = False
+    title_transmit_bg_color = "#8b4003"
+  [[Gruvbox Dark]]
+    background_color = "#1e1e1e"
+    cursor_bg_color = "#bbbbbb"
+    font = Ubuntu Mono 12
+    foreground_color = "#e6d4a3"
+    scrollback_infinite = True
+    palette = "#161819:#f73028:#aab01e:#f7b125:#719586:#c77089:#7db669:#faefbb:#7f7061:#be0f17:#868715:#cc881a:#377375:#a04b73:#578e57:#e6d4a3"
     use_system_font = False
     title_transmit_bg_color = "#8b4003"
 [layouts]
