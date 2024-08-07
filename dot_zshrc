@@ -378,7 +378,6 @@ alias setup_oct="cd /mnt/octopus/mnt/home/maxime/setup"
 alias setup_fish="cd /mnt/fish/mnt/home/maxime/setup"
 alias setup_whale="cd /mnt/whale/mnt/home/maxime/setup"
 
-alias htop="htop -t"
 alias keyd_reload="sudo cp ~/.config/keyd/default.conf /etc/keyd/default.conf && sudo cp ~/.config/keyd/app_non_root.conf ~/.config/keyd/app.conf && sudo keyd reload"
 alias down="cd ~/Downloads"
 alias editzsh="chezmoi edit ~/.zshrc"
