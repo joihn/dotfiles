@@ -34,7 +34,7 @@
     "LaunchNotebookShown": "true",
     "ShowHintText": "false",
     "Theme": "\"Dark\"",
-    "AIRequestLimitInfo": "{\"limit\":40,\"num_requests_used_since_refresh\":0,\"next_refresh_time\":\"2024-09-04T15:26:52.827860Z\"}",
+    "AIRequestLimitInfo": "{\"limit\":40,\"num_requests_used_since_refresh\":2,\"next_refresh_time\":\"2024-09-04T15:26:52.827860Z\"}",
     "ExperimentId": "952b78c1-3536-47bc-b5c1-cc24622d3d8c",
     "TelemetryEnabled": "false",
     "FontSize": "17.0",
