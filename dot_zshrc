@@ -410,7 +410,7 @@ vpycal(){
 
 alias bluco='echo -e "connect AC:80:0A:7E:44:BB \nquit" | bluetoothctl'
 alias restart_audio_stack='systemctl --user restart pipewire; systemctl --user restart wireplumber; systemctl --user restart pipewire-pulse; sleep 2s; systemctl --user status pipewire pipewire-pulse wireplumber'
-alias grep='grep -i'
+alias grep='grep -i --color'
 
 alias clean_repo="find . -type d -name '__pycache__' -exec sudo rm -r {} + && find . -type d -name '*.egg-info' -exec sudo rm -rf {} + && find . -type d -name '*.eggs' -exec sudo rm -rf {} + && find . -type d -empty -exec sudo rm -rf {} +"
 
