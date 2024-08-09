@@ -1,0 +1,27 @@
+#!/bin/bash
+set -ex
+# Define the Bluetooth card and the profiles
+
+echo -e "connect AC:80:0A:7E:44:BB \nquit" | bluetoothctl
+
+BT_CARD="bluez_card.AC_80_0A_7E_44_BB"
+PROFILE_A2DP="a2dp_sink"
+PROFILE_HFP="handsfree_head_unit"
+
+# Function to set the Bluetooth profile
+set_profile() {
+    local profile=$1
+    echo "Switching to profile: $profile"
+    pactl set-card-profile "$BT_CARD" "$profile"
+}
+
+# Switch to HFP profile
+set_profile "$PROFILE_HFP"
+
+# Wait for 2 seconds
+sleep 5
+
+# Switch back to A2DP profile
+set_profile "$PROFILE_A2DP"
+
+echo "Switched back to profile: $PROFILE_A2DP"
