@@ -87,7 +87,7 @@ unsetopt HIST_VERIFY          # Execute commands using history (e.g.: using !$) 
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git z zsh-autosuggestions web-search fast-syntax-highlighting zsh-vi-mode conda-zsh-completion)
+plugins=(git z zsh-autosuggestions fast-syntax-highlighting zsh-vi-mode conda-zsh-completion)
 
 source $ZSH/oh-my-zsh.sh
 
