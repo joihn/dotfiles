@@ -41,6 +41,13 @@ customCommands:
     #showOutput: true
     subprocess: true 
 
+  - key: 'C'
+    command: "git commit -C ORIG_HEAD"
+    context: 'files'
+    description: 'comit with prev name'
+    #showOutput: false
+    #subprocess: true 
+
 
 
 
