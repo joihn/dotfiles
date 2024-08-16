@@ -15,7 +15,7 @@
     url = "https://github.com/conda-incubator/conda-zsh-completion.git"
     refreshPeriod = "504h"
     branch = "main"
-[".oh-my-zsh/custom/plugins/zsh-autosuggestions"
+[".oh-my-zsh/custom/plugins/zsh-autosuggestions"]
     type = "git-repo"
     url = "https://github.com/zsh-users/zsh-autosuggestions.git"
     refreshPeriod = "504h"
