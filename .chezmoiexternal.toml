@@ -8,7 +8,7 @@
     refreshPeriod = "504h"
 [".oh-my-zsh/custom/plugins/zsh-vi-mode"]
     type = "git-repo"
-    url = "git@github.com:joihn/zsh-vi-mode.git"
+    url = "https://github.com/jeffreytse/zsh-vi-mode.git"
     refreshPeriod = "504h"
 [".oh-my-zsh/custom/plugins/conda-zsh-completion"]
     type = "git-repo"
