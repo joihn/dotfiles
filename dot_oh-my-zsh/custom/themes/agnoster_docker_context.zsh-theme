@@ -254,9 +254,12 @@ prompt_aws() {
   esac
 }
 
+
 prompt_docker_host() {
-    local docker_context=$(docker context show)  # Store the output of docker context show in a variable
-    if [[ "$docker_context" != "default" ]]; then  # Check if the variable is not equal to 'default'
+    local docker_context
+    docker_context=$(docker context show 2>/dev/null)  # Store the output of docker context show in a variable, suppress stderr
+
+    if [[ $? -eq 0 ]] && [[ "$docker_context" != "default" ]]; then  # Check if the command succeeded and the context is not 'default'
         prompt_segment cyan black "$docker_context"  # Execute the prompt_segment function if condition is met
     fi
 }
