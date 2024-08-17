@@ -8,4 +8,4 @@ launch zsh
 launch zsh
 
 # Create a horizontal split in the last panel
-launch zsh
+#launch zsh
