@@ -198,8 +198,10 @@ export gamingip=192.168.0.248
 export homeip=77.57.209.47
 export yvip=10.194.25.62
 
+if [[ -f "/home/maxime/.secretrc" ]]; then
+  source /home/maxime/.secretrc
+fi
 
-source /home/maxime/.secretrc
 alias subl="/home/maxime/Documents/code/sublime.sh"
 alias ccc="xclip -sel clip"
 ccc2(){ echo -n $1 | xclip -selection clipboard; }
@@ -432,7 +434,7 @@ function csshfs() {
 
 alias csshfs=csshfs
 
-eval $(thefuck --alias)
+command -v thefuck > /dev/null 2>&1 && eval $(thefuck --alias)
 export SYSTEMD_LESS="FRSi-+X"
 
 if [[ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]]; then
