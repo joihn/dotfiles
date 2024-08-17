@@ -166,13 +166,6 @@ if [ -f '/home/maxime/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/maxi
 export EDITOR='vim'
 
 
-# HSTR configuration - add this to ~/.zshrc
-function zvm_after_init() { # to avoid vim mode erasing this
-  alias hh=hstr                    # hh to be alias for hstr
-  setopt histignorespace           # skip cmds w/ leading space from history
-  export HSTR_CONFIG=hicolor,raw-history-view      # get more colors
-  bindkey -s "\C-r" "\C-a hstr -- \C-j"     # bind hstr to Ctrl-r (for Vi mode check doc)
-}
 export ANSIBLE_NOCOWS=1
 export monkeyip=194.182.163.58
 export pandaip=89.145.166.246
@@ -451,3 +444,19 @@ alias res="reset"
 alias hide_git="git config --add oh-my-zsh.hide-status 1 && git config --add oh-my-zsh.hide-dirty 1"
 alias chezlg="lazygit -p ~/.local/share/chezmoi"
 
+
+# Check if hstr is available in the PATH
+if command -v hstr &> /dev/null; then
+    # HSTR configuration
+    function zvm_after_init() {
+        alias hh=hstr                    # hh to be alias for hstr
+        setopt histignorespace           # skip cmds w/ leading space from history
+        export HSTR_CONFIG=hicolor,raw-history-view      # get more colors
+        bindkey -s "\C-r" "\C-a hstr -- \C-j"     # bind hstr to Ctrl-r (for Vi mode check doc)
+    }
+elif [ -f "$HOME/.atuin/bin/env" ]; then
+    # Atuin configuration
+    . "$HOME/.atuin/bin/env"
+    eval "$(atuin init zsh --disable-up-arrow)"
+    bindkey '^r' atuin-search
+fi
