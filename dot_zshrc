@@ -444,9 +444,7 @@ alias res="reset"
 alias hide_git="git config --add oh-my-zsh.hide-status 1 && git config --add oh-my-zsh.hide-dirty 1"
 alias chezlg="lazygit -p ~/.local/share/chezmoi"
 
-
-# Check if hstr is available in the PATH
-if command -v hstr &> /dev/null; then
+if command -v hstr &> /dev/null; then # if hstr exist
     # HSTR configuration
     function zvm_after_init() {
         alias hh=hstr                    # hh to be alias for hstr
@@ -454,9 +452,11 @@ if command -v hstr &> /dev/null; then
         export HSTR_CONFIG=hicolor,raw-history-view      # get more colors
         bindkey -s "\C-r" "\C-a hstr -- \C-j"     # bind hstr to Ctrl-r (for Vi mode check doc)
     }
-elif [ -f "$HOME/.atuin/bin/env" ]; then
+elif [ -f "$HOME/.atuin/bin/env" ]; then # if atuin exist
     # Atuin configuration
     . "$HOME/.atuin/bin/env"
     eval "$(atuin init zsh --disable-up-arrow)"
-    bindkey '^r' atuin-search
+    function zvm_after_init() {
+        bindkey '^r' atuin-search
+    }
 fi
