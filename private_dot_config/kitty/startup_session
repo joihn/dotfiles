@@ -1,0 +1,11 @@
+# Launch the first window/panel
+launch zsh
+
+# Create a vertical split
+launch zsh
+
+# Create another vertical split
+launch zsh
+
+# Create a horizontal split in the last panel
+launch zsh
