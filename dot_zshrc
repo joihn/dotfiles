@@ -462,3 +462,5 @@ elif [ -f "$HOME/.atuin/bin/env" ]; then # if atuin exist
         bindkey '^r' atuin-search
     }
 fi
+
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#aaa"
