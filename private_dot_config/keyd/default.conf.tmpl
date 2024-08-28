@@ -78,7 +78,7 @@ n = macro(\()
 / = *
 p = #
 # for laptop easy access
-leftalt = rightcontrol
+leftalt = layer(control)
 
 [capslock_space_layer]
 [capslock_space_layer+capslock]
@@ -166,9 +166,13 @@ h = S-left
 j = S-down
 k = S-up
 l = S-right
-[capslock+shift+control]
-, = S-home
-. = S-end
+[capslock+control]
+, = home
+. = end
+n = C-home
+m = C-end
+
+
 
 #[space_delete:S] # for repeated keypress, deprecated
 #space = enter
