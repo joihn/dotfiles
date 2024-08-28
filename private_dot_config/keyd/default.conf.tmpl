@@ -11,6 +11,7 @@ z=y
 capslock = overload(capslock, esc)
 tab = overload(tab_layer, tab)
 / = overload(shift, slash)
+
 #fn key laptop
 wakeup=layer(meta)
 
@@ -31,7 +32,7 @@ i = M-w
 h = M-left
 l = M-right
 q = A-f9
-s = command(echo 1 | tee '/sys/class/leds/platform::micmute/brightness' && sleep 0.2 && echo 0 | tee '/sys/class/leds/platform::micmute/brightness' && systemctl suspend)
+s = command(echo 1 | tee '/sys/class/leds/platform::micmute/brightness' && sleep 0.2 && echo 0 | tee '/sys/class/leds/platform::micmute/brightness' && logger 'keyd_attempt_sle_ep' && systemctl suspend)
 
 , = pageup
 . = pagedown
@@ -119,11 +120,13 @@ m = 1
 space = 0
 n = .
 backspace = backspace
-/ = .
+/ = *
 n=volumedown
 h=volumeup
-# pycharm completion 
-semicolon = S-space
+# pycharm completion, TODO move to dedicated 
+#semicolon = S-space
+semicolon = .
+
 
 [shift]
 
