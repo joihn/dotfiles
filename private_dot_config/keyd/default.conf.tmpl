@@ -129,9 +129,8 @@ semicolon = .
 
 
 [shift]
-
 #space = swapm(space_delete, enter) # user for repeated keypress, deprecated
-space = enter
+space = overload(shift_space_layer, macro2(0,0,space))
 # to avoid race condition due to my /=overoverload(shift, /)
 / = ?
 a = swapm(space_space, A)
@@ -160,6 +159,12 @@ w = swapm(space_space, W)
 x = swapm(space_space, X)
 y = swapm(space_space, Z)
 z = swapm(space_space, Y)
+
+[shift_space_layer]
+[shift_space_layer+shift]
+a=b
+
+
 
 [capslock+shift]
 h = S-left
