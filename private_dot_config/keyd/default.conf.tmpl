@@ -92,6 +92,8 @@ n = A-home
 m = A-end
 , = A-pageup
 . = A-pagedown
+# paste w/o formatting
+v = command(sudo -u maxime sh -c 'copyq eval "var text = clipboard(); copy(text); copySelection(text); paste();" 1 2> /tmp/error.log')
 #kitty specific should be in app specific
 i = C-S-z
 
@@ -162,7 +164,8 @@ z = swapm(space_space, Y)
 
 [shift_space_layer]
 [shift_space_layer+shift]
-a=b
+a= b
+
 
 
 
