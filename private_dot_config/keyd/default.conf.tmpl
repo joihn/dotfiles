@@ -96,6 +96,10 @@ m = A-end
 v = command(sudo -u maxime sh -c 'copyq eval "var text = clipboard(); copy(text); copySelection(text); paste();" 1 2> /tmp/error.log')
 #kitty specific should be in app specific
 i = C-S-z
+#obsidian specific
+x = macro(C-v 100ms left left |400) 
+
+
 
 [dance_semicolon]
 semicolon = swapm(dance_semicolon2, macro(backspace ç))
