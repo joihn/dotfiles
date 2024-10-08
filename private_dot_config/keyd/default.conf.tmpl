@@ -6,6 +6,9 @@ overload_tap_timeout=200
 
 [main]
 pageup=macro2(90, 90, C-email))
+rightalt = enter
+
+
 102nd = leftshift
 y=z
 z=y
@@ -55,6 +58,7 @@ micmute = micmute
 brightnessdown = brightnessdown
 brightnessup = brightnessup
 
+space = command(sudo -u maxime sh -c 'sleep 0.2 && export DISPLAY="{{.DISPLAY_VAR}}" && /home/maxime/Documents/code/move-to-next-monitor/move-to-next-monitor') 
 
 [capslock:C]
 h = left
