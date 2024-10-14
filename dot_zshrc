@@ -337,7 +337,6 @@ alias torchdep="cd /home/maxime/Documents/code/erx-ai/erxtorch/deploy"
 alias torchconf="cd /home/maxime/Documents/code/erx-ai/erxtorch/src/erxtorch/configs"
 
 alias model="cd /home/maxime/Documents/code/erx-model"
-alias code="cd /home/maxime/Documents/code"
 alias torchexo="cd /home/maxime/Documents/code/erx-torch/external/erx-ai/Exoscale"
 alias torchdep="cd /home/maxime/Documents/code/erx-torch/external/erx-ai/deploy"
 alias torchdepp="cd /home/maxime/Documents/code/erx-torch/erxtorch/external/erx-ai/deploy"
