@@ -5,9 +5,8 @@ overload_tap_timeout=200
 
 
 [main]
-pageup=macro2(90, 90, C-email))
 rightalt = enter
-
+escape = `
 
 102nd = leftshift
 y=z
@@ -140,6 +139,8 @@ semicolon = .
 
 
 [shift]
+escape = ~
+
 #space = swapm(space_delete, enter) # user for repeated keypress, deprecated
 space = overload(shift_space_layer, macro2(0,0,enter))
 # to avoid race condition due to my /=overoverload(shift, /)
