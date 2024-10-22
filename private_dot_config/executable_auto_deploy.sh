@@ -1,4 +1,5 @@
 #!/bin/bash
+set -ex
 cd ~
 # static zsh
 sh -c "$(curl --proto '=https' --tlsv1.2 -fsSL https://raw.githubusercontent.com/romkatv/zsh-bin/master/install)" -- -d ~/.local/ -e no -q
