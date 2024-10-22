@@ -8,6 +8,30 @@ customCommands:
       attach: true
       command: 'docker exec -it -u 0 {{ .Container.ID }} /bin/bash'
       serviceNames: []
+    - name: own home
+      attach: false
+#      command: "docker exec -u 0 {{ .Container.ID }} /bin/bash -c 'find $HOME -type d -print0 | xargs -0 -n1 -P8 chown maxime:maxime'"
+      command: "docker exec -u 0 {{ .Container.ID }} /bin/bash -c 'find $HOME -maxdepth 3 -print0 | xargs -0 -n1 -P8 chown maxime:maxime'"
+      serviceNames: []
+
+    - name: install chezmoi and start zsh
+      attach: true
+#      command: "docker exec -u 0 {{ .Container.ID }} /bin/bash -c 'find $HOME -type d -print0 | xargs -0 -n1 -P8 chown maxime:maxime'"
+      command: 'docker exec -it {{ .Container.ID }} /bin/bash -c "curl --tlsv1.2 -fsSL https://raw.githubusercontent.com/joihn/dotfiles/master/private_dot_config/executable_auto_deploy.sh | bash && exec \$HOME/.local/bin/zsh"'
+      serviceNames: []
+    
+    - name: zsh normal
+      attach: true
+      command: 'docker exec -it {{ .Container.ID }} /bin/bash -c "exec \$HOME/.local/bin/zsh"'
+      serviceNames: []
+
+    - name: zsh root
+      attach: true
+      command: 'docker exec -it -u 0 {{ .Container.ID }} /bin/bash -c "exec \$HOME/.local/bin/zsh"'
+      serviceNames: []
+
+
+
  
   images:
     - name: bash normal
