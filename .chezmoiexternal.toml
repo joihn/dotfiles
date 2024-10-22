@@ -23,12 +23,34 @@
 
 [".local/bin/broot"]
     type = "file"
-    url = "https://dystroy.org/broot/download/x86_64-linux/broot"
     refreshPeriod = "504h"
     executable = true
+    {{- if or (eq .chezmoi.arch "amd64") (eq .chezmoi.arch "x86_64") }}
+        url = "https://dystroy.org/broot/download/x86_64-linux/broot"
+    {{- else if or (eq .chezmoi.arch "arm64") (eq .chezmoi.arch "aarch64") }}
+        url = "https://dystroy.org/broot/download/aarch64-unknown-linux-gnu/broot"
+    {{- else if eq .chezmoi.arch "armv7" }}
+        url = "https://dystroy.org/broot/download/armv7-unknown-linux-gnueabihf/broot"
+    {{- else if eq .chezmoi.arch "armv7-musl" }}
+        url = "https://dystroy.org/broot/download/armv7-unknown-linux-musleabi/broot"
+    {{- else if eq .chezmoi.arch "armv6" }}
+        url = "https://dystroy.org/broot/download/armv6-unknown-linux-gnueabihf/broot"
+    {{- else if eq .chezmoi.arch "musl" }}
+        url = "https://dystroy.org/broot/download/x86_64-unknown-linux-musl/broot"
+    {{- else }}
+        # Fallback to x86_64 Linux if architecture is not recognized
+        url = "https://dystroy.org/broot/download/x86_64-linux/broot"
+    {{- end }}
+
+{{ $lazygitVersion := "0.44.1" -}}
 [".local/bin/lazygit"]
     type = "archive-file"
-    url = "https://github.com/jesseduffield/lazygit/releases/download/v0.44.1/lazygit_0.44.1_Linux_x86_64.tar.gz"
     path = 'lazygit'
-    refreshPeriod = "504h"
-
+    refreshPeriod = "50004h"
+    {{- if eq .chezmoi.arch "amd64" }}
+        url = "https://github.com/jesseduffield/lazygit/releases/download/v{{ $lazygitVersion }}/lazygit_{{ $lazygitVersion }}_Linux_x86_64.tar.gz"
+    {{- else if eq .chezmoi.arch "arm64" }}
+        url = "https://github.com/jesseduffield/lazygit/releases/download/v{{ $lazygitVersion }}/lazygit_{{ $lazygitVersion }}_Linux_arm64.tar.gz"
+    {{- else if eq .chezmoi.arch "armv6" }}
+        url = "https://github.com/jesseduffield/lazygit/releases/download/v{{ $lazygitVersion }}/lazygit_{{ $lazygitVersion }}_Linux_armv6.tar.gz"
+    {{- end }}
