@@ -26,3 +26,9 @@
     url = "https://dystroy.org/broot/download/x86_64-linux/broot"
     refreshPeriod = "504h"
     executable = true
+[".local/bin/lazygit"]
+    type = "archive-file"
+    url = "https://github.com/jesseduffield/lazygit/releases/download/v0.44.1/lazygit_0.44.1_Linux_x86_64.tar.gz"
+    path = 'lazygit'
+    refreshPeriod = "504h"
+
