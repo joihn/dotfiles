@@ -432,6 +432,13 @@ function csshfs() {
 }
 
 alias csshfs=csshfs
+unzip() {
+    for zipfile in "$@"; do
+        dir="${zipfile%.zip}"
+        mkdir -p "$dir"
+        command unzip "$zipfile" -d "$dir"
+    done
+}
 
 command -v thefuck > /dev/null 2>&1 && eval $(thefuck --alias)
 export SYSTEMD_LESS="FRSi-+X"
