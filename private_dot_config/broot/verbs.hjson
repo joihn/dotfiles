@@ -93,7 +93,11 @@ verbs: [
     
     {
         invocation: "fpc"
-        execution: "bash -c \"echo -n {file} | xclip -selection clipboard;\"" 
+        execution: "bash -c \"echo -n $(escape_filename \"{file}\") | xclip -selection clipboard\""
+
+
+
+
         from_shell: false
         leave_broot: false
     }
