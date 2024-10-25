@@ -316,7 +316,7 @@ alias cl="clear"
 export ZSHZ_UNCOMMON=1
 #alias broot="broot -c :start_end_panel\;:toggle_preview\;:panel_left"
 alias broot="broot -c :toggle_preview"
-source /home/maxime/.config/broot/launcher/bash/br
+source $HOME/.local/share/broot/launcher/bash/1
 cp_to_new_folder() {
   if [ "$#" -ne 2 ]; then
     echo "You need to provide exactly two arguments: source directory and target directory"
