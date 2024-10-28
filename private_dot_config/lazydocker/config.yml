@@ -8,11 +8,19 @@ customCommands:
       attach: true
       command: 'docker exec -it -u 0 {{ .Container.ID }} /bin/bash'
       serviceNames: []
-    - name: own home
+    - name: own home maxime:maxime
       attach: false
 #      command: "docker exec -u 0 {{ .Container.ID }} /bin/bash -c 'find $HOME -type d -print0 | xargs -0 -n1 -P8 chown maxime:maxime'"
       command: "docker exec -u 0 {{ .Container.ID }} /bin/bash -c 'find $HOME -maxdepth 3 -print0 | xargs -0 -n1 -P8 chown maxime:maxime'"
       serviceNames: []
+
+
+    - name: own home maxime
+      attach: false
+#      command: "docker exec -u 0 {{ .Container.ID }} /bin/bash -c 'find $HOME -type d -print0 | xargs -0 -n1 -P8 chown maxime:maxime'"
+      command: "docker exec -u 0 {{ .Container.ID }} /bin/bash -c 'find $HOME -maxdepth 3 -print0 | xargs -0 -n1 -P8 chown maxime'"
+      serviceNames: []
+
 
     - name: install chezmoi and start zsh
       attach: true
