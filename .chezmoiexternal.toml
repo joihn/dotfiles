@@ -56,3 +56,16 @@
     {{- else if eq .chezmoi.arch "armv6" }}
         url = "https://github.com/jesseduffield/lazygit/releases/download/v{{ $lazygitVersion }}/lazygit_{{ $lazygitVersion }}_Linux_armv6.tar.gz"
     {{- end }}
+
+{{ $lazydockerVersion := "0.23.3" -}}
+[".local/bin/lazydocker"]
+    type = "archive-file"
+    path = 'lazydocker'
+    refreshPeriod = "50004h"
+    {{- if eq .chezmoi.arch "amd64" }}
+        url = "https://github.com/jesseduffield/lazydocker/releases/download/v{{ $lazydockerVersion }}/lazydocker_{{ $lazydockerVersion }}_Linux_x86_64.tar.gz"
+    {{- else if eq .chezmoi.arch "arm64" }}
+        url = "https://github.com/jesseduffield/lazydocker/releases/download/v{{ $lazydockerVersion }}/lazydocker_{{ $lazydockerVersion }}_Linux_arm64.tar.gz"
+    {{- else if eq .chezmoi.arch "armv6" }}
+        url = "https://github.com/jesseduffield/lazydocker/releases/download/v{{ $lazydockerVersion }}/lazydocker_{{ $lazydockerVersion }}_Linux_armv6.tar.gz"
+    {{- end }}
