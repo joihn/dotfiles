@@ -204,9 +204,9 @@ if [[ -f "/home/maxime/.secretrc" ]]; then
 fi
 
 alias subl="/home/maxime/Documents/code/sublime.sh"
-alias ccc="xclip -sel clip"
-ccc2(){ echo -n $1 | xclip -selection clipboard; }
-alias cccimg="xclip -selection clipboard -t image/png -i"
+alias ccc="kitten clipboard"
+ccc2(){ echo -n $1 | kitten clipboard; }
+alias cccimg="kitten clipboard -m image/*"
 
 
 mkcd ()
@@ -247,8 +247,8 @@ export LESS="IRS"
 #zle -N vi-yank-xclip
 #bindkey -M vicmd 'y' vi-yank-xclip
 # ___zsh new vim plugin github___
-alias cbread='xclip -selection c'
-alias cbprint='xclip -o -selection clipboard'
+alias cbread='kitten clipboard'
+alias cbprint='kitten clipboard --get-clipboard'
 my_zvm_vi_yank() {
     zvm_vi_yank
     echo -en "${CUTBUFFER}" | cbread
@@ -361,7 +361,7 @@ abspath() {
 }
 fpc(){
      #readlink -f $1 | xclip -sel clip # will resolve symlink, undesired
-     abspath $1 | xclip -sel clip
+     abspath $1 | kitten clipboard
     
 }
 alias setup="cd /mnt/home/maxime/setup"
