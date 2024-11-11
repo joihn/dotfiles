@@ -132,7 +132,7 @@ vnoremap <S-Tab> <gv
 
 if executable('kitten')
   " Copy yanked text to the 'kitten clipboard' after any yank operation
-  autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '"' | call system('kitten clipboard', @") | endif
+  autocmd TextYankPost * if v:event.operator ==# 'y' && (v:event.regname ==# '' || v:event.regname ==# '"') | call system('kitten clipboard', @") | endif
 
   " Map 'p' to paste from the 'kitten clipboard'
   nnoremap p :call PasteFromKittenClipboard()<CR>
