@@ -430,7 +430,7 @@ function csshfs() {
     
     echo sshfs -o allow_other "maxime@$1:/" "$mount_point"
     #                  ,default_permissions,uid=1007,gid=10000
-    sshfs -o allow_other "maxime@$1:/" "$mount_point"
+    sshfs -o allow_other "maxime@$1:/" "$mount_point" -o compression=yes -o cache=yes -o cache_timeout=3600 -o kernel_cache 
 }
 
 alias csshfs=csshfs
