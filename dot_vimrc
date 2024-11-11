@@ -132,3 +132,35 @@ nnoremap <S-Tab> <<_
 inoremap <S-Tab> <C-D>
 vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
+" Check if xclip is installed
+if executable('kitten')
+    " Define custom clipboard functions using xclip
+    function! MyClipboardCopy(regtype, lines)
+        let l:text = join(a:lines, "\n")
+        if a:regtype ==# 'V'
+            let l:text .= "\n"
+        endif
+        call system('kitten clipboard', l:text)
+    endfunction
+
+    function! MyClipboardPaste()
+        let l:text = system('kitten clipboard --get-clipboard')
+        return {'lines': split(l:text, "\n"), 'type': 'V'}
+    endfunction
+
+    " Set up the clipboard to use the custom functions
+    let g:clipboard = {
+        \   'name': 'myClipboard',
+        \   'copy': {
+        \      '+': 'MyClipboardCopy',
+        \      '*': 'MyClipboardCopy',
+        \    },
+        \   'paste': {
+        \      '+': 'MyClipboardPaste',
+        \      '*': 'MyClipboardPaste',
+        \   },
+    \ }
+
+    " Use the unnamedplus register for all yank, delete, change, and put operations
+    set clipboard+=unnamedplus
+endif
