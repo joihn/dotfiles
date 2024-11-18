@@ -38,7 +38,10 @@ customCommands:
       command: 'docker exec -it -u 0 {{ .Container.ID }} /bin/bash -c "exec \$HOME/.local/bin/zsh"'
       serviceNames: []
 
-
+    - name: copy ID
+      attach: false
+      command: 'mykittencopy {{ .Container.ID }}'
+      serviceNames: []
 
  
   images:

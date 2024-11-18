@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Check if an argument was provided
+if [ $# -eq 0 ]; then
+    echo "Error: Please provide a string argument"
+    echo "Usage: $0 \"your string here\""
+    exit 1
+fi
+
+# Echo the input string and pipe it to kitten clipboard
+echo "$1" | kitten clipboard
+
