@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Check if required arguments are provided
+if [ "$#" -ne 2 ]; then
+  echo "Usage: $0 <line> <file>"
+  exit 1
+fi
+
+# Assign input arguments to variables
+line=$1
+file=$2
+
+# Check if the file exists
+if [ ! -f "$file" ]; then
+  echo "Error: File '$file' not found!"
+  exit 1
+fi
+
+# Append the command to the zsh history
+echo ": $(date +%s):0;$EDITOR +${line} ${file}" >> ~/.zsh_history
+# Open the file in the editor at the specified line
+$EDITOR +${line} ${file}
+
+
