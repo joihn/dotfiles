@@ -9,6 +9,12 @@ vim.api.nvim_set_hl(0, "CursorColumn", { bg = "#3a3d41" }) -- Same as line for c
 
 -- Customize the search highlight color
 vim.api.nvim_set_hl(0, "Search", { bg = "#FFD700", fg = "#000000", bold = true }) -- Example: Gold background, black text
+
+
+vim.opt.ignorecase = true -- Ignore case in search patterns
+vim.opt.smartcase = true  -- Override ignorecase if search pattern contains uppercase letters
+
+
 local setup = function()
   local nlines = vim.fn.getenv('INPUT_LINE_NUMBER')
   local cur_line = vim.fn.getenv('CURSOR_LINE')
