@@ -154,3 +154,5 @@ if executable('kitten')
 endif
 
 "===================== End Kitten Clipboard Integration =======================
+
+highlight Search ctermfg=black ctermbg=yellow guifg=black guibg=yellow
