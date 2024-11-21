@@ -1,0 +1,3 @@
+sonnet: true          # Enables the 'sonnet' mode
+dark-mode: true       # Enables dark mode
+auto-commits: false   # Disables auto-commits

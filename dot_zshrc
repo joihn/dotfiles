@@ -199,8 +199,8 @@ export gamingip=192.168.0.248
 export homeip=77.57.209.47
 export yvip=10.194.25.62
 
-if [[ -f "/home/maxime/.secretrc" ]]; then
-  source /home/maxime/.secretrc
+if [[ -f "$HOME/.secretrc" ]]; then
+  source $HOME/.secretrc
 fi
 
 alias subl="/home/maxime/Documents/code/sublime.sh"
