@@ -6,3 +6,4 @@ docker/.JetBrains-plugins/*
 docker/.JetBrains/*
 **/*maximecustom*
 .idea
+.aider*
