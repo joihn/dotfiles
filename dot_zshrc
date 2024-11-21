@@ -206,7 +206,7 @@ fi
 alias subl="/home/maxime/Documents/code/sublime.sh"
 alias ccc="kitten clipboard"
 ccc2(){ echo -n $1 | kitten clipboard; }
-alias cccimg="kitten clipboard -m image/*"
+alias cccimg="kitten clipboard -m image/png"
 
 
 mkcd ()
