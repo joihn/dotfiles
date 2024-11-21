@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Script name: bssh
+# Description: SSH to a host using kitten and launch bash with forced color prompt
+
+if [ $# -eq 0 ]; then
+    echo "Usage: $(basename "$0") <[user@]hostname>"
+    exit 1
+fi
+
+kitten ssh -t "$1" 'force_color_prompt=yes bash --login'
+

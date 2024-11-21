@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Function to handle cleanup on script exit
+cleanup() {
+    # Check if .gitconfig_erx exists
+    if [ -f ~/.gitconfig_erx ]; then
+        # Remove existing .gitconfig symlink if it exists
+        rm -f ~/.gitconfig
+        # Create symlink to .gitconfig_erx
+        ln -s ~/.gitconfig_erx ~/.gitconfig
+    else
+        echo "Warning: ~/.gitconfig_erx does not exist. No symlink created."
+    fi
+}
+
+# Register the cleanup function to be called on script exit
+trap cleanup EXIT
+
+# Check if .gitconfig_github exists
+if [ -f ~/.gitconfig_github ]; then
+    # Remove existing .gitconfig symlink if it exists
+    rm -f ~/.gitconfig
+    # Create symlink to .gitconfig_github
+    ln -s ~/.gitconfig_github ~/.gitconfig
+else
+    echo "Error: ~/.gitconfig_github does not exist. Cannot proceed."
+    exit 1
+fi
+
+# Launch lazygit with specified path
+lazygit -p ~/.local/share/chezmoi
+
+# Note: cleanup function will be called automatically when the script exits
+

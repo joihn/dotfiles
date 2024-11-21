@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Script name: zssh
+# Description: SSH to a remote host and launch zsh from user's local bin
+
+if [ $# -eq 0 ]; then
+    echo "Usage: $(basename "$0") <hostname>"
+    exit 1
+fi
+
+ssh -t "$1" '$HOME/.local/bin/zsh'
+

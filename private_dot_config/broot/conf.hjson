@@ -297,3 +297,4 @@ imports: [
         file: skins/white.hjson
     }
 ]
+kitty_graphics_transmission: chunks
