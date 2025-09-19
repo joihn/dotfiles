@@ -1,0 +1,88 @@
+// Place your key bindings in this file to override the defaults
+[
+
+    {
+        "key": "cmd+=",
+        "command": "workbench.action.terminal.fontZoomIn",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "cmd+-",
+        "command": "workbench.action.terminal.fontZoomOut",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "shift+cmd+e",
+        "command": "editor.debug.action.selectionToRepl",
+        "when": "debuggersAvailable && editorHasSelection && editorTextFocus"
+    },
+    {
+        "key": "alt+f8",
+        "command": "-editor.debug.action.selectionToRepl",
+        "when": "debuggersAvailable && editorHasSelection && editorTextFocus"
+    },
+    {
+        "key": "cmd+-",
+        "command": "-workbench.action.zoomOut",
+        "when": "!terminalFocus"
+    },
+    {
+        "key": "cmd+=",
+        "command": "-workbench.action.zoomIn",
+        "when": "!terminalFocus"
+    },
+    {
+        "key": "cmd+e",
+        "command": "-composer.showBackgroundAgentHistory",
+        "when": "backgroundComposerEnabled || showBackgroundAgentHistoryAction"
+    },
+    {
+        "key": "cmd+g",
+        "command": "editor.action.addSelectionToNextFindMatch",
+        "when": "editorFocus"
+    },
+    {
+        "key": "ctrl+g",
+        "command": "-editor.action.addSelectionToNextFindMatch",
+        "when": "editorFocus"
+    },
+    {
+        "key": "cmd+=",
+        "command": "-editor.unfold",
+        "when": "editorFocus"
+    },
+    {
+        "key": "cmd+=",
+        "command": "-editor.unfold",
+        "when": "editorFocus && foldingEnabled"
+    },
+    {
+        "key": "cmd+-",
+        "command": "-editor.fold",
+        "when": "editorFocus"
+    },
+    {
+        "key": "cmd+-",
+        "command": "-editor.fold",
+        "when": "editorFocus && foldingEnabled"
+    },
+    {
+        "key": "shift+cmd+f",
+        "command": "workbench.action.findInFiles",
+        "when": "!terminalFocus"
+    },
+    {
+        "key": "shift+cmd+f",
+        "command": "-workbench.action.findInFiles"
+    },
+    {
+        "key": "shift+cmd+f",
+        "command": "workbench.action.terminal.findNext",
+        "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocusInAny && terminalHasBeenCreated || terminalFocusInAny && terminalProcessSupported"
+    },
+    {
+        "key": "f3",
+        "command": "-workbench.action.terminal.findNext",
+        "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocusInAny && terminalHasBeenCreated || terminalFocusInAny && terminalProcessSupported"
+    }
+]

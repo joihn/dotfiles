@@ -1,0 +1,256 @@
+{
+  "[python]" : {
+    "editor.formatOnType" : true
+  },
+  "C_Cpp.intelliSenseEngine" : "disabled",
+  "cursor.composer.textSizeScale" : 1.2,
+  "cursor.cpp.disabledLanguages" : [
+    "yaml",
+    "plaintext",
+    "markdown"
+  ],
+  "debug.inlineValues" : true,
+  "debug.toolTips" : true,
+  "diffEditor.codeLens" : true,
+  "diffEditor.renderSideBySide" : true,
+  "editor.accessibilitySupport" : "off",
+  "editor.fontFamily" : "JetBrains Mono, Consolas, 'Courier New', monospace",
+  "editor.fontSize" : 14,
+  "editor.formatOnPaste" : true,
+  "editor.inlineSuggest.enabled" : true,
+  "editor.lineDecorationsWidth" : 0,
+  "editor.minimap.enabled" : false,
+  "editor.mouseWheelZoom" : true,
+  "editor.parameterHints.enabled" : false,
+  "editor.renderLineHighlight" : "none",
+  "explorer.confirmDelete" : false,
+  "explorer.confirmDragAndDrop" : false,
+  "explorer.confirmPasteNative" : false,
+  "files.autoSave" : "onFocusChange",
+  "files.watcherExclude" : {
+    "**\/.git\/objects\/**" : true,
+    "**\/.git\/subtree-cache\/**" : true,
+    "**\/.venv\/**" : true,
+    "**\/bazel-out\/**" : true,
+    "**\/compile_commands.json" : true,
+    "**\/node_modules\/*\/**" : true
+  },
+  "find-it-faster.general.useTerminalInEditor" : true,
+  "geminicodeassist.project" : "t42-machine-learning",
+  "git.autofetch" : true,
+  "git.blame.editorDecoration.enabled" : false,
+  "git.blame.statusBarItem.enabled" : true,
+  "git.replaceTagsWhenPull" : true,
+  "github.copilot.enable" : {
+    "*" : true,
+    "markdown" : false,
+    "plaintext" : false,
+    "yaml" : false
+  },
+  "gitlab.duo.enabledWithoutGitlabProject" : false,
+  "gitlab.duoChat.enabled" : false,
+  "gitlab.duoCodeSuggestions.enabled" : false,
+  "gitlens.codeLens.authors.enabled" : false,
+  "gitlens.codeLens.recentChange.enabled" : false,
+  "gitlens.currentLine.enabled" : false,
+  "gitlens.graph.minimap.enabled" : false,
+  "gitlens.hovers.currentLine.enabled" : false,
+  "gitlens.telemetry.enabled" : false,
+  "gitlens.views.scm.grouped.views" : {
+    "branches" : true,
+    "commits" : true,
+    "contributors" : true,
+    "fileHistory" : false,
+    "launchpad" : false,
+    "remotes" : true,
+    "repositories" : true,
+    "searchAndCompare" : true,
+    "stashes" : true,
+    "tags" : true,
+    "worktrees" : true
+  },
+  "jupyter.askForKernelRestart" : false,
+  "jupyter.interactiveWindow.creationMode" : "perFile",
+  "jupyter.jupyterServerType" : "remote",
+  "peacock.favoriteColors" : [
+    {
+      "name" : "Midnight Blue",
+      "value" : "#0a2472"
+    },
+    {
+      "name" : "Deep Purple",
+      "value" : "#311b92"
+    },
+    {
+      "name" : "Forest Green",
+      "value" : "#1a472a"
+    },
+    {
+      "name" : "Blood Red",
+      "value" : "#7f0000"
+    },
+    {
+      "name" : "Dark Teal",
+      "value" : "#00251a"
+    },
+    {
+      "name" : "Charcoal",
+      "value" : "#212121"
+    },
+    {
+      "name" : "Dark Brown",
+      "value" : "#3e2723"
+    },
+    {
+      "name" : "Navy",
+      "value" : "#001064"
+    }
+  ],
+  "python.analysis.exclude" : [
+    "**\/node_modules",
+    "**\/bower_components",
+    "**\/.venv",
+    "**\/bazel-out"
+  ],
+  "python.analysis.typeCheckingMode" : "basic",
+  "remote.autoForwardPortsSource" : "hybrid",
+  "remote.SSH.remotePlatform" : {
+    "workstation" : "linux"
+  },
+  "search.exclude" : {
+    "**\/.venv\/**" : true,
+    "**\/*.code-search" : true,
+    "**\/bazel-out\/**" : true,
+    "**\/bower_components" : true,
+    "**\/compile_commands.json" : true,
+    "**\/node_modules" : true
+  },
+  "security.workspace.trust.untrustedFiles" : "open",
+  "snyk.advanced.cliPath" : "\/Users\/maximegardoni\/Library\/Application Support\/snyk\/vscode-cli\/snyk-macos-arm64",
+  "snyk.folderConfigs" : [
+    {
+      "baseBranch" : "",
+      "folderPath" : "\/tmp\/starter"
+    }
+  ],
+  "snyk.securityAtInception" : {
+    "autoConfigureMcpServer" : true,
+    "persistRulesInProjects" : true,
+    "publishSecurityAtInceptionRules" : true
+  },
+  "telemetry.telemetryLevel" : "off",
+  "terminal.integrated.defaultProfile.linux" : "bash",
+  "terminal.integrated.enableMultiLinePasteWarning" : "never",
+  "terminal.integrated.fontSize" : 14,
+  "terminal.integrated.inheritEnv" : false,
+  "vim.leader" : ",",
+  "vim.normalModeKeyBindingsNonRecursive" : [
+    {
+      "after" : [
+        "\"",
+        "_",
+        "x"
+      ],
+      "before" : [
+        "x"
+      ]
+    },
+    {
+      "after" : [
+        "\"",
+        "_",
+        "X"
+      ],
+      "before" : [
+        "X"
+      ]
+    },
+    {
+      "after" : [
+        "\"",
+        "_",
+        "d"
+      ],
+      "before" : [
+        "d"
+      ]
+    },
+    {
+      "after" : [
+        "\"",
+        "_",
+        "D"
+      ],
+      "before" : [
+        "D"
+      ]
+    },
+    {
+      "after" : [
+        "\"",
+        "*",
+        "d"
+      ],
+      "before" : [
+        "<leader>",
+        "d"
+      ]
+    },
+    {
+      "after" : [
+        "\"",
+        "*",
+        "D"
+      ],
+      "before" : [
+        "<leader>",
+        "D"
+      ]
+    }
+  ],
+  "vim.useSystemClipboard" : true,
+  "vim.vimrc.enable" : true,
+  "vim.visualModeKeyBindingsNonRecursive" : [
+    {
+      "after" : [
+        "\"",
+        "_",
+        "d"
+      ],
+      "before" : [
+        "d"
+      ]
+    },
+    {
+      "after" : [
+        "\"",
+        "*",
+        "d"
+      ],
+      "before" : [
+        "<leader>",
+        "d"
+      ]
+    }
+  ],
+  "window.confirmSaveUntitledWorkspace" : false,
+  "window.titleBarStyle" : "custom",
+  "window.zoomLevel" : -0.5,
+  "window.zoomPerWindow" : false,
+  "workbench.activityBar.orientation" : "vertical",
+  "workbench.colorCustomizations" : {
+    "tab.activeBorder" : "#00ff00",
+    
+    "tab.inactiveForeground" : "#e7e7e7",
+    "tab.unfocusedInactiveForeground": "#e7e7e7",
+    "tab.unfocusedActiveBorder" : "#cc1bf4"
+
+  },
+  "workbench.editor.enablePreviewFromQuickOpen" : true,
+  "workbench.editor.labelFormat" : "medium",
+  "workbench.editor.tabSizing" : "fit",
+  "workbench.editor.wrapTabs" : true,
+  "workbench.list.openMode" : "doubleClick",
+  "workbench.quickOpen.closeOnFocusLost" : false,
+  "workbench.tree.expandMode" : "doubleClick"
+}
