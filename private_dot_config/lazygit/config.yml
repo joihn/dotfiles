@@ -1,0 +1,56 @@
+gui:
+  sidePanelWidth: 0.23 # gives you more space to show things side-by-side
+  experimentalShowBranchHeads: true
+
+git:
+  paging:
+    colorArg: always
+    pager: delta --dark --paging=never
+  parseEmoji: true
+
+keybinding:
+  universal:
+    appendNewline: '<tab>'
+
+customCommands:
+  - key: 'I'
+    command: "git-absorb -b {{.SelectedLocalCommit.Sha}}"
+    context: 'commits'
+    description: 'git absorb'
+    showOutput: true
+  - key: 'B'
+    command: "git branch \"{{.SelectedLocalBranch.Name}}_$(date +\"%D.%Hh%M\")\"  \"{{.SelectedLocalBranch.FullRefName}}\" "
+    context: 'localBranches'
+    description: 'Backup branch' 
+
+#  - key: 'u'
+#    command: "GIT_EDITOR=\"sed -i '1s/^/break \\n /'\" git rebase --interactive --update-refs --autostash --keep-empty --empty=keep --no-autosquash {{.SelectedLocalBranch.Name}}"
+#    context: 'localBranches'
+#    description: 'REBASE (interactive and updating refs)'
+
+  - key: 'b'
+    command: "black ."
+    context: 'files'
+    description: 'apply black at the root of repo'
+    showOutput: true
+
+  - key: 'u'
+    command: "GIT_PAGER='delta --dark --paging=never' git diff {{.SelectedLocalCommit.Sha}}"
+    context: 'commits'
+    description: 'diff with worktree (select 1 commit before)'
+    #showOutput: true
+    subprocess: true 
+
+  - key: 'C'
+    command: "git commit -C ORIG_HEAD"
+    context: 'files'
+    description: 'comit with prev name'
+    #showOutput: false
+    #subprocess: true 
+
+
+
+
+
+theme:
+  border: rounded
