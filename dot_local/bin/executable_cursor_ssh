@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+cursor --remote ssh-remote+workstation "$1" 
