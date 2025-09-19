@@ -1,0 +1,621 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+
+
+if [[ -n "$CURSOR_AGENT" ]]; then
+  # Skip theme initialization for better compatibility
+else
+
+    if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+    source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+    fi
+
+fi
+DISABLE_AUTO_UPDATE="true"
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# Path to your oh-my-zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
+
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time oh-my-zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+ZSH_THEME="powerlevel10k/powerlevel10k" #agnoster_docker_context
+
+# Set list of themes to pick from when loading at random
+# Setting this variable when ZSH_THEME=random will cause zsh to load
+# a theme from this variable instead of looking in $ZSH/themes/
+# If set to an empty array, this variable will have no effect.
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
+
+# Uncomment the following line to use hyphen-insensitive completion.
+# Case-sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
+# Uncomment the following line to disable bi-weekly auto-update checks.
+# DISABLE_AUTO_UPDATE="true"
+
+# Uncomment the following line to automatically update without prompting.
+# DISABLE_UPDATE_PROMPT="true"
+
+# Uncomment the following line to change how often to auto-update (in days).
+# export UPDATE_ZSH_DAYS=13
+
+# Uncomment the following line if pasting URLs and other text is messed up.
+# DISABLE_MAGIC_FUNCTIONS="true"
+
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
+
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+# Caution: this setting can cause issues with multiline prompts (zsh 5.7.1 and newer seem to work)
+# See https://github.com/ohmyzsh/ohmyzsh/issues/5765
+# COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
+# HIST_STAMPS="mm/dd/yyyy"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
+##########
+# HISTORY
+##########
+
+HISTFILE=$HOME/.zsh_history
+HISTSIZE=50000
+SAVEHIST=50000
+
+setopt INC_APPEND_HISTORY     # Immediately append to history file.
+setopt EXTENDED_HISTORY       # Record timestamp in history.
+setopt HIST_EXPIRE_DUPS_FIRST # Expire duplicate entries first when trimming history.
+setopt HIST_IGNORE_DUPS       # Dont record an entry that was just recorded again.
+setopt HIST_IGNORE_ALL_DUPS   # Delete old recorded entry if new entry is a duplicate.
+setopt HIST_FIND_NO_DUPS      # Do not display a line previously found.
+setopt HIST_IGNORE_SPACE      # Dont record an entry starting with a space.
+setopt HIST_SAVE_NO_DUPS      # Dont write duplicate entries in the history file.
+setopt SHARE_HISTORY          # Share history between all sessions.
+unsetopt HIST_VERIFY          # Execute commands using history (e.g.: using !$) immediately
+
+# Which plugins would you like to load?
+# Standard plugins can be found in $ZSH/plugins/
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(git z zsh-autosuggestions web-search fast-syntax-highlighting zsh-vi-mode conda-zsh-completion)
+source $ZSH/oh-my-zsh.sh
+
+# User configuration
+
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
+
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
+
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+#prompt_context() {
+#    if [[ $(hostname) == "maximeComputer" ]]; then
+#      HOSTNAME_RENAMED="yv"
+#    else
+#      HOSTNAME_RENAMED=$(hostname)
+#    fi
+#    prompt_segment black default "%(!.%{%F{yellow}%}.)${HOSTNAME_RENAMED}"
+#}
+ENABLE_CORRECTION="true"
+# Install Ruby Gems to ~/gems
+export GEM_HOME="$HOME/gems"
+export PATH="$HOME/gems/bin:$PATH"
+alias pt=~/Documents/pt
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+#__conda_setup="$('/home/maxime/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+#if [ $? -eq 0 ]; then
+#    eval "$__conda_setup"
+#else
+#    if [ -f "/home/maxime/anaconda3/etc/profile.d/conda.sh" ]; then
+#        . "/home/maxime/anaconda3/etc/profile.d/conda.sh"
+#    else
+#        export PATH="/home/maxime/anaconda3/bin:$PATH"
+#    fi
+#fi
+#unset __conda_setup
+# <<< conda initialize <<<
+
+HOSTNAME=$(hostname)
+if [[ "$HOSTNAME" == "maximeComputer" ]]; then
+    conda activate base2
+fi
+
+
+#%%%% for docker 
+export GIDs=$GID 
+export UIDs=$UID 
+#xhost +local:all > /dev/null
+export EDITOR='vim'
+
+
+export ANSIBLE_NOCOWS=1
+export monkeyip=194.182.163.58
+export pandaip=89.145.166.246
+export orangip=89.145.167.184
+export slothip=85.217.160.255
+export snakeip=91.92.117.181
+export lizardip=194.182.171.230
+
+export duckip=10.194.25.26
+export octopusip=10.194.24.173
+export dolphinip=10.194.24.171
+export fiship=10.194.24.172
+export bacalhauip=10.194.25.202
+export gitlabip=10.194.25.252
+export xavierip=10.194.26.135
+
+
+export chickenname=smallGpu4test4npi
+export monkeyname=erx-1-gpu-p100-1
+export pandaname=erx-1-gpu-p100-2
+export orangname=erx-1-gpu-p100-3
+export slothname=erx-1-gpu-p100-4
+export snakename=erx-2-gpu-a40-1
+export lizardname=erx-2-gpu-a40-2
+
+export duckname=erx-2-gpu-GTX1080-1
+export octopusname=erx-2-gpu-rtx3090ti-1
+export dolphinname=erx-2-gpu-rtx3090ti-2
+export fishname=erx-2-gpu-rtx3090ti-3
+
+export gamingip=192.168.0.248
+export homeip=77.57.209.47
+export yvip=10.194.25.62
+
+if [[ -f "$HOME/.secretrc" ]]; then
+  source $HOME/.secretrc
+fi
+
+alias subl="/home/maxime/Documents/code/sublime.sh"
+alias ccc="kitten clipboard"
+ccc2(){ echo -n $1 | kitten clipboard; }
+alias cccimg="kitten clipboard -m image/png"
+
+
+mkcd ()
+{
+    mkdir -p -- "$1" &&
+       cd -P -- "$1"
+}
+fp(){readlink -f $1}
+export TRAINING_USER="maxime"
+sshtunnel(){ssh -NfL localhost:"$2":localhost:"$2" "$1"}
+sshtunnelcan(){ssh -O exit $1}
+alias dust="du -sh * | sort -hr"
+alias cp="cp -r"
+alias j="z"
+markd(){ pandoc "$1" | lynx -stdin;}
+untar(){tar -xvzf $1}
+get_backend(){ps aux | grep '/lqib64/ld-linux-x86-64.so.2'  | grep -o ".\{0,1\}/home/maxime/Documents/code.\{0,30\}" | grep "/home/maxime/Documents/code"}
+scaling(){dconf write /org/gnome/desktop/interface/text-scaling-factor $1}
+
+alias lg="lazygit"
+alias ch="setxkbmap ch -variant fr -option && setxkbmap ch -variant fr -option caps:escape"
+alias eur="setxkbmap maximekey -option && setxkbmap maximekey -option lv3:lsgt_switch -option caps:escape"
+
+#vim mode in cli
+#bindkey -v
+#VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true
+#VI_MODE_SET_CURSOR=true
+KEYTIMEOUT=15
+#less program option #i: case insentive seach #R color #S line truncation instead of wrapping 
+export LESS="IRS"
+
+# _____zsh original vi plugin vanilla_____
+#function vi-yank-xclip {
+    #zle vi-yank
+   #echo "$CUTBUFFER" | ccc
+#}
+#
+#zle -N vi-yank-xclip
+#bindkey -M vicmd 'y' vi-yank-xclip
+# ___zsh new vim plugin github___
+alias cbread='kitten clipboard'
+alias cbprint='kitten clipboard --get-clipboard'
+my_zvm_vi_yank() {
+    zvm_vi_yank
+    echo -en "${CUTBUFFER}" | cbread
+}
+my_zvm_vi_delete() {
+    zvm_vi_delete
+    echo -en "${CUTBUFFER}" | cbread
+}
+my_zvm_vi_change() {
+    zvm_vi_change
+    echo -en "${CUTBUFFER}" | cbread
+}
+my_zvm_vi_change_eol() {
+    zvm_vi_change_eol
+    echo -en "${CUTBUFFER}" | cbread
+}
+my_zvm_vi_substitute() {
+    zvm_vi_substitute
+    echo -en "${CUTBUFFER}" | cbread
+}
+my_zvm_vi_substitute_whole_line() {
+    zvm_vi_substitute_whole_line
+    echo -en "${CUTBUFFER}" | cbread
+}
+my_zvm_vi_put_after() {
+    CUTBUFFER=$(cbprint)
+    zvm_vi_put_after
+    zvm_highlight clear # zvm_vi_put_after introduces weird highlighting
+}
+my_zvm_vi_put_before() {
+    CUTBUFFER=$(cbprint)
+    zvm_vi_put_before
+    zvm_highlight clear # zvm_vi_put_before introduces weird highlighting
+}
+my_zvm_vi_replace_selection() {
+    CUTBUFFER=$(cbprint)
+    zvm_vi_replace_selection
+    echo -en "${CUTBUFFER}" | cbread
+}
+zvm_after_lazy_keybindings() {
+    zvm_define_widget my_zvm_vi_yank
+    zvm_define_widget my_zvm_vi_delete
+    zvm_define_widget my_zvm_vi_change
+    zvm_define_widget my_zvm_vi_change_eol
+    zvm_define_widget my_zvm_vi_put_after
+    zvm_define_widget my_zvm_vi_put_before
+    zvm_define_widget my_zvm_vi_substitute
+    zvm_define_widget my_zvm_vi_substitute_whole_line
+    zvm_define_widget my_zvm_vi_replace_selection
+    zvm_bindkey vicmd 'C' my_zvm_vi_change_eol
+    zvm_bindkey vicmd 'P' my_zvm_vi_put_before
+    zvm_bindkey vicmd 'S' my_zvm_vi_substitute_whole_line
+    zvm_bindkey vicmd 'p' my_zvm_vi_put_after
+    zvm_bindkey visual 'p' my_zvm_vi_replace_selection
+    zvm_bindkey visual 'c' my_zvm_vi_change
+    zvm_bindkey visual 'd' my_zvm_vi_delete
+    zvm_bindkey visual 's' my_zvm_vi_substitute
+    zvm_bindkey visual 'x' my_zvm_vi_delete
+    zvm_bindkey visual 'y' my_zvm_vi_yank
+}
+#________________
+
+alias ld="lazydocker"
+alias cl="clear"
+#better jump
+export ZSHZ_UNCOMMON=1
+#alias broot="broot -c :start_end_panel\;:toggle_preview\;:panel_left"
+alias broot="broot -c :toggle_preview"
+#source $HOME/.local/share/broot/launcher/bash/1
+cp_to_new_folder() {
+  if [ "$#" -ne 2 ]; then
+    echo "You need to provide exactly two arguments: source directory and target directory"
+    return 1
+  fi
+
+  mkdir -p "$2" && cp -r "$1"/* "$2/"
+}
+alias html="w3m -dump"
+export EDITOR=vim
+export VISUAL=vim
+#alias ssy="ssh maxime@$yvip"
+alias ssy='autossh -M 0 -o "ServerAliveInterval 30" -o "ServerAliveCountMax 3"  maxime@10.194.25.62'
+alias ai="cd /home/maxime/Documents/code/erx-ai"
+alias torch="cd /home/maxime/Documents/code/erx-ai/erxtorch"
+alias tf="cd /home/maxime/Documents/code/erx-ai/erxtf"
+alias torchdep="cd /home/maxime/Documents/code/erx-ai/erxtorch/deploy"
+alias torchconf="cd /home/maxime/Documents/code/erx-ai/erxtorch/src/erxtorch/configs"
+
+alias model="cd /home/maxime/Documents/code/erx-model"
+alias torchexo="cd /home/maxime/Documents/code/erx-torch/external/erx-ai/Exoscale"
+alias torchdep="cd /home/maxime/Documents/code/erx-torch/external/erx-ai/deploy"
+alias torchdepp="cd /home/maxime/Documents/code/erx-torch/erxtorch/external/erx-ai/deploy"
+
+abspath() {
+    if [ -z "$1" ]; then
+        echo "Usage: abspath <relative-path>"
+        return 1
+    fi
+
+    local rel_path="$1"
+    local abs_path
+
+    if [ "$rel_path" = "." ]; then
+        abs_path=$(cd "$(dirname "$rel_path")" && pwd)
+    else
+        abs_path=$(cd "$(dirname "$rel_path")" && pwd)/$(basename "$rel_path")
+    fi
+
+    echo -n "$abs_path"
+}
+fpc(){
+     #readlink -f $1 | xclip -sel clip # will resolve symlink, undesired
+     abspath $1 | kitten clipboard
+    
+}
+
+fpcc() {
+  if [[ $# -ne 1 ]]; then
+    echo "Usage: fpcc <file>"
+    return 1
+  fi
+
+  if [[ ! -f $1 ]]; then
+    echo "Error: '$1' is not a valid file."
+    return 1
+  fi
+
+  # Resolve absolute file path and create a valid file URI
+  local filepath=$(readlink -f "$1")
+  local uri="file://$filepath"
+
+  # Create a temporary file for the URI and ensure cleanup after use
+  local tmpfile=$(mktemp /tmp/fileuri.XXXXXX)
+  echo -n "$uri" > "$tmpfile"
+
+  # Copy the file URI with the correct MIME type to the clipboard
+  kitten clipboard --mime text/uri-list "$tmpfile"
+
+  # Remove the temporary file
+  rm "$tmpfile"
+}
+
+
+alias setup="cd /mnt/home/maxime/setup"
+alias setup2="cd /mnt/erx/setup"
+alias setup_dol="cd /mnt/dolphin/mnt/home/maxime/setup"
+alias setup_oct="cd /mnt/octopus/mnt/home/maxime/setup"
+alias setup_fish="cd /mnt/fish/mnt/home/maxime/setup"
+alias setup_whale="cd /mnt/whale/mnt/home/maxime/setup"
+
+alias keyd_reload="sudo cp ~/.config/keyd/default.conf /etc/keyd/default.conf && sudo cp ~/.config/keyd/app_non_root.conf ~/.config/keyd/app.conf && sudo keyd reload"
+alias down="cd ~/Downloads"
+alias editzsh="chezmoi edit ~/.zshrc"
+alias editkey="chezmoi edit ~/.config/keyd/default.conf"
+autoload -U compinit && compinit #conda complete
+alias latest="find $1 -type f -print0 | xargs -0 stat --format '%Y :%y %n' | sort -nr | cut -d: -f2- | head"
+alias pycharm="screen -dmS pycharm-\$(date +%s%N) pycharm-professional"
+alias monitor_off="gnome-extensions disable system-monitor-next@paradoxxx.zero.gmail.com"
+alias monitor_on="gnome-extensions enable system-monitor-next@paradoxxx.zero.gmail.com"
+alias unzipdir='f() { mkdir -p "${1%.*}" && unzip "$1" -d "${1%.*}"; }; f'
+#apply the changes whenever you save the file.
+alias chezvim="chezmoi edit --watch $1"
+alias chezcd="cd $HOME/.local/share/chezmoi"
+alias history="history -E"
+export PATH="$PATH:$HOME/.local/bin"
+
+mansubl() {
+  if [ "$#" -ne 1 ]; then
+    echo "You need to provide exactly 1 arguments"
+    return 1
+  fi
+
+  man "$1" | col -b > /tmp/ls_man.txt && subl /tmp/ls_man.txt
+}
+pycal(){
+    python3 -c "uv run -- python print($1)"
+}
+vpycal(){
+    uv run -- python -c "import numpy as np; print(f\"$1 = {$1}\")"
+}
+
+alias bluco='echo -e "connect AC:80:0A:7E:44:BB \nquit" | bluetoothctl'
+alias restart_audio_stack='systemctl --user restart pipewire; systemctl --user restart wireplumber; systemctl --user restart pipewire-pulse; sleep 2s; systemctl --user status pipewire pipewire-pulse wireplumber'
+alias grep='grep -i --color'
+
+alias clean_repo="find . -type d -name '__pycache__' -exec sudo rm -r {} + && find . -type d -name '*.egg-info' -exec sudo rm -rf {} + && find . -type d -name '*.eggs' -exec sudo rm -rf {} + && find . -type d -empty -exec sudo rm -rf {} +"
+
+journalsubl() {
+  journalctl -k --since today |uniq | col -b > /tmp/ls_man.txt && subl /tmp/ls_man.txt
+}
+
+gosubl() {
+  cat | col -b > /tmp/ls_man.txt && subl /tmp/ls_man.txt
+}
+function csshfs() {
+    local server_name="${1%%.*}" # extract hostname before dot
+    
+    local mount_point="/mnt/${server_name}"
+    
+    # Check if the mount point exists, if not create it, change ownership, and mount
+    if [[ ! -d "$mount_point" ]]; then
+        echo "Mount point $mount_point does not exist. Creating it now..."
+        # Creating mount point and changing its owner to 'maxime'
+        sudo mkdir "$mount_point"
+        sudo chown maxime "$mount_point"
+    fi
+    
+    echo sshfs -o allow_other "maxime@$1:/" "$mount_point"
+    #                  ,default_permissions,uid=1007,gid=10000
+    sshfs -o allow_other "maxime@$1:/" "$mount_point" 
+}
+
+alias csshfs=csshfs
+unzip() {
+    for zipfile in "$@"; do
+        dir="${zipfile%.zip}"
+        mkdir -p "$dir"
+        command unzip "$zipfile" -d "$dir"
+    done
+}
+
+command -v thefuck > /dev/null 2>&1 && eval $(thefuck --alias)
+export SYSTEMD_LESS="FRSi-+X"
+
+if [[ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
+alias xrandr_repair="xrandr --output HDMI-1 --off && xrandr --output HDMI-1 --mode 1920x1080 --left-of DP-2"
+alias res="reset"
+alias hide_git="git config --add oh-my-zsh.hide-status 1 && git config --add oh-my-zsh.hide-dirty 1"
+alias cheatsheet_regen="libreoffice --headless --convert-to pdf --outdir /tmp $HOME/layout_cheatsheet.pptx && sleep 1 && convert -density 300 -quality 100 /tmp/layout_cheatsheet.pdf  $HOME/layout_cheatsheet.png"
+if command -v hstr &> /dev/null; then # if hstr exist
+    # HSTR configuration
+    function zvm_after_init() {
+        alias hh=hstr                    # hh to be alias for hstr
+        setopt histignorespace           # skip cmds w/ leading space from history
+        export HSTR_CONFIG=hicolor,raw-history-view      # get more colors
+        bindkey -s "\C-r" "\C-a hstr -- \C-j"     # bind hstr to Ctrl-r (for Vi mode check doc)
+    }
+elif [ -f "$HOME/.atuin/bin/env" ]; then # if atuin exist
+    # Atuin configuration
+    . "$HOME/.atuin/bin/env"
+    eval "$(atuin init zsh --disable-up-arrow)"
+    function zvm_after_init() {
+        bindkey '^r' atuin-search
+    }
+fi
+
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#AAAAAA"
+
+#source /Users/maximegardoni/.config/broot/launcher/bash/br
+alias xdg-open=open
+
+
+# VS Code/Cursor remote SSH completion
+# Adds tab completion for: code/cursor --remote ssh-remote+HOST <PATH>
+
+# Helper function for SSH path completion
+_ssh_path_complete() {
+    local ssh_host="$1"
+    local cur="${2:-${words[CURRENT]}}"
+    
+    # Default to /home/ if empty
+    [[ -z "$cur" ]] && cur="/home/"
+    
+    # Extract directory and basename
+    local dir_path base_name
+    if [[ "$cur" == */ ]]; then
+        dir_path="$cur"
+        base_name=""
+    elif [[ "$cur" == */* ]]; then
+        dir_path="${cur%/*}/"
+        base_name="${cur##*/}"
+    else
+        dir_path=$([[ "$cur" == /* ]] && echo "/" || echo "/home/")
+        base_name="${cur#/}"
+    fi
+    
+    # Get remote completions
+    local ssh_cmd="ls -1aF '$dir_path' 2>/dev/null"
+    [[ -n "$base_name" ]] && ssh_cmd+=" | grep '^$base_name'"
+    ssh_cmd+=" | head -30"
+    
+    local dirs=() files=()
+    local item
+    while IFS= read -r item; do
+        [[ -n "$item" && "$item" != "." && "$item" != ".." ]] || continue
+        local full_path="${dir_path%/}/${item}"
+        # Check if it's a directory (ends with /)
+        if [[ "$item" == */ ]]; then
+            dirs+=("${full_path%/}")  # Remove trailing / for now
+        else
+            files+=("$full_path")
+        fi
+    done < <(ssh -o ConnectTimeout=2 -o LogLevel=ERROR "$ssh_host" "$ssh_cmd" 2>/dev/null)
+    
+    # Add completions with appropriate suffixes
+    if [[ ${#dirs[@]} -gt 0 || ${#files[@]} -gt 0 ]]; then
+        # Add directories with / suffix and no space
+        [[ ${#dirs[@]} -gt 0 ]] && compadd -U -S/ -q -a dirs
+        # Add files with no suffix and no space
+        [[ ${#files[@]} -gt 0 ]] && compadd -U -S '' -a files
+    else
+        _default
+    fi
+}
+
+# Main completion for code/cursor commands
+_vscode_cursor_remote_completion() {
+    # Check for --remote ssh-remote+HOST pattern
+    local ssh_host=""
+    local i
+    for ((i=1; i<=$#words; i++)); do
+        if [[ "${words[$i]}" == "--remote" && $((i+1)) -le $#words && "${words[$((i+1))]}" =~ ^ssh-remote\\+(.*)$ ]]; then
+            ssh_host="${match[1]}"
+            break
+        fi
+    done
+    
+    # Use SSH completion if remote host found, otherwise default
+    [[ -n "$ssh_host" ]] && _ssh_path_complete "$ssh_host" || _default
+}
+
+# Completion for cursh alias
+_cursh_completion() {
+    _ssh_path_complete "workstation"
+}
+
+# cursh alias
+alias cursh='cursor --remote ssh-remote+workstation'
+
+# Register completions
+compdef _vscode_cursor_remote_completion code
+compdef _vscode_cursor_remote_completion cursor
+compdef _cursh_completion cursh
+
+
+export DEEPCODE_REPO_PATH=/Users/maximegardoni/code/deepcode
+export PATTERNS_REPO_PATH=/Users/maximegardoni/code/patterns
+export PATH="$HOME/bin:$PATH"
+
+export GOOGLE_CLOUD_PROJECT=t42-machine-learning
+
+export GOOGLE_CLOUD_LOCATION=europe-west1
+export GOOGLE_GENAI_USE_VERTEXAI=true
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/opt/homebrew/share/google-cloud-sdk/path.zsh.inc' ]; then . '/opt/homebrew/share/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/opt/homebrew/share/google-cloud-sdk/completion.zsh.inc' ]; then . '/opt/homebrew/share/google-cloud-sdk/completion.zsh.inc'; fi
+
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+if [[ -n "$CURSOR_AGENT" ]]; then
+  # Skip theme initialization for better compatibility
+else
+  [[ -r ~/.p10k.zsh ]] && source ~/.p10k.zsh
+fi
+echo hello Im ini
+echo $
+CURSOR_AGENT
