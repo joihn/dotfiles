@@ -618,7 +618,3 @@ if [[ -n "$CURSOR_AGENT" ]]; then
 else
   [[ -r ~/.p10k.zsh ]] && source ~/.p10k.zsh
 fi
-echo hello Im ini
-echo $
-CURSOR_AGENT
-
