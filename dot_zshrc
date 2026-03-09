@@ -210,7 +210,6 @@ if [[ -f "$HOME/.secretrc" ]]; then
   source $HOME/.secretrc
 fi
 
-alias subl="/home/maxime/Documents/code/sublime.sh"
 alias ccc="kitten clipboard"
 ccc2(){ echo -n $1 | kitten clipboard; }
 alias cccimg="kitten clipboard -m image/png"
@@ -618,3 +617,4 @@ if [[ -n "$CURSOR_AGENT" ]]; then
 else
   [[ -r ~/.p10k.zsh ]] && source ~/.p10k.zsh
 fi
+alias todo='open "obsidian://open?path=/Users/maximegardoni/Documents/max_pro_vault/TODO.md"'

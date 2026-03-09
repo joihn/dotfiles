@@ -3,16 +3,16 @@
     "editor.formatOnType" : true
   },
   "C_Cpp.intelliSenseEngine" : "disabled",
-  "cursor.composer.textSizeScale" : 1.2,
+  "cursor.composer.textSizeScale" : 1.15,
   "cursor.cpp.disabledLanguages" : [
     "yaml",
     "plaintext",
     "markdown"
   ],
-  "debug.inlineValues" : true,
+  "debug.inlineValues" : "on",
   "debug.toolTips" : true,
   "diffEditor.codeLens" : true,
-  "diffEditor.renderSideBySide" : true,
+  "diffEditor.renderSideBySide" : false,
   "editor.accessibilitySupport" : "off",
   "editor.fontFamily" : "JetBrains Mono, Consolas, 'Courier New', monospace",
   "editor.fontSize" : 14,
@@ -27,7 +27,11 @@
   "explorer.confirmDragAndDrop" : false,
   "explorer.confirmPasteNative" : false,
   "files.autoSave" : "onFocusChange",
+  "files.exclude" : {
+    "**/__pycache__" : true
+  },
   "files.watcherExclude" : {
+    "**/__pycache__" : true,
     "**\/.git\/objects\/**" : true,
     "**\/.git\/subtree-cache\/**" : true,
     "**\/.venv\/**" : true,
@@ -35,11 +39,10 @@
     "**\/compile_commands.json" : true,
     "**\/node_modules\/*\/**" : true
   },
-  "find-it-faster.general.useTerminalInEditor" : true,
   "geminicodeassist.project" : "t42-machine-learning",
   "git.autofetch" : true,
   "git.blame.editorDecoration.enabled" : false,
-  "git.blame.statusBarItem.enabled" : true,
+  "git.blame.statusBarItem.enabled" : false,
   "git.replaceTagsWhenPull" : true,
   "github.copilot.enable" : {
     "*" : true,
@@ -52,8 +55,7 @@
   "gitlab.duoCodeSuggestions.enabled" : false,
   "gitlens.codeLens.authors.enabled" : false,
   "gitlens.codeLens.recentChange.enabled" : false,
-  "gitlens.currentLine.enabled" : false,
-  "gitlens.graph.minimap.enabled" : false,
+  "gitlens.currentLine.enabled": false,
   "gitlens.hovers.currentLine.enabled" : false,
   "gitlens.telemetry.enabled" : false,
   "gitlens.views.scm.grouped.views" : {
@@ -110,38 +112,29 @@
     "**\/node_modules",
     "**\/bower_components",
     "**\/.venv",
+    "**\/__pycache__",
     "**\/bazel-out"
   ],
   "python.analysis.typeCheckingMode" : "basic",
   "remote.autoForwardPortsSource" : "hybrid",
   "remote.SSH.remotePlatform" : {
-    "workstation" : "linux"
+    "workstation": "linux"
   },
   "search.exclude" : {
     "**\/.venv\/**" : true,
     "**\/*.code-search" : true,
+    "**\/__pycache__" : true,
     "**\/bazel-out\/**" : true,
     "**\/bower_components" : true,
     "**\/compile_commands.json" : true,
     "**\/node_modules" : true
   },
   "security.workspace.trust.untrustedFiles" : "open",
-  "snyk.advanced.cliPath" : "\/Users\/maximegardoni\/Library\/Application Support\/snyk\/vscode-cli\/snyk-macos-arm64",
-  "snyk.folderConfigs" : [
-    {
-      "baseBranch" : "",
-      "folderPath" : "\/tmp\/starter"
-    }
-  ],
-  "snyk.securityAtInception" : {
-    "autoConfigureMcpServer" : true,
-    "persistRulesInProjects" : true,
-    "publishSecurityAtInceptionRules" : true
-  },
+
+
   "telemetry.telemetryLevel" : "off",
-  "terminal.integrated.defaultProfile.linux" : "bash",
-  "terminal.integrated.enableMultiLinePasteWarning" : "never",
-  "terminal.integrated.fontSize" : 14,
+  "terminal.integrated.defaultProfile.linux" : "zsh",
+  "terminal.integrated.enableMultiLinePasteWarning": "never",
   "terminal.integrated.inheritEnv" : false,
   "vim.leader" : ",",
   "vim.normalModeKeyBindingsNonRecursive" : [
@@ -187,7 +180,7 @@
     },
     {
       "after" : [
-        "\"",
+      "\"",
         "*",
         "d"
       ],
@@ -234,8 +227,7 @@
     }
   ],
   "window.confirmSaveUntitledWorkspace" : false,
-  "window.titleBarStyle" : "custom",
-  "window.zoomLevel" : -0.5,
+  "window.titleBarStyle": "custom",
   "window.zoomPerWindow" : false,
   "workbench.activityBar.orientation" : "vertical",
   "workbench.colorCustomizations" : {
@@ -243,7 +235,16 @@
     
     "tab.inactiveForeground" : "#e7e7e7",
     "tab.unfocusedInactiveForeground": "#e7e7e7",
-    "tab.unfocusedActiveBorder" : "#cc1bf4"
+    "tab.unfocusedActiveBorder" : "#cc1bf4",
+
+
+
+          // Color of markdown code chunks when opened with VSCode's "Open Preview to the Side" feature.
+      "textCodeBlock.background": "#71797E",
+
+
+      // cursor suggest: Background color 
+      "editorGhostText.background": "#c400c8b0",
 
   },
   "workbench.editor.enablePreviewFromQuickOpen" : true,
@@ -252,5 +253,97 @@
   "workbench.editor.wrapTabs" : true,
   "workbench.list.openMode" : "doubleClick",
   "workbench.quickOpen.closeOnFocusLost" : false,
-  "workbench.tree.expandMode" : "doubleClick"
+  "workbench.tree.expandMode": "doubleClick",
+  "gitlens.ai.model": "gitkraken",
+  "gitlens.ai.gitkraken.model": "gemini:gemini-2.0-flash",
+  "gitlens.graph.minimap.enabled": false,
+  
+
+  "debugpy.showPythonInlineValues": true,
+  "snyk.advanced.cliPath": "/Users/maxime2gardoni/Library/Application Support/snyk/vscode-cli/snyk-macos-arm64",
+  "snyk.folderConfigs": [
+    {
+      "folderPath": "/home/maximegardoni/code/patterns",
+      "baseBranch": "master",
+      "localBranches": [
+        "SECHUN2-3391",
+        "SECHUN2-3392",
+        "SECHUN2-3469",
+        "as",
+        "beatcraft",
+        "benchmark",
+        "benchmark_test46_23_2789",
+        "blip",
+        "detect_image",
+        "dummy_pr",
+        "feat/github_staragent",
+        "feat/openrouter",
+        "feat/staragent/entrypoint-modularity",
+        "feat_staragent",
+        "fix/js-express-url-source",
+        "fix-GOS-3472",
+        "fix-SECHUN2-3390",
+        "fix-SECHUN2-3471",
+        "isolated_network",
+        "master",
+        "master_for_bench",
+        "master_for_staragent_fix",
+        "revert_2fp",
+        "revert_fp",
+        "staragent_aibom",
+        "staragent_default_gemini_binary",
+        "staragent_dev_repo",
+        "staragent_draft",
+        "staragent_message_user",
+        "staragent_skills",
+        "starlagent_predicate_img"
+      ],
+      "preferredOrg": "",
+      "autoDeterminedOrg": "",
+      "orgMigratedFromGlobalConfig": false,
+      "orgSetByUser": true,
+      "featureFlags": {
+        "internal_iaw_enabled": false,
+        "snykCodeConsistentIgnores": false,
+        "snykCodeInlineIgnore": false
+      },
+      "sastSettings": null
+    }
+  ],
+  "snyk.trustedFolders": [
+    "/home/maximegardoni/code/juice-shop",
+    "/home/maximegardoni/code/ai-ml-autofix-golden-tests",
+    "/private/tmp/dummy",
+    "/home/maximegardoni/code/staragent",
+    "/home/maximegardoni/code/benchmark_output"
+  ],
+  "snyk.yesWelcomeNotification": false,
+  "python.languageServer": "Jedi",
+  //"remote.SSH.connectTimeout": 120,
+
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "clangd.arguments": [
+  "--all-scopes-completion",
+  "--background-index",
+  "--compile-commands-dir=${workspaceFolder}",
+  "--enable-config",
+  "-j=8"
+],
+"githubPullRequests.pullBranch": "never",
+"remote.SSH.defaultExtensions": [
+    "llvm-vs-code-extensions.vscode-clangd"
+],
+"workbench.editor.enablePreview": false,
+"editor.hover.delay": 1000,
+"editor.hover.hidingDelay": 1000,
+"workbench.hover.delay": 1000,
+"workbench.sash.hoverDelay": 1000,
+"find-it-faster.general.useTerminalInEditor": true,
+"cursorBlame.editorDecoration.enabled": false,
+"workbench.editor.revealIfOpen": true,
+"terminal.integrated.fontSize": 13,
+"window.zoomLevel": 1,
+
 }

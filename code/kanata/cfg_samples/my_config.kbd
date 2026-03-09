@@ -91,7 +91,7 @@ fn  lctl lalt lmet          spc            ralt rmet rctl
   @tab      q    w    e    r    t    z   u    i    o    p    [    ]    \
   @caps     a    s    d    f    g    h    j    k    l    ;    '    ret
   lsft      lsft y   x    c    v    b    n    m    ,    .    @slsh rsft
-fn lctl      lalt lmet          @spc            ralt rmet rctl 
+lctl lctl      lalt lmet          @spc            ralt rmet rctl 
   ;;        command  option (ignore the swapped representation)
 )
 

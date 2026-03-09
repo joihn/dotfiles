@@ -1,5 +1,5 @@
 {
-  "$schema" : "https:\/\/schema.linearmouse.app\/0.10.1",
+  "$schema" : "https:\/\/schema.linearmouse.app\/0.10.2",
   "schemes" : [
     {
       "if" : {
@@ -17,7 +17,7 @@
       },
       "scrolling" : {
         "acceleration" : {
-          "vertical" : 1
+          "vertical" : 0
         },
         "modifiers" : {
           "vertical" : {
@@ -28,6 +28,9 @@
         },
         "reverse" : {
           "vertical" : true
+        },
+        "speed" : {
+          "vertical" : 13.18
         }
       }
     },
@@ -109,7 +112,19 @@
         }
       },
       "pointer" : {
-        "disableAcceleration" : false
+        "acceleration" : 2.9296,
+        "disableAcceleration" : false,
+        "redirectsToScroll" : false,
+        "speed" : 0.2303
+      },
+      "scrolling" : {
+        "modifiers" : {
+          "vertical" : {
+            "command" : {
+              "type" : "zoom"
+            }
+          }
+        }
       }
     }
   ]

@@ -57,6 +57,11 @@
         "when": "editorFocus && foldingEnabled"
     },
     {
+        "key": "cmd+=",
+        "command": "editor.action.fontZoomIn",
+        "when": "editorFocus && !terminalFocus"
+    },
+    {
         "key": "cmd+-",
         "command": "-editor.fold",
         "when": "editorFocus"
@@ -65,6 +70,16 @@
         "key": "cmd+-",
         "command": "-editor.fold",
         "when": "editorFocus && foldingEnabled"
+    },
+    {
+        "key": "cmd+-",
+        "command": "editor.action.fontZoomOut",
+        "when": "editorFocus && !terminalFocus"
+    },
+    {
+        "key": "cmd+0",
+        "command": "editor.action.fontZoomReset",
+        "when": "editorFocus && !terminalFocus"
     },
     {
         "key": "shift+cmd+f",
@@ -84,5 +99,22 @@
         "key": "f3",
         "command": "-workbench.action.terminal.findNext",
         "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocusInAny && terminalHasBeenCreated || terminalFocusInAny && terminalProcessSupported"
+    },
+    {
+        "key": "cmd+y",
+        "command": "-editor.action.previewDeclaration"
+    },
+    {
+        "key": "alt+end",
+        "command": "workbench.action.focusActiveEditorGroup"
+    },
+    {
+        "key": "shift+cmd+r",
+        "command": "workbench.action.reloadWindow"
+    },
+    {
+        "key": "shift+cmd+r",
+        "command": "-workbench.action.reloadWindow",
+        "when": "isDevelopment"
     }
 ]
