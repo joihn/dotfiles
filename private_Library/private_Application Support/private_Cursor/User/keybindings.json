@@ -180,7 +180,7 @@
     {
         "key": "ctrl+shift+tab",
         "command": "workbench.action.quickOpenLeastRecentlyUsedEditorInGroup",
-        "when": "!terminalFocus && activeEditor && !activeEditorGroupEmpty && !agentsPaneFocused && !auxiliaryBarFocus && !composerFocused && !panelFocus && !sideBarFocus && !terminalFocus || editorFocus && !activeEditorGroupEmpty && !agentsPaneFocused && !auxiliaryBarFocus && !composerFocused && !panelFocus && !sideBarFocus && !terminalFocus"
+        "when": "!inQuickOpen && activeEditor && !activeEditorGroupEmpty && !agentsPaneFocused && !auxiliaryBarFocus && !composerFocused && !panelFocus && !sideBarFocus && !terminalFocus || !inQuickOpen && editorFocus && !activeEditorGroupEmpty && !agentsPaneFocused && !auxiliaryBarFocus && !composerFocused && !panelFocus && !sideBarFocus && !terminalFocus"
     },
     {
         "key": "ctrl+shift+tab",
@@ -196,5 +196,15 @@
         "key": "ctrl+shift+tab",
         "command": "-workbench.action.quickOpenLeastRecentlyUsedAgent",
         "when": "agentsPaneFocused && !isInBackgroundComposerWindow || composerFocused && !isInBackgroundComposerWindow"
+    },
+    {
+        "key": "ctrl+shit+tab",
+        "command": "workbench.action.quickOpenNavigatePrevious",
+        "when": "inQuickOpen"
+    },
+    {
+        "key": "alt+cmd+s",
+        "command": "workbench.action.toggleUnifiedSidebarFromKeyboard",
+        "when": "!isAuxiliaryWindowFocusedContext"
     }
 ]

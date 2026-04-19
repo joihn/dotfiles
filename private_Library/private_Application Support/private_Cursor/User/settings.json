@@ -118,7 +118,8 @@
   "python.analysis.typeCheckingMode" : "basic",
   "remote.autoForwardPortsSource" : "hybrid",
   "remote.SSH.remotePlatform" : {
-    "workstation": "linux"
+    "workstation": "linux",
+    "gcloud-pii-gpu": "linux"
   },
   "search.exclude" : {
     "**\/.venv\/**" : true,
@@ -315,7 +316,8 @@
     "/home/maximegardoni/code/ai-ml-autofix-golden-tests",
     "/private/tmp/dummy",
     "/home/maximegardoni/code/staragent",
-    "/home/maximegardoni/code/benchmark_output"
+    "/home/maximegardoni/code/benchmark_output",
+    "/Users/maximegardoni/code/juice-shop"
   ],
   "snyk.yesWelcomeNotification": false,
   "python.languageServer": "Jedi",
@@ -343,8 +345,33 @@
 "find-it-faster.general.useTerminalInEditor": true,
 "cursorBlame.editorDecoration.enabled": false,
 "workbench.editor.revealIfOpen": true,
-"terminal.integrated.fontSize": 13,
-"window.zoomLevel": 1,
 "l13Diff.confirmCopy": false,
-
+"terminal.integrated.scrollback": 10000,
+"snyk.advanced.autoSelectOrganization": false,
+"editor.tokenColorCustomizations": {
+  "textMateRules": [
+    {
+      // VSCode's built-in TextMate grammar for Markdown does not provide a scope for the entire heading line.
+      // As a workaround, we color both the '#' and the heading text, as well as fallback to string.markdown.
+      // This still may not fully color the line due to TextMate grammar limitations.
+      "scope": [
+        "markup.heading",
+        "markup.heading.markdown",
+        "markup.heading.markdown punctuation.definition.heading.markdown",
+        "markup.heading.markdown string",
+        "entity.name.section.markdown",
+        "string.markdown"
+      ],
+      "settings": {
+        "foreground": "#75ac83",
+        
+      }
+    }
+  ]
+},
+"window.zoomLevel": 2
+  
+  
 }
+
+
