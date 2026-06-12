@@ -7,3 +7,7 @@ docker/.JetBrains/*
 **/*maximecustom*
 .idea
 .aider*
+*.pkl
+staragent.code-workspace
+
+**/.claude/settings.local.json
