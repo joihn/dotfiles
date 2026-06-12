@@ -1,12 +1,28 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
+HOST_MAC_PRO="L575R744X3"                 
+HOST_MAC_PRIV="Maximes-MacBook-Air.local" 
+HOST_WORKSTATION="ip-10-10-1-57"          
 
+case "$HOST" in
+  "$HOST_MAC_PRO")     MACHINE=mac_pro     ;;
+  "$HOST_MAC_PRIV")    MACHINE=mac_priv    ;;
+  "$HOST_WORKSTATION") MACHINE=workstation ;;
+  *)                   MACHINE=unknown     ;;
+esac
+export MACHINE
+
+case "$OSTYPE" in
+  darwin*)  OS=mac     ;;
+  linux*)   OS=linux   ;;
+  *)        OS=unknown ;;
+esac
+export OS
 
 if [[ -n "$CURSOR_AGENT" ]]; then
   # Skip theme initialization for better compatibility
 else
-
+   # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+   # Initialization code that may require console input (password prompts, [y/n]
+   # confirmations, etc.) must go above this block; everything else may go below.
     if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
     fi
@@ -224,6 +240,42 @@ fp(){readlink -f $1}
 export TRAINING_USER="maxime"
 sshtunnel(){ssh -NfL localhost:"$2":localhost:"$2" "$1"}
 sshtunnelcan(){ssh -O exit $1}
+# Attach to (or create) the code1 tmux session on workstation in one command.
+# ClearAllForwardings=yes skips the config's LocalForward 8888 so concurrent
+# connections don't fight over the local port (the tunnel is held by your main
+# session / Cursor). new-session -A attaches if code1 exists, else creates it.
+alias code1='ssh -t -o ClearAllForwardings=yes workstation /home/linuxbrew/.linuxbrew/bin/tmux new-session -A -s code1'
+alias code2='ssh -t -o ClearAllForwardings=yes workstation /home/linuxbrew/.linuxbrew/bin/tmux new-session -A -s code2'
+alias code3='ssh -t -o ClearAllForwardings=yes gcloud-pii-gpu tmux new-session -A -s code3'
+alias code4='ssh -t -o ClearAllForwardings=yes gcloud-pii-gpu tmux new-session -A -s code4'
+
+# ---------------------------------------------------------------------------
+# Auto-heal the local terminal after an ssh session ends.
+#
+# When the remote (tmux/vim/etc.) puts kitty into alt-screen, mouse-tracking
+# and the kitty keyboard protocol, an abrupt disconnect (wifi drop / laptop
+# sleep) kills ssh before the remote can undo those modes. ssh restores the
+# local tty line discipline on exit but cannot undo emulator state, so the
+# terminal is left unable to scroll with broken keys. This sends the specific
+# "undo" sequences after ssh returns (any exit reason). Instant, and a no-op
+# when nothing was broken -- unlike `reset`, which also wipes scrollback.
+_reset_term_modes() {
+  [[ -t 1 ]] || return 0   # only for an interactive terminal (skip -Nf tunnels)
+  printf '\033[<u\033[<u\033[<u'                       # pop kitty keyboard protocol stack
+  printf '\033[?1049l'                                 # leave alternate screen -> restores scrolling
+  printf '\033[?1l\033>'                               # normal cursor keys + keypad
+  printf '\033[?2004l'                                 # disable bracketed paste
+  printf '\033[?1000l\033[?1002l\033[?1003l\033[?1006l\033[?1015l' # disable mouse tracking
+  printf '\033[?1004l'                                 # disable focus reporting
+  printf '\033[?7h\033[?25h\033[0m'                    # autowrap on, cursor visible, reset attrs
+  stty sane 2>/dev/null                                # restore line discipline
+}
+ssh() {
+  command ssh "$@"
+  local ret=$?
+  _reset_term_modes
+  return $ret
+}
 alias dust="du -sh * | sort -hr"
 alias cp="cp -r"
 alias j="z"
@@ -323,7 +375,14 @@ alias cl="clear"
 export ZSHZ_UNCOMMON=1
 
 
-source /Users/maximegardoni/Library/Application\ Support/org.dystroy.broot/launcher/bash/br
+# broot launcher — path differs per OS; the -r guard makes it a no-op if absent
+if [[ "$OS" == "mac" ]]; then
+  [[ -r "$HOME/Library/Application Support/org.dystroy.broot/launcher/bash/br" ]] && \
+    source "$HOME/Library/Application Support/org.dystroy.broot/launcher/bash/br"
+elif [[ "$OS" == "linux" ]]; then
+  [[ -r "$HOME/.config/broot/launcher/bash/br" ]] && \
+    source "$HOME/.config/broot/launcher/bash/br"
+fi
 
 
 cp_to_new_folder() {
@@ -432,10 +491,10 @@ mansubl() {
   man "$1" | col -b > /tmp/ls_man.txt && subl /tmp/ls_man.txt
 }
 pycal(){
-    python3 -c "uv run -- python print($1)"
+    uv run --with numpy python -c "import numpy as np; print(f\"{$1}\")"
 }
 vpycal(){
-    uv run -- python -c "import numpy as np; print(f\"$1 = {$1}\")"
+    uv run --with numpy python -c "import numpy as np; print(f\"$1 = {$1:.1f}\")"
 }
 
 alias bluco='echo -e "connect AC:80:0A:7E:44:BB \nquit" | bluetoothctl'
@@ -508,91 +567,10 @@ fi
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#AAAAAA"
 
-source /Users/maximegardoni/.config/broot_mac_bak/launcher/bash/br
-alias xdg-open=open
-
-
-# VS Code/Cursor remote SSH completion
-# Adds tab completion for: code/cursor --remote ssh-remote+HOST <PATH>
-
-# Helper function for SSH path completion
-_ssh_path_complete() {
-    local ssh_host="$1"
-    local cur="${2:-${words[CURRENT]}}"
-    
-    # Default to /home/ if empty
-    [[ -z "$cur" ]] && cur="/home/"
-    
-    # Extract directory and basename
-    local dir_path base_name
-    if [[ "$cur" == */ ]]; then
-        dir_path="$cur"
-        base_name=""
-    elif [[ "$cur" == */* ]]; then
-        dir_path="${cur%/*}/"
-        base_name="${cur##*/}"
-    else
-        dir_path=$([[ "$cur" == /* ]] && echo "/" || echo "/home/")
-        base_name="${cur#/}"
-    fi
-    
-    # Get remote completions
-    local ssh_cmd="ls -1aF '$dir_path' 2>/dev/null"
-    [[ -n "$base_name" ]] && ssh_cmd+=" | grep '^$base_name'"
-    ssh_cmd+=" | head -30"
-    
-    local dirs=() files=()
-    local item
-    while IFS= read -r item; do
-        [[ -n "$item" && "$item" != "." && "$item" != ".." ]] || continue
-        local full_path="${dir_path%/}/${item}"
-        # Check if it's a directory (ends with /)
-        if [[ "$item" == */ ]]; then
-            dirs+=("${full_path%/}")  # Remove trailing / for now
-        else
-            files+=("$full_path")
-        fi
-    done < <(ssh -o ConnectTimeout=2 -o LogLevel=ERROR "$ssh_host" "$ssh_cmd" 2>/dev/null)
-    
-    # Add completions with appropriate suffixes
-    if [[ ${#dirs[@]} -gt 0 || ${#files[@]} -gt 0 ]]; then
-        # Add directories with / suffix and no space
-        [[ ${#dirs[@]} -gt 0 ]] && compadd -U -S/ -q -a dirs
-        # Add files with no suffix and no space
-        [[ ${#files[@]} -gt 0 ]] && compadd -U -S '' -a files
-    else
-        _default
-    fi
-}
-
-# Main completion for code/cursor commands
-_vscode_cursor_remote_completion() {
-    # Check for --remote ssh-remote+HOST pattern
-    local ssh_host=""
-    local i
-    for ((i=1; i<=$#words; i++)); do
-        if [[ "${words[$i]}" == "--remote" && $((i+1)) -le $#words && "${words[$((i+1))]}" =~ ^ssh-remote\\+(.*)$ ]]; then
-            ssh_host="${match[1]}"
-            break
-        fi
-    done
-    
-    # Use SSH completion if remote host found, otherwise default
-    [[ -n "$ssh_host" ]] && _ssh_path_complete "$ssh_host" || _default
-}
-
-# Completion for cursh alias
-_cursh_completion() {
-    _ssh_path_complete "workstation"
-}
 
 # cursh alias
 alias cursh='cursor --remote ssh-remote+workstation'
 
-# Register completions
-compdef _vscode_cursor_remote_completion code
-compdef _vscode_cursor_remote_completion cursor
-compdef _cursh_completion cursh
 
 
 export DEEPCODE_REPO_PATH=/Users/maximegardoni/code/deepcode
@@ -617,4 +595,16 @@ if [[ -n "$CURSOR_AGENT" ]]; then
 else
   [[ -r ~/.p10k.zsh ]] && source ~/.p10k.zsh
 fi
-alias todo='open "obsidian://open?path=/Users/maximegardoni/Documents/max_pro_vault/TODO.md"'
+
+
+
+if [[ "$MACHINE" == "mac_pro" ]]; then
+  alias todo='open "obsidian://open?path=/Users/maximegardoni/Documents/max_pro_vault/TODO.md"'
+
+  # bun completions
+  [ -s "/Users/maximegardoni/.bun/_bun" ] && source "/Users/maximegardoni/.bun/_bun"
+
+  # bun
+  export BUN_INSTALL="$HOME/.bun"
+  export PATH="$BUN_INSTALL/bin:$PATH"
+fi
