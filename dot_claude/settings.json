@@ -1,0 +1,42 @@
+{
+  "permissions": {
+    "defaultMode": "auto"
+  },
+  "model": "opus[1m]",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/budget-guard.sh\"",
+            "statusMessage": "Checking session budget"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "i=$(cat); d=$(printf '%s' \"$i\" | jq -r '(.workspace.current_dir // .cwd // \"?\") as $d | if (env.HOME // \"\") != \"\" and ($d | startswith(env.HOME)) then \"~\" + ($d | ltrimstr(env.HOME)) else $d end'); printf '%s · %s · %s · %s%% ctx · $%.2f' \"$d\" \"$(printf '%s' \"$i\" | jq -r '.model.display_name // \"?\"')\" \"$(printf '%s' \"$i\" | jq -r '.effort.level // \"?\"')\" \"$(printf '%s' \"$i\" | jq -r '.context_window.used_percentage // 0')\" \"$(printf '%s' \"$i\" | jq -r '.cost.total_cost_usd // 0')\""
+  },
+  "enabledPlugins": {
+    "slack@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "snyk-internal": {
+      "source": {
+        "source": "github",
+        "repo": "snyk/claude-marketplace-internal"
+      }
+    }
+  },
+  "alwaysThinkingEnabled": true,
+  "voice": {
+    "enabled": true,
+    "mode": "hold"
+  },
+  "skipDangerousModePermissionPrompt": true,
+  "voiceEnabled": true
+}
