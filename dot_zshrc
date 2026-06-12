@@ -1,5 +1,3 @@
-
-
 HOST_MAC_PRO="L575R744X3"                 
 HOST_MAC_PRIV="Maximes-MacBook-Air.local" 
 HOST_WORKSTATION="ip-10-10-1-57"          
@@ -162,6 +160,9 @@ export GEM_HOME="$HOME/gems"
 export PATH="$HOME/gems/bin:$PATH"
 alias pt=~/Documents/pt
 alias cm=chezmoi
+alias cmlg="lazygit -p $HOME/.local/share/chezmoi"
+alias cmdf="chezmoi diff"
+alias cmra="chezmoi re-add"
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 #__conda_setup="$('/home/maxime/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
