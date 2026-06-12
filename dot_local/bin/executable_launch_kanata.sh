@@ -1,26 +1,65 @@
 #!/usr/bin/env bash
+#
+# kanata control helper.
+#
+# Autostart is now handled by launchd, NOT by this script and NOT by screen:
+#   - kanata          -> /Library/LaunchDaemons/dev.kanata.kanata.plist   (root, starts at boot)
+#   - kanata-vk-agent -> ~/Library/LaunchAgents/dev.kanata.vk-agent.plist  (your user, at login)
+#
+# Because kanata runs from a root LaunchDaemon, launchd starts it as root for
+# you -- there is no more sudo password to type and no screen session to attach.
+#
+# This script just wraps launchctl for convenient manual control.
+set -euo pipefail
 
-# When called from LaunchAgent at login, give macOS time to load input monitoring
-# and virtual HID drivers before kanata tries to grab the keyboard.
-if [ "$LAUNCH_FROM_AGENT" = "1" ]; then
-  sleep 5
-fi
+DAEMON_LABEL="dev.kanata.kanata"
+AGENT_LABEL="dev.kanata.vk-agent"
+DAEMON_PLIST="/Library/LaunchDaemons/${DAEMON_LABEL}.plist"
+AGENT_PLIST="${HOME}/Library/LaunchAgents/${AGENT_LABEL}.plist"
+GUI="gui/$(id -u)"
 
-pkill -f '/opt/homebrew/bin/kanata'      2>/dev/null || true
-screen -S kanata_main -X quit            2>/dev/null || true
-screen -dmS kanata_main bash -c 'sudo /opt/homebrew/bin/kanata \
-      -c /Users/maximegardoni/code/kanata/cfg_samples/my_config.kbd \
-      -p 5829 2>&1 | tee -a /Users/maximegardoni/.local/log/kanata.log'
+usage() {
+  cat <<EOF
+Usage: $(basename "$0") {start|stop|restart|status|logs}
 
-pkill -f kanata-vk-agent                 2>/dev/null || true
-screen -S kanata_vk_agent -X quit        2>/dev/null || true
-sleep 3s
+  start     bootstrap + start both launchd jobs
+  stop      stop both jobs (kanata daemon needs sudo)
+  restart   kickstart -k both jobs (fast reload, e.g. after editing the .kbd)
+  status    show launchd state + running processes
+  logs      tail both log files
+EOF
+}
 
-if [ "$LAUNCH_FROM_AGENT" = "1" ]; then
-  # Run directly — screen isolates from WindowServer, which kanata-vk-agent needs for app detection
-  exec /opt/homebrew/bin/kanata-vk-agent -p 5829 -b net.kovidgoyal.kitty \
-    >> /Users/maximegardoni/.local/log/kanata-vk-agent.log 2>&1
-else
-  screen -dmS kanata_vk_agent bash -c 'while true; do /opt/homebrew/bin/kanata-vk-agent -p 5829 -b net.kovidgoyal.kitty \
-        2>&1 | tee -a /Users/maximegardoni/.local/log/kanata-vk-agent.log; sleep 3; done'
-fi
+cmd="${1:-status}"
+case "$cmd" in
+  start)
+    sudo launchctl bootstrap system "$DAEMON_PLIST" 2>/dev/null || \
+      sudo launchctl kickstart -k "system/${DAEMON_LABEL}"
+    launchctl bootstrap "$GUI" "$AGENT_PLIST" 2>/dev/null || \
+      launchctl kickstart -k "${GUI}/${AGENT_LABEL}"
+    echo "started."
+    ;;
+  stop)
+    launchctl bootout "${GUI}/${AGENT_LABEL}" 2>/dev/null || true
+    sudo launchctl bootout "system/${DAEMON_LABEL}" 2>/dev/null || true
+    echo "stopped."
+    ;;
+  restart)
+    sudo launchctl kickstart -k "system/${DAEMON_LABEL}"
+    launchctl kickstart -k "${GUI}/${AGENT_LABEL}"
+    echo "restarted."
+    ;;
+  status)
+    echo "== daemon (kanata, root) =="
+    sudo launchctl print "system/${DAEMON_LABEL}" 2>/dev/null | grep -E 'state|pid|program' | head || echo "not loaded"
+    echo "== agent (kanata-vk-agent, user) =="
+    launchctl print "${GUI}/${AGENT_LABEL}" 2>/dev/null | grep -E 'state|pid|program' | head || echo "not loaded"
+    echo "== processes =="
+    pgrep -fl 'kanata' || echo "(no kanata processes)"
+    ;;
+  logs)
+    tail -n 40 -f /var/log/kanata.log "${HOME}/.local/log/kanata-vk-agent.log"
+    ;;
+  *)
+    usage; exit 1 ;;
+esac
