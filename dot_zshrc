@@ -1,3 +1,5 @@
+
+
 HOST_MAC_PRO="L575R744X3"                 
 HOST_MAC_PRIV="Maximes-MacBook-Air.local" 
 HOST_WORKSTATION="ip-10-10-1-57"          
@@ -374,6 +376,8 @@ alias cl="clear"
 #better jump
 export ZSHZ_UNCOMMON=1
 
+#alias broot="broot -c :start_end_panel\;:toggle_preview\;:panel_left"
+alias broot="broot -c :toggle_preview"
 
 # broot launcher — path differs per OS; the -r guard makes it a no-op if absent
 if [[ "$OS" == "mac" ]]; then
@@ -382,6 +386,8 @@ if [[ "$OS" == "mac" ]]; then
 elif [[ "$OS" == "linux" ]]; then
   [[ -r "$HOME/.config/broot/launcher/bash/br" ]] && \
     source "$HOME/.config/broot/launcher/bash/br"
+  [[ -r "$HOME/.local/share/broot/launcher/bash/1" ]] && \
+    source "$HOME/.local/share/broot/launcher/bash/1"
 fi
 
 
@@ -394,8 +400,8 @@ cp_to_new_folder() {
   mkdir -p "$2" && cp -r "$1"/* "$2/"
 }
 alias html="w3m -dump"
-export EDITOR=vim
-export VISUAL=vim
+export EDITOR=nvim
+export VISUAL=nvim
 #alias ssy="ssh maxime@$yvip"
 alias ssy='autossh -M 0 -o "ServerAliveInterval 30" -o "ServerAliveCountMax 3"  maxime@10.194.25.62'
 alias ai="cd /home/maxime/Documents/code/erx-ai"
@@ -525,6 +531,7 @@ function csshfs() {
     
     echo sshfs -o allow_other "maxime@$1:/" "$mount_point"
     #                  ,default_permissions,uid=1007,gid=10000
+    # sshfs -o allow_other "maxime@$1:/" "$mount_point" -o compression=yes -o cache=yes -o cache_timeout=3600 -o kernel_cache 
     sshfs -o allow_other "maxime@$1:/" "$mount_point" 
 }
 
@@ -572,16 +579,6 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#AAAAAA"
 alias cursh='cursor --remote ssh-remote+workstation'
 
 
-
-export DEEPCODE_REPO_PATH=/Users/maximegardoni/code/deepcode
-export PATTERNS_REPO_PATH=/Users/maximegardoni/code/patterns
-export PATH="$HOME/bin:$PATH"
-
-export GOOGLE_CLOUD_PROJECT=t42-machine-learning
-
-export GOOGLE_CLOUD_LOCATION=europe-west1
-export GOOGLE_GENAI_USE_VERTEXAI=true
-
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/opt/homebrew/share/google-cloud-sdk/path.zsh.inc' ]; then . '/opt/homebrew/share/google-cloud-sdk/path.zsh.inc'; fi
 
@@ -589,12 +586,6 @@ if [ -f '/opt/homebrew/share/google-cloud-sdk/path.zsh.inc' ]; then . '/opt/home
 if [ -f '/opt/homebrew/share/google-cloud-sdk/completion.zsh.inc' ]; then . '/opt/homebrew/share/google-cloud-sdk/completion.zsh.inc'; fi
 
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-if [[ -n "$CURSOR_AGENT" ]]; then
-  # Skip theme initialization for better compatibility
-else
-  [[ -r ~/.p10k.zsh ]] && source ~/.p10k.zsh
-fi
 
 
 
@@ -607,4 +598,52 @@ if [[ "$MACHINE" == "mac_pro" ]]; then
   # bun
   export BUN_INSTALL="$HOME/.bun"
   export PATH="$BUN_INSTALL/bin:$PATH"
+fi
+
+
+
+
+
+if [[ "$MACHINE" == "workstation" ]]; then
+  # The next line updates PATH for the Google Cloud SDK.
+  if [ -f '/home/maximegardoni/google-cloud-sdk/path.zsh.inc' ]; then . '/home/maximegardoni/google-cloud-sdk/path.zsh.inc'; fi
+  # The next line enables shell command completion for gcloud.
+  if [ -f '/home/maximegardoni/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/maximegardoni/google-cloud-sdk/completion.zsh.inc'; fi
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+  export DEEPCODE_REPO_PATH=/Users/maximegardoni/code/deepcode
+  export PATTERNS_REPO_PATH=/Users/maximegardoni/code/patterns
+  export PATH="$HOME/bin:$PATH"
+  export GOOGLE_CLOUD_PROJECT=t42-machine-learning
+  export GOOGLE_CLOUD_LOCATION=europe-west1 # europe-west4  # global
+  export GOOGLE_GENAI_USE_VERTEXAI=true
+  alias pre_commit_all="(source .venv/.venv-precommit/bin/activate && pre-commit run --all-files)"
+
+  # bazel cachine
+  zstyle ':completion:*' use-cache on
+  zstyle ':completion:*' cache-path ~/.zsh/cache
+  export DEEPCODE_REPO_PATH=/home/maximegardoni/code/deepcode
+  export PATTERNS_REPO_PATH=/home/maximegardoni/code/patterns
+
+  # for tsh @snyk
+  export TELEPORT_LOGIN_BIND_ADDR=localhost:8000 
+
+  alias code='cd /home/maximegardoni/code'
+
+  export CLAUDE_STARAGENT_REPO=/home/maximegardoni/code/claude_staragent
+  export AUTOFIX_VECTORSTORE_PATH=/home/maximegardoni/code/autorfix_vectorstore
+  export AUTOFIX_MODEL_ARTIFACT_PATH="$HOME/autofix_model"
+
+  [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+
+fi
+
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+if [[ -n "$CURSOR_AGENT" ]]; then
+  # Skip theme initialization for better compatibility
+else
+  [[ -r ~/.p10k.zsh ]] && source ~/.p10k.zsh
 fi
