@@ -28,6 +28,9 @@
     refreshPeriod = "504h"
     branch = "main"
 
+
+
+{{/*
 [".local/bin/broot"]
     type = "file"
     refreshPeriod = "504h"
@@ -88,4 +91,4 @@
     {{- else if eq .chezmoi.arch "arm" }}
         url = "https://github.com/kovidgoyal/kitty/releases/latest/download/kitten-linux-arm"
     {{- end }}
-
+*/}}
