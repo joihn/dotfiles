@@ -1,3 +1,35 @@
+
+
+HOST_MAC_PRO="L575R744X3"                 
+HOST_MAC_PRIV="Maximes-MacBook-Air.local" 
+HOST_WORKSTATION="ip-10-10-1-57"          
+
+case "$HOST" in
+  "$HOST_MAC_PRO")     MACHINE=mac_pro     ;;
+  "$HOST_MAC_PRIV")    MACHINE=mac_priv    ;;
+  "$HOST_WORKSTATION") MACHINE=workstation ;;
+  *)                   MACHINE=unknown     ;;
+esac
+export MACHINE
+
+case "$OSTYPE" in
+  darwin*)  OS=mac     ;;
+  linux*)   OS=linux   ;;
+  *)        OS=unknown ;;
+esac
+export OS
+
+if [[ -n "$CURSOR_AGENT" ]]; then
+  # Skip theme initialization for better compatibility
+else
+   # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+   # Initialization code that may require console input (password prompts, [y/n]
+   # confirmations, etc.) must go above this block; everything else may go below.
+    if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+    source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+    fi
+
+fi
 DISABLE_AUTO_UPDATE="true"
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -8,7 +40,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="agnoster_docker_context"
+ZSH_THEME="powerlevel10k/powerlevel10k" #agnoster_docker_context
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -89,7 +121,6 @@ unsetopt HIST_VERIFY          # Execute commands using history (e.g.: using !$) 
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git z zsh-autosuggestions web-search fast-syntax-highlighting zsh-vi-mode conda-zsh-completion)
-
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -117,14 +148,14 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-prompt_context() {
-    if [[ $(hostname) == "maximeComputer" ]]; then
-      HOSTNAME_RENAMED="yv"
-    else
-      HOSTNAME_RENAMED=$(hostname)
-    fi
-    prompt_segment black default "%(!.%{%F{yellow}%}.)${HOSTNAME_RENAMED}"
-}
+#prompt_context() {
+#    if [[ $(hostname) == "maximeComputer" ]]; then
+#      HOSTNAME_RENAMED="yv"
+#    else
+#      HOSTNAME_RENAMED=$(hostname)
+#    fi
+#    prompt_segment black default "%(!.%{%F{yellow}%}.)${HOSTNAME_RENAMED}"
+#}
 ENABLE_CORRECTION="true"
 # Install Ruby Gems to ~/gems
 export GEM_HOME="$HOME/gems"
@@ -133,17 +164,17 @@ alias pt=~/Documents/pt
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/maxime/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/maxime/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/maxime/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/maxime/anaconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
+#__conda_setup="$('/home/maxime/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+#if [ $? -eq 0 ]; then
+#    eval "$__conda_setup"
+#else
+#    if [ -f "/home/maxime/anaconda3/etc/profile.d/conda.sh" ]; then
+#        . "/home/maxime/anaconda3/etc/profile.d/conda.sh"
+#    else
+#        export PATH="/home/maxime/anaconda3/bin:$PATH"
+#    fi
+#fi
+#unset __conda_setup
 # <<< conda initialize <<<
 
 HOSTNAME=$(hostname)
@@ -156,12 +187,6 @@ fi
 export GIDs=$GID 
 export UIDs=$UID 
 #xhost +local:all > /dev/null
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/maxime/google-cloud-sdk/path.zsh.inc' ]; then . '/home/maxime/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/home/maxime/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/maxime/google-cloud-sdk/completion.zsh.inc'; fi
-
 export EDITOR='vim'
 
 
@@ -203,7 +228,6 @@ if [[ -f "$HOME/.secretrc" ]]; then
   source $HOME/.secretrc
 fi
 
-alias subl="/home/maxime/Documents/code/sublime.sh"
 alias ccc="kitten clipboard"
 ccc2(){ echo -n $1 | kitten clipboard; }
 alias cccimg="kitten clipboard -m image/png"
@@ -218,6 +242,42 @@ fp(){readlink -f $1}
 export TRAINING_USER="maxime"
 sshtunnel(){ssh -NfL localhost:"$2":localhost:"$2" "$1"}
 sshtunnelcan(){ssh -O exit $1}
+# Attach to (or create) the code1 tmux session on workstation in one command.
+# ClearAllForwardings=yes skips the config's LocalForward 8888 so concurrent
+# connections don't fight over the local port (the tunnel is held by your main
+# session / Cursor). new-session -A attaches if code1 exists, else creates it.
+alias code1='ssh -t -o ClearAllForwardings=yes workstation /home/linuxbrew/.linuxbrew/bin/tmux new-session -A -s code1'
+alias code2='ssh -t -o ClearAllForwardings=yes workstation /home/linuxbrew/.linuxbrew/bin/tmux new-session -A -s code2'
+alias code3='ssh -t -o ClearAllForwardings=yes gcloud-pii-gpu tmux new-session -A -s code3'
+alias code4='ssh -t -o ClearAllForwardings=yes gcloud-pii-gpu tmux new-session -A -s code4'
+
+# ---------------------------------------------------------------------------
+# Auto-heal the local terminal after an ssh session ends.
+#
+# When the remote (tmux/vim/etc.) puts kitty into alt-screen, mouse-tracking
+# and the kitty keyboard protocol, an abrupt disconnect (wifi drop / laptop
+# sleep) kills ssh before the remote can undo those modes. ssh restores the
+# local tty line discipline on exit but cannot undo emulator state, so the
+# terminal is left unable to scroll with broken keys. This sends the specific
+# "undo" sequences after ssh returns (any exit reason). Instant, and a no-op
+# when nothing was broken -- unlike `reset`, which also wipes scrollback.
+_reset_term_modes() {
+  [[ -t 1 ]] || return 0   # only for an interactive terminal (skip -Nf tunnels)
+  printf '\033[<u\033[<u\033[<u'                       # pop kitty keyboard protocol stack
+  printf '\033[?1049l'                                 # leave alternate screen -> restores scrolling
+  printf '\033[?1l\033>'                               # normal cursor keys + keypad
+  printf '\033[?2004l'                                 # disable bracketed paste
+  printf '\033[?1000l\033[?1002l\033[?1003l\033[?1006l\033[?1015l' # disable mouse tracking
+  printf '\033[?1004l'                                 # disable focus reporting
+  printf '\033[?7h\033[?25h\033[0m'                    # autowrap on, cursor visible, reset attrs
+  stty sane 2>/dev/null                                # restore line discipline
+}
+ssh() {
+  command ssh "$@"
+  local ret=$?
+  _reset_term_modes
+  return $ret
+}
 alias dust="du -sh * | sort -hr"
 alias cp="cp -r"
 alias j="z"
@@ -315,9 +375,22 @@ alias ld="lazydocker"
 alias cl="clear"
 #better jump
 export ZSHZ_UNCOMMON=1
+
 #alias broot="broot -c :start_end_panel\;:toggle_preview\;:panel_left"
 alias broot="broot -c :toggle_preview"
-source $HOME/.local/share/broot/launcher/bash/1
+
+# broot launcher — path differs per OS; the -r guard makes it a no-op if absent
+if [[ "$OS" == "mac" ]]; then
+  [[ -r "$HOME/Library/Application Support/org.dystroy.broot/launcher/bash/br" ]] && \
+    source "$HOME/Library/Application Support/org.dystroy.broot/launcher/bash/br"
+elif [[ "$OS" == "linux" ]]; then
+  [[ -r "$HOME/.config/broot/launcher/bash/br" ]] && \
+    source "$HOME/.config/broot/launcher/bash/br"
+  [[ -r "$HOME/.local/share/broot/launcher/bash/1" ]] && \
+    source "$HOME/.local/share/broot/launcher/bash/1"
+fi
+
+
 cp_to_new_folder() {
   if [ "$#" -ne 2 ]; then
     echo "You need to provide exactly two arguments: source directory and target directory"
@@ -327,8 +400,8 @@ cp_to_new_folder() {
   mkdir -p "$2" && cp -r "$1"/* "$2/"
 }
 alias html="w3m -dump"
-export EDITOR=vim
-export VISUAL=vim
+export EDITOR=nvim
+export VISUAL=nvim
 #alias ssy="ssh maxime@$yvip"
 alias ssy='autossh -M 0 -o "ServerAliveInterval 30" -o "ServerAliveCountMax 3"  maxime@10.194.25.62'
 alias ai="cd /home/maxime/Documents/code/erx-ai"
@@ -364,6 +437,34 @@ fpc(){
      abspath $1 | kitten clipboard
     
 }
+
+fpcc() {
+  if [[ $# -ne 1 ]]; then
+    echo "Usage: fpcc <file>"
+    return 1
+  fi
+
+  if [[ ! -f $1 ]]; then
+    echo "Error: '$1' is not a valid file."
+    return 1
+  fi
+
+  # Resolve absolute file path and create a valid file URI
+  local filepath=$(readlink -f "$1")
+  local uri="file://$filepath"
+
+  # Create a temporary file for the URI and ensure cleanup after use
+  local tmpfile=$(mktemp /tmp/fileuri.XXXXXX)
+  echo -n "$uri" > "$tmpfile"
+
+  # Copy the file URI with the correct MIME type to the clipboard
+  kitten clipboard --mime text/uri-list "$tmpfile"
+
+  # Remove the temporary file
+  rm "$tmpfile"
+}
+
+
 alias setup="cd /mnt/home/maxime/setup"
 alias setup2="cd /mnt/erx/setup"
 alias setup_dol="cd /mnt/dolphin/mnt/home/maxime/setup"
@@ -396,10 +497,10 @@ mansubl() {
   man "$1" | col -b > /tmp/ls_man.txt && subl /tmp/ls_man.txt
 }
 pycal(){
-    python -c "print($1)"
+    uv run --with numpy python -c "import numpy as np; print(f\"{$1}\")"
 }
 vpycal(){
-    python -c "import numpy as np; print(f\"$1 = {$1}\")"
+    uv run --with numpy python -c "import numpy as np; print(f\"$1 = {$1:.1f}\")"
 }
 
 alias bluco='echo -e "connect AC:80:0A:7E:44:BB \nquit" | bluetoothctl'
@@ -430,7 +531,8 @@ function csshfs() {
     
     echo sshfs -o allow_other "maxime@$1:/" "$mount_point"
     #                  ,default_permissions,uid=1007,gid=10000
-    sshfs -o allow_other "maxime@$1:/" "$mount_point" -o compression=yes -o cache=yes -o cache_timeout=3600 -o kernel_cache 
+    # sshfs -o allow_other "maxime@$1:/" "$mount_point" -o compression=yes -o cache=yes -o cache_timeout=3600 -o kernel_cache 
+    sshfs -o allow_other "maxime@$1:/" "$mount_point" 
 }
 
 alias csshfs=csshfs
@@ -471,3 +573,77 @@ elif [ -f "$HOME/.atuin/bin/env" ]; then # if atuin exist
 fi
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#AAAAAA"
+
+
+# cursh alias
+alias cursh='cursor --remote ssh-remote+workstation'
+
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/opt/homebrew/share/google-cloud-sdk/path.zsh.inc' ]; then . '/opt/homebrew/share/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/opt/homebrew/share/google-cloud-sdk/completion.zsh.inc' ]; then . '/opt/homebrew/share/google-cloud-sdk/completion.zsh.inc'; fi
+
+
+
+
+
+if [[ "$MACHINE" == "mac_pro" ]]; then
+  alias todo='open "obsidian://open?path=/Users/maximegardoni/Documents/max_pro_vault/TODO.md"'
+
+  # bun completions
+  [ -s "/Users/maximegardoni/.bun/_bun" ] && source "/Users/maximegardoni/.bun/_bun"
+
+  # bun
+  export BUN_INSTALL="$HOME/.bun"
+  export PATH="$BUN_INSTALL/bin:$PATH"
+fi
+
+
+
+
+
+if [[ "$MACHINE" == "workstation" ]]; then
+  # The next line updates PATH for the Google Cloud SDK.
+  if [ -f '/home/maximegardoni/google-cloud-sdk/path.zsh.inc' ]; then . '/home/maximegardoni/google-cloud-sdk/path.zsh.inc'; fi
+  # The next line enables shell command completion for gcloud.
+  if [ -f '/home/maximegardoni/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/maximegardoni/google-cloud-sdk/completion.zsh.inc'; fi
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+  export DEEPCODE_REPO_PATH=/Users/maximegardoni/code/deepcode
+  export PATTERNS_REPO_PATH=/Users/maximegardoni/code/patterns
+  export PATH="$HOME/bin:$PATH"
+  export GOOGLE_CLOUD_PROJECT=t42-machine-learning
+  export GOOGLE_CLOUD_LOCATION=europe-west1 # europe-west4  # global
+  export GOOGLE_GENAI_USE_VERTEXAI=true
+  alias pre_commit_all="(source .venv/.venv-precommit/bin/activate && pre-commit run --all-files)"
+
+  # bazel cachine
+  zstyle ':completion:*' use-cache on
+  zstyle ':completion:*' cache-path ~/.zsh/cache
+  export DEEPCODE_REPO_PATH=/home/maximegardoni/code/deepcode
+  export PATTERNS_REPO_PATH=/home/maximegardoni/code/patterns
+
+  # for tsh @snyk
+  export TELEPORT_LOGIN_BIND_ADDR=localhost:8000 
+
+  alias code='cd /home/maximegardoni/code'
+
+  export CLAUDE_STARAGENT_REPO=/home/maximegardoni/code/claude_staragent
+  export AUTOFIX_VECTORSTORE_PATH=/home/maximegardoni/code/autorfix_vectorstore
+  export AUTOFIX_MODEL_ARTIFACT_PATH="$HOME/autofix_model"
+
+  [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+
+fi
+
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+if [[ -n "$CURSOR_AGENT" ]]; then
+  # Skip theme initialization for better compatibility
+else
+  [[ -r ~/.p10k.zsh ]] && source ~/.p10k.zsh
+fi
