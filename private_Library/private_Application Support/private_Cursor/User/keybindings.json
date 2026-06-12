@@ -201,10 +201,5 @@
         "key": "ctrl+shit+tab",
         "command": "workbench.action.quickOpenNavigatePrevious",
         "when": "inQuickOpen"
-    },
-    {
-        "key": "alt+cmd+s",
-        "command": "workbench.action.toggleUnifiedSidebarFromKeyboard",
-        "when": "!isAuxiliaryWindowFocusedContext"
     }
 ]

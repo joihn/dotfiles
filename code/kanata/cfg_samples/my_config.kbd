@@ -73,7 +73,7 @@ fn  lctl lalt lmet          spc            ralt rmet rctl
   cap-spc (tap-hold-press $tap-timeout $hold-timeout @underscore (layer-while-held capslock-space))
   
 
-  ping (cmd bash -c "su - $(stat -f%Su /dev/console) -c 'afplay /System/Library/Sounds/Ping.aiff'")
+  ;;ping (cmd bash -c "su - $(stat -f%Su /dev/console) -c 'afplay /System/Library/Sounds/Ping.aiff'")
   ;; Volume and brightness controls
   vup volu
   vdn vold
@@ -84,7 +84,7 @@ fn  lctl lalt lmet          spc            ralt rmet rctl
 
 ;; Main layer
 (deflayer main
-  @esc-grv  🔅   🔆    @ping    ✗    ✗    ✗    ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊
+  @esc-grv  🔅   🔆    ✗    ✗    ✗    ✗    ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊
   grv       1    2    3    4    5    6    7    8    9    0    -    =    bspc
   @tab      q    w    e    r    t    z   u    i    o    p    [    ]    \
   @caps     a    s    d    f    g    h    j    k    l    ;    '    ret

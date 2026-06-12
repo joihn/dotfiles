@@ -12,7 +12,7 @@
   "debug.inlineValues" : "on",
   "debug.toolTips" : true,
   "diffEditor.codeLens" : true,
-  "diffEditor.renderSideBySide" : true,
+  "diffEditor.renderSideBySide" : false,
   "editor.accessibilitySupport" : "off",
   "editor.fontFamily" : "JetBrains Mono, Consolas, 'Courier New', monospace",
   "editor.fontSize" : 14,
@@ -320,12 +320,10 @@
     "/Users/maximegardoni/code/juice-shop"
   ],
   "snyk.yesWelcomeNotification": false,
-  "python.languageServer": "Jedi",
+  "python.languageServer": "None",
   //"remote.SSH.connectTimeout": 120,
 
-  "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
+
   "clangd.arguments": [
   "--all-scopes-completion",
   "--background-index",
@@ -369,8 +367,14 @@
     }
   ]
 },
-"window.zoomLevel": 2
-  
+"starlang.analysis.sourceFolder": "_playground",
+"cursor.chatMaxWidth": 1200,
+"window.autoDetectColorScheme": false,
+"security.workspace.trust.enabled": true,
+"extensions.installCooldownHours": 24,
+"window.zoomLevel": 2,
+"terminal.integrated.fontSize": 10
+
   
 }
 
