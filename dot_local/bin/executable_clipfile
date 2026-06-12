@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# clipfile - Copy a file to clipboard on macOS so it can be pasted in Finder or as an attachment
+
+if [ $# -eq 0 ]; then
+    echo "Usage: clipfile <file>"
+    echo "Copies a file to the clipboard so you can paste it in Finder or attach it in apps like Slack"
+    exit 1
+fi
+
+FILE="$1"
+
+if [ ! -e "$FILE" ]; then
+    echo "Error: File '$FILE' does not exist"
+    exit 1
+fi
+
+# Get absolute path
+ABSOLUTE_PATH=$(cd "$(dirname "$FILE")" && pwd)/$(basename "$FILE")
+
+# Copy file to clipboard using AppleScript with proper file list format for macOS Sequoia
+osascript <<EOF 2>/dev/null
+use framework "Foundation"
+use framework "AppKit"
+
+set filePath to "$ABSOLUTE_PATH"
+set fileURL to current application's NSURL's fileURLWithPath:filePath
+set pasteboard to current application's NSPasteboard's generalPasteboard()
+pasteboard's clearContents()
+pasteboard's writeObjects:{fileURL}
+EOF
+
+if [ $? -eq 0 ]; then
+    echo "✓ File copied to clipboard: $(basename "$FILE")"
+    echo "You can now paste it in Finder (Cmd+V) or attach it in Slack"
+else
+    echo "Error: Failed to copy file to clipboard"
+    exit 1
+fi
+
