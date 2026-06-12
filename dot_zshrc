@@ -161,7 +161,7 @@ ENABLE_CORRECTION="true"
 export GEM_HOME="$HOME/gems"
 export PATH="$HOME/gems/bin:$PATH"
 alias pt=~/Documents/pt
-
+alias cm=chezmoi
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 #__conda_setup="$('/home/maxime/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
