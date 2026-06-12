@@ -3,3 +3,5 @@ diff:
 git:
   autoCommit: true
   autoPush: true
+data:
+  DISPLAY_VAR: {{ env "DISPLAY" | default ":1" | quote }}
