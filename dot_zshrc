@@ -163,6 +163,7 @@ alias cm=chezmoi
 alias cmlg="lazygit -p $HOME/.local/share/chezmoi"
 alias cmdf="chezmoi diff"
 alias cmra="chezmoi re-add"
+alias cmcd="cd $HOME/.local/share/chezmoi"
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 #__conda_setup="$('/home/maxime/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
