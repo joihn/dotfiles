@@ -589,6 +589,9 @@ if [ -f '/opt/homebrew/share/google-cloud-sdk/completion.zsh.inc' ]; then . '/op
 
 
 
+if [[ "$MACHINE" == "mac_priv" ]]; then
+  alias todo='open "obsidian://open?path=/Users/maxime/Documents/online_vault/TODO.md"'
+fi
 
 
 if [[ "$MACHINE" == "mac_pro" ]]; then
