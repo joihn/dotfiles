@@ -2,7 +2,7 @@
   "permissions": {
     "defaultMode": "auto"
   },
-  "model": "opus[1m]",
+  "model": "opus",
   "hooks": {
     "PreToolUse": [
       {
@@ -12,6 +12,16 @@
             "type": "command",
             "command": "\"$HOME/.claude/hooks/budget-guard.sh\"",
             "statusMessage": "Checking session budget"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/sudo-guard.sh\"",
+            "statusMessage": "Checking sudo timestamp"
           }
         ]
       }

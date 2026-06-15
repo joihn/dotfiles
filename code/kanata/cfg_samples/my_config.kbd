@@ -87,9 +87,16 @@ fn  lctl lalt lmet          spc            ralt rmet rctl
 ;; the keyboard's physical type, so this one slot must differ per machine:
 ;;   - ANSI (US priv laptop): `grv` = the real backtick key      -> backtick
 ;;   - ISO  (UK pro  laptop): `grv` = junk key next to left-shift -> shift
-;; chezmoi templates this per host (matches the hostname pattern in ~/.zshrc).
-(defalias
-  grvkey {{ if hasPrefix "l575r744x3" (lower .chezmoi.hostname) }}lsft{{ else }}grv{{ end }}
+;; Selected by the KANATA_KB env var (set per machine; see launchd plist).
+;; Unset/empty defaults to ANSI.
+(environment (KANATA_KB iso)
+  (defalias grvkey lsft)
+)
+(environment (KANATA_KB ansi)
+  (defalias grvkey grv)
+)
+(environment (KANATA_KB "")
+  (defalias grvkey grv)
 )
 
 ;; Main layer
