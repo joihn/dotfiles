@@ -652,3 +652,6 @@ if [[ -n "$CURSOR_AGENT" ]]; then
 else
   [[ -r ~/.p10k.zsh ]] && source ~/.p10k.zsh
 fi
+
+# Mount AWS workstation home over fuse-t sshfs (reliability flags: reconnect + keepalive)
+alias mnt_work='sshfs workstation:/home/maximegardoni ~/mnt_workstation -o reconnect -o ServerAliveInterval=15 -o ServerAliveCountMax=3 -o ConnectTimeout=10 -o defer_permissions -o volname=workstation'
