@@ -164,7 +164,7 @@ alias cmlg="lazygit -p $HOME/.local/share/chezmoi"
 alias cmdf="chezmoi diff"
 alias cmra="chezmoi re-add"
 alias cmcd="cd $HOME/.local/share/chezmoi"
-#%%%% for docker
+#%%%% for docker 
 export GIDs=$GID 
 export UIDs=$UID 
 #xhost +local:all > /dev/null
@@ -568,6 +568,9 @@ if [ -f '/opt/homebrew/share/google-cloud-sdk/completion.zsh.inc' ]; then . '/op
 
 
 
+if [[ "$MACHINE" == "mac_priv" ]]; then
+  alias todo='open "obsidian://open?path=/Users/maxime/Documents/online_vault/TODO.md"'
+fi
 
 
 if [[ "$MACHINE" == "mac_pro" ]]; then
@@ -628,3 +631,6 @@ if [[ -n "$CURSOR_AGENT" ]]; then
 else
   [[ -r ~/.p10k.zsh ]] && source ~/.p10k.zsh
 fi
+
+# Mount AWS workstation home over fuse-t sshfs (reliability flags: reconnect + keepalive)
+alias mnt_work='sshfs workstation:/home/maximegardoni ~/mnt_workstation -o reconnect -o ServerAliveInterval=15 -o ServerAliveCountMax=3 -o ConnectTimeout=10 -o defer_permissions -o volname=workstation'
