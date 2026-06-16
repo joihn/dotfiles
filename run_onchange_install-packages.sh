@@ -1,5 +1,11 @@
 #!/bin/sh
 
+# This script installs Linux/Debian system packages via apt. It is a no-op on
+# macOS (and any non-Linux OS), where packages come from Homebrew instead.
+if [ "$(uname)" != "Linux" ]; then
+    exit 0
+fi
+
 # Ask user for confirmation
 printf "Do you want to install basic tools? (y/n): "
 # Read a single character without waiting for Enter
