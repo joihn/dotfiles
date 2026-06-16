@@ -7,7 +7,7 @@ if [ "$(uname)" != "Linux" ]; then
 fi
 
 # Ask user for confirmation
-printf "Do you want to install basic tools? (y/n): "
+printf "Do you want to install basic linux tools via apt? (y/n): "
 # Read a single character without waiting for Enter
 if [ -t 0 ]; then
     # Save the current terminal settings
