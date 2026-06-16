@@ -1,29 +1,53 @@
 {
-  "env": {
-    "PHOENIX_ENDPOINT": "http://localhost:6006",
-    "ARIZE_TRACE_ENABLED": "true"
-  },
   "permissions": {
-    "defaultMode": "auto",
-    "skipDangerousModePermissionPrompt": true
+    "defaultMode": "auto"
   },
   "model": "opus",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/budget-guard.sh\"",
+            "statusMessage": "Checking session budget"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/sudo-guard.sh\"",
+            "statusMessage": "Checking sudo timestamp"
+          }
+        ]
+      }
+    ]
+  },
   "statusLine": {
     "type": "command",
     "command": "i=$(cat); d=$(printf '%s' \"$i\" | jq -r '(.workspace.current_dir // .cwd // \"?\") as $d | if (env.HOME // \"\") != \"\" and ($d | startswith(env.HOME)) then \"~\" + ($d | ltrimstr(env.HOME)) else $d end'); printf '%s · %s · %s · %s%% ctx · $%.2f' \"$d\" \"$(printf '%s' \"$i\" | jq -r '.model.display_name // \"?\"')\" \"$(printf '%s' \"$i\" | jq -r '.effort.level // \"?\"')\" \"$(printf '%s' \"$i\" | jq -r '.context_window.used_percentage // 0')\" \"$(printf '%s' \"$i\" | jq -r '.cost.total_cost_usd // 0')\""
   },
   "enabledPlugins": {
-    "slack@claude-plugins-official": true,
-    "claude-code-tracing@arize-claude-plugin": true
+    "slack@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
-    "arize-claude-plugin": {
+    "snyk-internal": {
       "source": {
         "source": "github",
-        "repo": "Arize-ai/arize-claude-code-plugin"
+        "repo": "snyk/claude-marketplace-internal"
       }
     }
   },
-  "effortLevel": "xhigh",
+  "alwaysThinkingEnabled": true,
+  "voice": {
+    "enabled": true,
+    "mode": "hold"
+  },
+  "skipDangerousModePermissionPrompt": true,
+  "voiceEnabled": true, 
   "editorMode": "vim"
 }
