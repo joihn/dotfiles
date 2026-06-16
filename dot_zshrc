@@ -118,7 +118,7 @@ unsetopt HIST_VERIFY          # Execute commands using history (e.g.: using !$) 
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git z zsh-autosuggestions web-search fast-syntax-highlighting zsh-vi-mode conda-zsh-completion)
+plugins=(git z zsh-autosuggestions web-search fast-syntax-highlighting zsh-vi-mode)
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -164,27 +164,6 @@ alias cmlg="lazygit -p $HOME/.local/share/chezmoi"
 alias cmdf="chezmoi diff"
 alias cmra="chezmoi re-add"
 alias cmcd="cd $HOME/.local/share/chezmoi"
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-#__conda_setup="$('/home/maxime/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-#if [ $? -eq 0 ]; then
-#    eval "$__conda_setup"
-#else
-#    if [ -f "/home/maxime/anaconda3/etc/profile.d/conda.sh" ]; then
-#        . "/home/maxime/anaconda3/etc/profile.d/conda.sh"
-#    else
-#        export PATH="/home/maxime/anaconda3/bin:$PATH"
-#    fi
-#fi
-#unset __conda_setup
-# <<< conda initialize <<<
-
-HOSTNAME=$(hostname)
-if [[ "$HOSTNAME" == "maximeComputer" ]]; then
-    conda activate base2
-fi
-
-
 #%%%% for docker 
 export GIDs=$GID 
 export UIDs=$UID 
