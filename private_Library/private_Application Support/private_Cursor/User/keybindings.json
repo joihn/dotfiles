@@ -1,0 +1,205 @@
+// Place your key bindings in this file to override the defaults
+[
+
+    {
+        "key": "cmd+=",
+        "command": "workbench.action.terminal.fontZoomIn",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "cmd+-",
+        "command": "workbench.action.terminal.fontZoomOut",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "shift+cmd+e",
+        "command": "editor.debug.action.selectionToRepl",
+        "when": "debuggersAvailable && editorHasSelection && editorTextFocus"
+    },
+    {
+        "key": "alt+f8",
+        "command": "-editor.debug.action.selectionToRepl",
+        "when": "debuggersAvailable && editorHasSelection && editorTextFocus"
+    },
+    {
+        "key": "cmd+-",
+        "command": "-workbench.action.zoomOut",
+        "when": "!terminalFocus"
+    },
+    {
+        "key": "cmd+=",
+        "command": "-workbench.action.zoomIn",
+        "when": "!terminalFocus"
+    },
+    {
+        "key": "cmd+e",
+        "command": "-composer.showBackgroundAgentHistory",
+        "when": "backgroundComposerEnabled || showBackgroundAgentHistoryAction"
+    },
+    {
+        "key": "cmd+g",
+        "command": "editor.action.addSelectionToNextFindMatch",
+        "when": "editorFocus"
+    },
+    {
+        "key": "ctrl+g",
+        "command": "-editor.action.addSelectionToNextFindMatch",
+        "when": "editorFocus"
+    },
+    {
+        "key": "cmd+=",
+        "command": "-editor.unfold",
+        "when": "editorFocus"
+    },
+    {
+        "key": "cmd+=",
+        "command": "-editor.unfold",
+        "when": "editorFocus && foldingEnabled"
+    },
+    {
+        "key": "cmd+=",
+        "command": "editor.action.fontZoomIn",
+        "when": "editorFocus && !terminalFocus"
+    },
+    {
+        "key": "cmd+-",
+        "command": "-editor.fold",
+        "when": "editorFocus"
+    },
+    {
+        "key": "cmd+-",
+        "command": "-editor.fold",
+        "when": "editorFocus && foldingEnabled"
+    },
+    {
+        "key": "cmd+-",
+        "command": "editor.action.fontZoomOut",
+        "when": "editorFocus && !terminalFocus"
+    },
+    {
+        "key": "cmd+0",
+        "command": "editor.action.fontZoomReset",
+        "when": "editorFocus && !terminalFocus"
+    },
+    {
+        "key": "shift+cmd+f",
+        "command": "workbench.action.findInFiles",
+        "when": "!terminalFocus"
+    },
+    {
+        "key": "shift+cmd+f",
+        "command": "-workbench.action.findInFiles"
+    },
+    {
+        "key": "shift+cmd+f",
+        "command": "workbench.action.terminal.findNext",
+        "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocusInAny && terminalHasBeenCreated || terminalFocusInAny && terminalProcessSupported"
+    },
+    {
+        "key": "f3",
+        "command": "-workbench.action.terminal.findNext",
+        "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocusInAny && terminalHasBeenCreated || terminalFocusInAny && terminalProcessSupported"
+    },
+    {
+        "key": "cmd+y",
+        "command": "-editor.action.previewDeclaration"
+    },
+    {
+        "key": "alt+end",
+        "command": "workbench.action.focusActiveEditorGroup"
+    },
+    {
+        "key": "shift+cmd+r",
+        "command": "workbench.action.reloadWindow"
+    },
+    {
+        "key": "shift+cmd+r",
+        "command": "-workbench.action.reloadWindow",
+        "when": "isDevelopment"
+    },
+    {
+        "key": "alt+cmd+down",
+        "command": "-workbench.action.terminal.focusNextPane",
+        "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+    },
+    {
+        "key": "ctrl+tab",
+        "command": "workbench.action.terminal.focusNextPane",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "alt+cmd+right",
+        "command": "-workbench.action.terminal.focusNextPane",
+        "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+    },
+    {
+        "key": "alt+cmd+up",
+        "command": "-workbench.action.terminal.focusPreviousPane",
+        "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+    },
+    {
+        "key": "ctrl+shift+tab",
+        "command": "workbench.action.terminal.focusPreviousPane",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "alt+cmd+left",
+        "command": "-workbench.action.terminal.focusPreviousPane",
+        "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+    },
+    {
+        "key": "ctrl+shift+tab",
+        "command": "workbench.action.quickOpenNavigatePreviousInEditorPicker",
+        "when": "!terminalFocus && inEditorsPicker && inQuickOpen"
+    },
+    {
+        "key": "ctrl+shift+tab",
+        "command": "-workbench.action.quickOpenNavigatePreviousInEditorPicker",
+        "when": "inEditorsPicker && inQuickOpen"
+    },
+    {
+        "key": "ctrl+shift+tab",
+        "command": "workbench.action.quickOpenNavigatePreviousInAgentsPicker",
+        "when": "!terminalFocus && inAgentsMRUPicker && inQuickOpen"
+    },
+    {
+        "key": "ctrl+shift+tab",
+        "command": "-workbench.action.quickOpenNavigatePreviousInAgentsPicker",
+        "when": "inAgentsMRUPicker && inQuickOpen"
+    },
+    {
+        "key": "ctrl+shift+tab",
+        "command": "workbench.action.compareEditor.focusOtherSide",
+        "when": "!terminalFocus && activeCompareEditorCanSwap"
+    },
+    {
+        "key": "ctrl+shift+tab",
+        "command": "-workbench.action.compareEditor.focusOtherSide",
+        "when": "activeCompareEditorCanSwap"
+    },
+    {
+        "key": "ctrl+shift+tab",
+        "command": "workbench.action.quickOpenLeastRecentlyUsedEditorInGroup",
+        "when": "!inQuickOpen && activeEditor && !activeEditorGroupEmpty && !agentsPaneFocused && !auxiliaryBarFocus && !composerFocused && !panelFocus && !sideBarFocus && !terminalFocus || !inQuickOpen && editorFocus && !activeEditorGroupEmpty && !agentsPaneFocused && !auxiliaryBarFocus && !composerFocused && !panelFocus && !sideBarFocus && !terminalFocus"
+    },
+    {
+        "key": "ctrl+shift+tab",
+        "command": "-workbench.action.quickOpenLeastRecentlyUsedEditorInGroup",
+        "when": "activeEditor && !activeEditorGroupEmpty && !agentsPaneFocused && !auxiliaryBarFocus && !composerFocused && !panelFocus && !sideBarFocus && !terminalFocus || editorFocus && !activeEditorGroupEmpty && !agentsPaneFocused && !auxiliaryBarFocus && !composerFocused && !panelFocus && !sideBarFocus && !terminalFocus"
+    },
+    {
+        "key": "ctrl+shift+tab",
+        "command": "workbench.action.quickOpenLeastRecentlyUsedAgent",
+        "when": "!terminalFocus && agentsPaneFocused && !isInBackgroundComposerWindow || composerFocused && !isInBackgroundComposerWindow"
+    },
+    {
+        "key": "ctrl+shift+tab",
+        "command": "-workbench.action.quickOpenLeastRecentlyUsedAgent",
+        "when": "agentsPaneFocused && !isInBackgroundComposerWindow || composerFocused && !isInBackgroundComposerWindow"
+    },
+    {
+        "key": "ctrl+shit+tab",
+        "command": "workbench.action.quickOpenNavigatePrevious",
+        "when": "inQuickOpen"
+    }
+]

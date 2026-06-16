@@ -1,0 +1,381 @@
+{
+  "[python]" : {
+    "editor.formatOnType" : true
+  },
+  "C_Cpp.intelliSenseEngine" : "disabled",
+  "cursor.composer.textSizeScale" : 1.15,
+  "cursor.cpp.disabledLanguages" : [
+    "yaml",
+    "plaintext",
+    "markdown"
+  ],
+  "debug.inlineValues" : "on",
+  "debug.toolTips" : true,
+  "diffEditor.codeLens" : true,
+  "diffEditor.renderSideBySide" : false,
+  "editor.accessibilitySupport" : "off",
+  "editor.fontFamily" : "JetBrains Mono, Consolas, 'Courier New', monospace",
+  "editor.fontSize" : 14,
+  "editor.formatOnPaste" : true,
+  "editor.inlineSuggest.enabled" : true,
+  "editor.lineDecorationsWidth" : 0,
+  "editor.minimap.enabled" : false,
+  "editor.mouseWheelZoom" : true,
+  "editor.parameterHints.enabled" : false,
+  "editor.renderLineHighlight" : "none",
+  "explorer.confirmDelete" : false,
+  "explorer.confirmDragAndDrop" : false,
+  "explorer.confirmPasteNative" : false,
+  "files.autoSave" : "onFocusChange",
+  "files.exclude" : {
+    "**/__pycache__" : true
+  },
+  "files.watcherExclude" : {
+    "**/__pycache__" : true,
+    "**\/.git\/objects\/**" : true,
+    "**\/.git\/subtree-cache\/**" : true,
+    "**\/.venv\/**" : true,
+    "**\/bazel-out\/**" : true,
+    "**\/compile_commands.json" : true,
+    "**\/node_modules\/*\/**" : true
+  },
+  "geminicodeassist.project" : "t42-machine-learning",
+  "git.autofetch" : true,
+  "git.blame.editorDecoration.enabled" : false,
+  "git.blame.statusBarItem.enabled" : false,
+  "git.replaceTagsWhenPull" : true,
+  "github.copilot.enable" : {
+    "*" : true,
+    "markdown" : false,
+    "plaintext" : false,
+    "yaml" : false
+  },
+  "gitlab.duo.enabledWithoutGitlabProject" : false,
+  "gitlab.duoChat.enabled" : false,
+  "gitlab.duoCodeSuggestions.enabled" : false,
+  "gitlens.codeLens.authors.enabled" : false,
+  "gitlens.codeLens.recentChange.enabled" : false,
+  "gitlens.currentLine.enabled": false,
+  "gitlens.hovers.currentLine.enabled" : false,
+  "gitlens.telemetry.enabled" : false,
+  "gitlens.views.scm.grouped.views" : {
+    "branches" : true,
+    "commits" : true,
+    "contributors" : true,
+    "fileHistory" : false,
+    "launchpad" : false,
+    "remotes" : true,
+    "repositories" : true,
+    "searchAndCompare" : true,
+    "stashes" : true,
+    "tags" : true,
+    "worktrees" : true
+  },
+  "jupyter.askForKernelRestart" : false,
+  "jupyter.interactiveWindow.creationMode" : "perFile",
+  "jupyter.jupyterServerType" : "remote",
+  "peacock.favoriteColors" : [
+    {
+      "name" : "Midnight Blue",
+      "value" : "#0a2472"
+    },
+    {
+      "name" : "Deep Purple",
+      "value" : "#311b92"
+    },
+    {
+      "name" : "Forest Green",
+      "value" : "#1a472a"
+    },
+    {
+      "name" : "Blood Red",
+      "value" : "#7f0000"
+    },
+    {
+      "name" : "Dark Teal",
+      "value" : "#00251a"
+    },
+    {
+      "name" : "Charcoal",
+      "value" : "#212121"
+    },
+    {
+      "name" : "Dark Brown",
+      "value" : "#3e2723"
+    },
+    {
+      "name" : "Navy",
+      "value" : "#001064"
+    }
+  ],
+  "python.analysis.exclude" : [
+    "**\/node_modules",
+    "**\/bower_components",
+    "**\/.venv",
+    "**\/__pycache__",
+    "**\/bazel-out"
+  ],
+  "python.analysis.typeCheckingMode" : "basic",
+  "remote.autoForwardPortsSource" : "hybrid",
+  "remote.SSH.remotePlatform" : {
+    "workstation": "linux",
+    "gcloud-pii-gpu": "linux"
+  },
+  "search.exclude" : {
+    "**\/.venv\/**" : true,
+    "**\/*.code-search" : true,
+    "**\/__pycache__" : true,
+    "**\/bazel-out\/**" : true,
+    "**\/bower_components" : true,
+    "**\/compile_commands.json" : true,
+    "**\/node_modules" : true
+  },
+  "security.workspace.trust.untrustedFiles" : "open",
+
+
+  "telemetry.telemetryLevel" : "off",
+  "terminal.integrated.defaultProfile.linux" : "zsh",
+  "terminal.integrated.enableMultiLinePasteWarning": "never",
+  "terminal.integrated.inheritEnv" : false,
+  "vim.leader" : ",",
+  "vim.normalModeKeyBindingsNonRecursive" : [
+    {
+      "after" : [
+        "\"",
+        "_",
+        "x"
+      ],
+      "before" : [
+        "x"
+      ]
+    },
+    {
+      "after" : [
+        "\"",
+        "_",
+        "X"
+      ],
+      "before" : [
+        "X"
+      ]
+    },
+    {
+      "after" : [
+        "\"",
+        "_",
+        "d"
+      ],
+      "before" : [
+        "d"
+      ]
+    },
+    {
+      "after" : [
+        "\"",
+        "_",
+        "D"
+      ],
+      "before" : [
+        "D"
+      ]
+    },
+    {
+      "after" : [
+      "\"",
+        "*",
+        "d"
+      ],
+      "before" : [
+        "<leader>",
+        "d"
+      ]
+    },
+    {
+      "after" : [
+        "\"",
+        "*",
+        "D"
+      ],
+      "before" : [
+        "<leader>",
+        "D"
+      ]
+    }
+  ],
+  "vim.useSystemClipboard" : true,
+  "vim.vimrc.enable" : true,
+  "vim.visualModeKeyBindingsNonRecursive" : [
+    {
+      "after" : [
+        "\"",
+        "_",
+        "d"
+      ],
+      "before" : [
+        "d"
+      ]
+    },
+    {
+      "after" : [
+        "\"",
+        "*",
+        "d"
+      ],
+      "before" : [
+        "<leader>",
+        "d"
+      ]
+    }
+  ],
+  "window.confirmSaveUntitledWorkspace" : false,
+  "window.titleBarStyle": "custom",
+  "window.zoomPerWindow" : false,
+  "workbench.activityBar.orientation" : "vertical",
+  "workbench.colorCustomizations" : {
+    "tab.activeBorder" : "#00ff00",
+    
+    "tab.inactiveForeground" : "#e7e7e7",
+    "tab.unfocusedInactiveForeground": "#e7e7e7",
+    "tab.unfocusedActiveBorder" : "#cc1bf4",
+
+
+
+          // Color of markdown code chunks when opened with VSCode's "Open Preview to the Side" feature.
+      "textCodeBlock.background": "#71797E",
+
+
+      // cursor suggest: Background color 
+      "editorGhostText.background": "#c400c8b0",
+
+  },
+  "workbench.editor.enablePreviewFromQuickOpen" : true,
+  "workbench.editor.labelFormat" : "medium",
+  "workbench.editor.tabSizing" : "fit",
+  "workbench.editor.wrapTabs" : true,
+  "workbench.list.openMode" : "doubleClick",
+  "workbench.quickOpen.closeOnFocusLost" : false,
+  "workbench.tree.expandMode": "doubleClick",
+  "gitlens.ai.model": "gitkraken",
+  "gitlens.ai.gitkraken.model": "gemini:gemini-2.0-flash",
+  "gitlens.graph.minimap.enabled": false,
+  
+
+  "debugpy.showPythonInlineValues": true,
+  "snyk.advanced.cliPath": "/Users/maxime2gardoni/Library/Application Support/snyk/vscode-cli/snyk-macos-arm64",
+  "snyk.folderConfigs": [
+    {
+      "folderPath": "/home/maximegardoni/code/patterns",
+      "baseBranch": "master",
+      "localBranches": [
+        "SECHUN2-3391",
+        "SECHUN2-3392",
+        "SECHUN2-3469",
+        "as",
+        "beatcraft",
+        "benchmark",
+        "benchmark_test46_23_2789",
+        "blip",
+        "detect_image",
+        "dummy_pr",
+        "feat/github_staragent",
+        "feat/openrouter",
+        "feat/staragent/entrypoint-modularity",
+        "feat_staragent",
+        "fix/js-express-url-source",
+        "fix-GOS-3472",
+        "fix-SECHUN2-3390",
+        "fix-SECHUN2-3471",
+        "isolated_network",
+        "master",
+        "master_for_bench",
+        "master_for_staragent_fix",
+        "revert_2fp",
+        "revert_fp",
+        "staragent_aibom",
+        "staragent_default_gemini_binary",
+        "staragent_dev_repo",
+        "staragent_draft",
+        "staragent_message_user",
+        "staragent_skills",
+        "starlagent_predicate_img"
+      ],
+      "preferredOrg": "",
+      "autoDeterminedOrg": "",
+      "orgMigratedFromGlobalConfig": false,
+      "orgSetByUser": true,
+      "featureFlags": {
+        "internal_iaw_enabled": false,
+        "snykCodeConsistentIgnores": false,
+        "snykCodeInlineIgnore": false
+      },
+      "sastSettings": null
+    }
+  ],
+  "snyk.trustedFolders": [
+    "/home/maximegardoni/code/juice-shop",
+    "/home/maximegardoni/code/ai-ml-autofix-golden-tests",
+    "/private/tmp/dummy",
+    "/home/maximegardoni/code/staragent",
+    "/home/maximegardoni/code/benchmark_output",
+    "/Users/maximegardoni/code/juice-shop"
+  ],
+  "snyk.yesWelcomeNotification": false,
+  "python.languageServer": "None",
+  //"remote.SSH.connectTimeout": 120,
+
+
+  "clangd.arguments": [
+  "--all-scopes-completion",
+  "--background-index",
+  "--compile-commands-dir=${workspaceFolder}",
+  "--enable-config",
+  "-j=8"
+],
+"githubPullRequests.pullBranch": "never",
+"remote.SSH.defaultExtensions": [
+    "llvm-vs-code-extensions.vscode-clangd"
+],
+"workbench.editor.enablePreview": false,
+"editor.hover.delay": 1000,
+"editor.hover.hidingDelay": 1000,
+"workbench.hover.delay": 1000,
+"workbench.sash.hoverDelay": 1000,
+"find-it-faster.general.useTerminalInEditor": true,
+"cursorBlame.editorDecoration.enabled": false,
+"workbench.editor.revealIfOpen": true,
+"l13Diff.confirmCopy": false,
+"terminal.integrated.scrollback": 10000,
+"snyk.advanced.autoSelectOrganization": false,
+"editor.tokenColorCustomizations": {
+  "textMateRules": [
+    {
+      // VSCode's built-in TextMate grammar for Markdown does not provide a scope for the entire heading line.
+      // As a workaround, we color both the '#' and the heading text, as well as fallback to string.markdown.
+      // This still may not fully color the line due to TextMate grammar limitations.
+      "scope": [
+        "markup.heading",
+        "markup.heading.markdown",
+        "markup.heading.markdown punctuation.definition.heading.markdown",
+        "markup.heading.markdown string",
+        "entity.name.section.markdown",
+        "string.markdown"
+      ],
+      "settings": {
+        "foreground": "#75ac83",
+        
+      }
+    }
+  ]
+},
+"starlang.analysis.sourceFolder": "_playground",
+"cursor.chatMaxWidth": 1200,
+"window.autoDetectColorScheme": false,
+"security.workspace.trust.enabled": true,
+"extensions.installCooldownHours": 24,
+"window.zoomLevel": 2,
+"terminal.integrated.fontSize": 10
+
+  
+}
+
+

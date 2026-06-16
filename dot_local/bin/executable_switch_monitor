@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+/Applications/BetterDisplay.app/Contents/MacOS/BetterDisplay set -ddc=17 -vcp=inputSelect

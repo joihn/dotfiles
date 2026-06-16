@@ -1,0 +1,37 @@
+#!/usr/bin/env zsh
+# fpf — “file to pasteboard (file)”
+# Usage: fpf <file> [more files]
+
+set -euo pipefail
+
+if [[ $# -lt 1 ]]; then
+  print -u2 "Usage: fpf <file> [more files]"
+  exit 1
+fi
+
+# Ensure all paths exist
+for f in "$@"; do
+  if [[ ! -e "$f" ]]; then
+    print -u2 "Not found: $f"
+    exit 1
+  fi
+done
+
+# Hand the POSIX file objects to AppleScript
+osascript - "$@" <<'APPLESCRIPT'
+on run argv
+	set L to {}
+	repeat with p in argv
+		-- p is a POSIX path string
+		set end of L to POSIX file p
+	end repeat
+	if (count of L) = 1 then
+		set the clipboard to item 1 of L
+	else
+		set the clipboard to L
+	end if
+end run
+APPLESCRIPT
+
+echo "📋 Copied file reference(s) to the clipboard."
+

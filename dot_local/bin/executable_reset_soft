@@ -1,0 +1,21 @@
+#!/bin/sh
+# reset_soft - gently restore a terminal left in a broken state.
+#
+# After an abrupt ssh disconnect (wifi drop / laptop sleep), the remote
+# tmux/vim never gets to undo the modes it set on your local terminal:
+# alt-screen (can't scroll), mouse tracking, kitty keyboard protocol
+# (broken shortcuts), bracketed paste, focus reporting. ssh can't fix this
+# because it treats the session as an opaque byte pipe.
+#
+# Unlike `reset`/`tput reset`, this is a SOFT reset: it sends only the
+# specific "undo" sequences, so it's instant and preserves your scrollback.
+# It's a no-op for any mode that wasn't actually set.
+
+printf '\033[<u\033[<u\033[<u'                                   # pop kitty keyboard protocol stack
+printf '\033[?1049l'                                             # leave alternate screen -> restores scrolling
+printf '\033[?1l\033>'                                           # normal cursor keys + keypad
+printf '\033[?2004l'                                             # disable bracketed paste
+printf '\033[?1000l\033[?1002l\033[?1003l\033[?1006l\033[?1015l' # disable mouse tracking
+printf '\033[?1004l'                                             # disable focus reporting
+printf '\033[?7h\033[?25h\033[0m'                                # autowrap on, cursor visible, reset attrs
+stty sane 2>/dev/null                                            # restore tty line discipline

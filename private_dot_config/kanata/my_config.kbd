@@ -1,0 +1,198 @@
+;; my_config.kbd - Kanata configuration for macOS
+;; Converted from keyd configuration
+
+(defcfg
+  process-unmapped-keys yes
+  danger-enable-cmd no
+  sequence-timeout 1000
+  concurrent-tap-hold yes
+  rapid-event-delay 5
+)
+
+;; Define source keys - adjust this based on your keyboard layout
+(defsrc
+  esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+  nubs  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+  caps a    s    d    f    g    h    j    k    l    ;    '    ret
+  lsft grv z    x    c    v    b    n    m    ,    .    /    rsft
+fn  lctl lalt lmet          spc            ralt rmet rctl 
+)
+
+;; Define variables for timeouts
+(defvar
+  tap-timeout 200
+  hold-timeout 200
+)
+(deftemplate unmeta (action)
+  (multi (release-key lmet) $action)
+)
+(deftemplate unshift (action)
+  (multi (release-key lshift) $action)
+)
+
+
+;; Define aliases
+(defalias
+  ;; Basic remapping
+  esc-grv grv  ;; escape becomes backtick
+    
+  ;; Special characters (using unicode or compose sequences)
+  é (unicode é)
+  à (unicode à)
+  è (unicode è)
+  ê (unicode ê)
+  ç (unicode ç)
+  ô (unicode ô)
+  â (unicode â)
+  chk (unicode ✓)
+  x-mark (unicode ✗)
+  underscore (macro S--)  ;; _ character
+  
+  ;; Macros
+  lparen (macro S-9)  ;; (
+  rparen (macro S-0)  ;; )
+  star (macro S-8)    ;; *
+  hash (macro S-3)    ;; #
+  plus (macro S-=)    ;; +
+  
+  ;; Helper actions for dance sequences (must be defined before use)
+  semi2 (macro bspc @ç)
+  apos2 (macro bspc @â)
+  brkt2 (macro bspc @ê)
+  
+  ;; Dance sequences (tap-dance in kanata)
+  dance-semi (tap-dance 200 (@é @semi2 @ô))
+  dance-apos (tap-dance 200 (@à @apos2))
+  dance-brkt (tap-dance 200 (@è @brkt2))
+  
+  caps (tap-hold-press $tap-timeout $hold-timeout esc (multi lmet (layer-while-held capslock-layer)))  
+
+  tab (tap-hold-press $tap-timeout $hold-timeout tab (layer-while-held tab-layer))
+  slsh (tap-hold-press $tap-timeout $hold-timeout / lsft)
+  spc (tap-hold-press $tap-timeout $hold-timeout spc (layer-while-held spc-layer))
+
+  ;; Capslock+space special handling
+  ;; CHANGED: Using tap-hold-press for immediate response
+  cap-spc (tap-hold-press $tap-timeout $hold-timeout @underscore (layer-while-held capslock-space))
+  
+  ;; Volume and brightness controls
+  vup volu
+  vdn vold
+  mut mute
+  bup brup
+  bdn brdn
+)
+
+;; Main layer
+(deflayer main
+  @esc-grv  🔅   🔆    ✗    ✗    ✗    ✗    ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊
+  grv       1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  @tab      q    w    e    r    t    z   u    i    o    p    [    ]    \
+  @caps     a    s    d    f    g    h    j    k    l    ;    '    ret
+  lsft      lsft y   x    c    v    b    n    m    ,    .    @slsh rsft
+fn lctl      lalt lmet          @spc            ralt rmet rctl 
+  ;;        command  option (ignore the swapped representation)
+)
+
+(deflayer spc-layer
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _   _    _    _    _    _
+(multi lshft (layer-while-held capslock-layer))    _    _    _    _    _    _    _     _   _    _  _    _
+  _    _    _    _    _    _    _    _    _      _    _    _
+fn  _    _    _    _              _              _    _    _
+)
+
+;; Capslock layer (Control behavior)
+(deflayer capslock-layer
+  _    _     _     _     _     _     _     _     _     _     _     _     _
+  _    _     _     _     _     _     _     _     _     _     _     _     _     _
+  _    _    _     _   (t! unmeta @vk_r)  _    _   (t! unmeta -)         (t! unmeta +)         (t! unmeta =)         (t! unmeta @hash)       (t! unmeta @dance-brkt) (t! unmeta @ç)   _
+  _    _    _     _    _    (t! unmeta @vk_g)    (t! unmeta left)      (t! unmeta down)      (t! unmeta up)        (t! unmeta rght)      (t! unmeta ret)         (t! unmeta @dance-apos) _
+  _    _     _    (t! unshift M-x)    (t! unshift M-c)    (t! unshift M-v)    _   (t! unmeta @lparen)   (t! unmeta @rparen)   (t! unmeta @vk_home)  (t! unmeta @vk_end)  (t! unmeta @star)       _
+_  _    lmet   lalt          (t! unmeta @cap-spc)  _     _     _
+)
+
+;; Capslock + Space layer
+(deflayer capslock-space
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    M--  M-= M-z   M-S-z    _    _    _
+  _    _    _    _    _    _    bspc C-S-tab C-tab del _ _    _
+  _    _    _    _    _    _    _    A-home A-end A-pgup A-pgdn _ _
+fn  _    _    _              _              _    _    _
+)
+
+;; Tab layer (number pad)
+(deflayer tab-layer
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    bspc
+  _    _    _    _    _    _    _    7    8    9    lrld    _    _    _
+  _    _    _    _    _    _    @vup 4    5    6    .    _    _
+  _    _    _    _    _    _    _    @vdn 1    2    3    @star _
+fn  _    _    _                  0              _    _    _
+)
+
+;; Meta layer
+(deflayer meta-layer
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    A-f9 _    _    _    _    _    M-up M-w  _    _    _    _    _
+  _    _    _    _    _    _    M-left _ _   M-right _  _    _
+  _    _    _    _    _    _    _    _    pgup pgdn _    _
+fn  _    _    _    _              _              _    _    _
+)
+
+;; Control layer
+(deflayermap (control-layer)
+  tab C-tab
+)
+
+;; Control+Shift layer
+(deflayermap (control-shift-layer)
+  tab C-S-tab
+)
+
+;; Shift layer
+(deflayermap (shift-layer)
+  esc S-grv  ;; tilde
+)
+
+;; Additional layer definitions for modifier combinations
+(deflayermap (capslock-shift)
+  h S-left
+  j S-down
+  k S-up
+  l S-right
+)
+
+(deflayermap (capslock-control)
+  , home
+  . end
+  n C-home
+  m C-end
+)
+
+(defvirtualkeys
+  net.kovidgoyal.kitty nop0
+)
+(defalias
+  vk_home (switch
+    ((input virtual net.kovidgoyal.kitty)) home break
+    () M-left break
+  )
+  vk_end (switch
+    ((input virtual net.kovidgoyal.kitty)) end break
+    () M-rght break
+  )
+  vk_r (switch ;; kitty hstr 
+    ((input virtual net.kovidgoyal.kitty)) C-r break
+    () M-r break
+  )
+  vk_g (switch ;; kitty broot selection
+    ((input virtual net.kovidgoyal.kitty)) C-g break
+    () M-g break
+  )
+)
+
