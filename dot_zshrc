@@ -547,13 +547,6 @@ if command -v hstr &> /dev/null; then # if hstr exist
         export HSTR_CONFIG=hicolor,raw-history-view      # get more colors
         bindkey -s "\C-r" "\C-a hstr -- \C-j"     # bind hstr to Ctrl-r (for Vi mode check doc)
     }
-elif [ -f "$HOME/.atuin/bin/env" ]; then # if atuin exist
-    # Atuin configuration
-    . "$HOME/.atuin/bin/env"
-    eval "$(atuin init zsh --disable-up-arrow)"
-    function zvm_after_init() {
-        bindkey '^r' atuin-search
-    }
 fi
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#AAAAAA"

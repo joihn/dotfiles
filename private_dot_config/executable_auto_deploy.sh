@@ -21,8 +21,6 @@ mkdir -p ~/.config/chezmoi
 printf "data:\n    DISPLAY_VAR: :1\n" >> ~/.config/chezmoi/chezmoi.yaml
 sh -c "$(curl --proto '=https' --tlsv1.2 -fsLS https://chezmoi.io/get)" -- init --apply joihn
 
-curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
-
 export TERM=xterm-256color
 
 zsh -l

@@ -203,7 +203,7 @@ run_onchange_install-brew-packages.sh.tmpl      brew bundle the Brewfile
 run_onchange_install-cursor-extensions.sh.tmpl  install tracked Cursor extensions
 dot_*                     ~/.* dotfiles (zshrc, bashrc, p10k.zsh, tmux.conf, vimrc, ...)
 dot_local/bin/            helper scripts (see below) → ~/.local/bin
-private_dot_config/       ~/.config/* (nvim, kitty, btop, kanata, atuin, ...)
+private_dot_config/       ~/.config/* (nvim, kitty, btop, kanata, ...)
 private_dot_config/executable_auto_deploy.sh    Tier-0 fresh-machine bootstrap
 private_Library/          macOS ~/Library bits
 ```
