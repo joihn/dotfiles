@@ -23,8 +23,8 @@ How Homebrew packages and Cursor extensions are tracked in this chezmoi repo.
 - **Casks are macOS-only** (Homebrew Cask doesn't exist on linuxbrew), so every
   `cask`/`mas`/`tap` line goes in the darwin block. Cross-platform CLI formulae
   go in the top (unguarded) section — verified each has a Linux bottle.
-- `goku` / `kanata-vk-agent` are pinned manually (brew marks them not-on-request,
-  so `brew bundle dump` won't list them); they show as expected drift in brewdiff.
+- `kanata-vk-agent` is pinned manually (brew marks it not-on-request,
+  so `brew bundle dump` won't list it); it shows as expected drift in brewdiff.
 
 ## Common tasks
 
