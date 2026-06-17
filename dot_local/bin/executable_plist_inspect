@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+#
+# plist-inspect — browse macOS `defaults` domains with an fzf picker and a
+# syntax-highlighted preview of each domain's values.
+#
+# Requires: fzf. Optionally uses `bat` for colorized previews (falls back to
+# plain `defaults read` output if bat is not installed).
+
+set -euo pipefail
+
+# Pick a preview command: prefer bat for color, fall back to plain output.
+if command -v bat >/dev/null 2>&1; then
+  # `defaults read` emits the old-style (NeXTSTEP) plist format; Swift's lexer
+  # gives the closest sensible highlighting for the { } = ; structure.
+  preview='defaults read {} 2>/dev/null | bat --color=always --language=swift --style=plain --paging=never || echo "(no readable values)"'
+else
+  preview='defaults read {} 2>/dev/null || echo "(no readable values)"'
+fi
+
+defaults domains \
+  | tr ',' '\n' \
+  | sed 's/^ *//' \
+  | fzf \
+      --preview "$preview" \
+      --preview-window 'right:60%:wrap' \
+      --prompt 'domain> ' \
+      --header 'macOS defaults domains  (enter to print, esc to quit)' \
+      --bind 'enter:execute(defaults read {} 2>/dev/null | less -R)'
