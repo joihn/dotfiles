@@ -17,7 +17,6 @@
 #   then edit this file to add what you want to keep, and `chezmoi apply`.
 
 # --- cross-platform CLI tools (macOS Homebrew + Linux linuxbrew) ---
-brew "awscli"
 brew "bat"
 brew "broot"
 brew "btop"
@@ -25,7 +24,6 @@ brew "chezmoi"
 brew "fzf"
 brew "gh"
 brew "git-delta"
-brew "git-lfs"
 brew "go"
 brew "grpc"
 brew "grpcurl"
@@ -41,7 +39,6 @@ brew "tig"
 brew "tmux"
 brew "uv"
 brew "wget"
-brew "zellij"
 
 {{ if eq .chezmoi.os "linux" -}}
 # --- Linux-only: provided by the system on macOS (built-in zsh, Xcode CLT git) ---
@@ -74,7 +71,6 @@ cask "cursor"
 cask "firefox"
 cask "font-meslo-lg-nerd-font"
 cask "forklift"
-cask "gcloud-cli"
 cask "gpg-suite"
 cask "homerow"
 cask "inkscape"
