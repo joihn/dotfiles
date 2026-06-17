@@ -29,6 +29,15 @@
     stripComponents = 1
     refreshPeriod = "504h"
 
+# powerlevel10k prompt theme. Fetched as an archive (same rationale as the
+# plugins: no git binary needed) into the oh-my-zsh custom themes dir so
+# `ZSH_THEME="powerlevel10k/powerlevel10k"` in .zshrc resolves it.
+[".oh-my-zsh/custom/themes/powerlevel10k"]
+    type = "archive"
+    url = "https://github.com/romkatv/powerlevel10k/archive/master.tar.gz"
+    stripComponents = 1
+    refreshPeriod = "504h"
+
 # kitten: single static binary, used for clipboard passthrough over SSH.
 # Linux only — on macOS kitty (and its bundled kitten) comes from `cask "kitty"`
 # in run_onchange_install-brew-packages.sh.
