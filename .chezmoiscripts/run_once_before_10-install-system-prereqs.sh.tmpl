@@ -1,0 +1,22 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/bin/sh
+#
+# Linux-only system/GUI packages that Homebrew should NOT own: X11/clipboard and
+# FUSE tooling that brew can't cleanly provide. CLI tools (git, zsh, git-delta,
+# etc.) come from the shared Brewfile instead.
+#
+# run_once_, runs in the run_before_ phase, unattended (no prompt). Idempotent;
+# tolerant of Docker / missing sudo.
+
+if [ -f /.dockerenv ] || ! command -v sudo >/dev/null 2>&1; then
+    echo "Skipping apt system prereqs (in Docker or no sudo)." >&2
+    exit 0
+fi
+
+sudo apt-get install -y vim-gtk3 xclip sshfs
+
+# mpv only on x86_64 GNOME desktops.
+if dpkg -l | grep -q gnome-shell && [ "$(uname -m)" = "x86_64" ]; then
+    sudo apt-get install -y mpv
+fi
+{{ end -}}

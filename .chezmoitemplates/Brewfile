@@ -43,7 +43,14 @@ brew "ripgrep"
 brew "tig"
 brew "tmux"
 brew "uv"
+brew "wget"
 brew "zellij"
+
+{{ if eq .chezmoi.os "linux" -}}
+# --- Linux-only: provided by the system on macOS (built-in zsh, Xcode CLT git) ---
+brew "git"
+brew "zsh"
+{{ end -}}
 
 {{ if eq .chezmoi.os "darwin" -}}
 # --- macOS-only: taps, mac-specific brews, GUI casks, App Store ---

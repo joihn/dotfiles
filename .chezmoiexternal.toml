@@ -5,24 +5,29 @@
     stripComponents = 1
     refreshPeriod = "168h"
 
+# Plugins are fetched as archives (HTTPS tarballs) rather than git-repo, so they
+# need no `git` binary — a fresh machine can apply before git is installed.
+# refreshPeriod still controls how often they re-download.
 [".oh-my-zsh/custom/plugins/fast-syntax-highlighting"]
-    type = "git-repo"
-    url = "https://github.com/zdharma-continuum/fast-syntax-highlighting.git"
+    type = "archive"
+    url = "https://github.com/zdharma-continuum/fast-syntax-highlighting/archive/master.tar.gz"
+    stripComponents = 1
     refreshPeriod = "504h"
 [".oh-my-zsh/custom/plugins/zsh-vi-mode"]
-    type = "git-repo"
-    url = "https://github.com/joihn/zsh-vi-mode.git"
+    type = "archive"
+    url = "https://github.com/joihn/zsh-vi-mode/archive/master.tar.gz"
+    stripComponents = 1
     refreshPeriod = "504h"
 [".oh-my-zsh/custom/plugins/conda-zsh-completion"]
-    type = "git-repo"
-    url = "https://github.com/conda-incubator/conda-zsh-completion.git"
+    type = "archive"
+    url = "https://github.com/conda-incubator/conda-zsh-completion/archive/main.tar.gz"
+    stripComponents = 1
     refreshPeriod = "504h"
-    branch = "main"
 [".oh-my-zsh/custom/plugins/zsh-autosuggestions"]
-    type = "git-repo"
-    url = "https://github.com/zsh-users/zsh-autosuggestions.git"
+    type = "archive"
+    url = "https://github.com/zsh-users/zsh-autosuggestions/archive/master.tar.gz"
+    stripComponents = 1
     refreshPeriod = "504h"
-    branch = "main"
 
 # kitten: single static binary, used for clipboard passthrough over SSH.
 # Linux only — on macOS kitty (and its bundled kitten) comes from `cask "kitty"`

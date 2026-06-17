@@ -1,0 +1,57 @@
+#!/bin/sh
+#
+# Bootstrap the package manager (Homebrew) before anything that depends on it.
+#
+# Runs in chezmoi's run_before_ phase, i.e. before files/externals/other scripts
+# are applied. It is run_once_: keyed on the rendered content, so it executes once
+# per machine. It must be idempotent and must NOT abort the whole `chezmoi apply`
+# on a recoverable failure (so: no `set -e`, and tolerate missing sudo/network).
+#
+# Each chezmoi script runs in its own shell with a minimal env, so PATH set here
+# does not propagate to later scripts. Downstream scripts (e.g.
+# run_onchange_install-brew-packages.sh.tmpl) locate brew by absolute path.
+
+brew_present() {
+    command -v brew >/dev/null 2>&1 \
+        || [ -x /opt/homebrew/bin/brew ] \
+        || [ -x /usr/local/bin/brew ] \
+        || [ -x /home/linuxbrew/.linuxbrew/bin/brew ]
+}
+
+install_homebrew() {
+    NONINTERACTIVE=1 /bin/bash -c \
+        "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+}
+
+{{ if eq .chezmoi.os "darwin" -}}
+# --- macOS ---
+# The official installer also triggers the Xcode Command Line Tools install,
+# which provides `git` before the update phase fetches externals.
+if brew_present; then
+    echo "Homebrew already installed; skipping." >&2
+else
+    echo "Installing Homebrew (macOS)..." >&2
+    install_homebrew
+fi
+
+{{ else if eq .chezmoi.os "linux" -}}
+# --- Linux ---
+# linuxbrew needs build tools + git/curl. Install them via apt first; this also
+# seeds `git` so the git-based externals fetched later this run succeed.
+if [ ! -f /.dockerenv ] && command -v sudo >/dev/null 2>&1; then
+    sudo apt-get update \
+        && sudo apt-get install -y build-essential procps curl file git
+else
+    echo "Skipping apt prereqs (in Docker or no sudo)." >&2
+fi
+
+# Homebrew refuses to run as root.
+if [ "$(id -u)" = "0" ]; then
+    echo "Running as root; skipping linuxbrew install." >&2
+elif brew_present; then
+    echo "Homebrew already installed; skipping." >&2
+else
+    echo "Installing Homebrew (linuxbrew)..." >&2
+    install_homebrew
+fi
+{{ end -}}
