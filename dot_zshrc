@@ -17,6 +17,11 @@ case "$OSTYPE" in
 esac
 export OS
 
+# Set a full UTF-8 locale before Powerlevel10k loads. The C.UTF-8 locale lacks a
+# complete collation table, which makes p10k's _p9k_init_params throw
+# "character not in range". en_US.UTF-8 has the ranges p10k expects.
+export LANG=en_US.UTF-8
+
 if [[ -n "$CURSOR_AGENT" ]]; then
   # Skip theme initialization for better compatibility
 else
