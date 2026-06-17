@@ -1,0 +1,31 @@
+#!/bin/sh
+
+# Install packages via Homebrew (macOS Homebrew + Linux linuxbrew).
+#
+# The package list lives in .chezmoitemplates/Brewfile (the single source of
+# truth) and is inlined here at render time. This is a run_onchange script:
+# chezmoi re-runs it only when the rendered content below changes. `brew bundle`
+# is idempotent, so already-installed packages are skipped.
+#
+# Note: macOS-only entries (casks, mas, mac brews/taps) are guarded inside the
+# template, so on Linux this renders to a linuxbrew-safe list.
+# Cursor extensions are handled separately (run_onchange_install-cursor-extensions.sh.tmpl).
+
+# Locate brew (chezmoi may run this with a minimal PATH).
+if command -v brew >/dev/null 2>&1; then
+    BREW=brew
+elif [ -x /home/linuxbrew/.linuxbrew/bin/brew ]; then
+    BREW=/home/linuxbrew/.linuxbrew/bin/brew
+elif [ -x /opt/homebrew/bin/brew ]; then
+    BREW=/opt/homebrew/bin/brew
+elif [ -x /usr/local/bin/brew ]; then
+    BREW=/usr/local/bin/brew
+else
+    echo "brew not found; skipping brew package install." >&2
+    exit 0
+fi
+
+# Rendered Brewfile content (from .chezmoitemplates/Brewfile).
+"$BREW" bundle --file=/dev/stdin <<'BREWFILE_EOF'
+{{ template "Brewfile" . }}
+BREWFILE_EOF

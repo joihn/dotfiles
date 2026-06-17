@@ -1,0 +1,39 @@
+#!/bin/sh
+
+# Show drift between what's installed via Homebrew and what's tracked in chezmoi.
+#
+# Tracked   = .chezmoitemplates/Brewfile, rendered for THIS machine's OS.
+# Installed = `brew bundle dump` (high-level packages only — leaves + casks).
+#
+#   < lines  : installed but NOT tracked  -> candidates to add to the Brewfile
+#   > lines  : tracked but NOT installed  -> removed upstream, or not yet applied
+#
+# Taps are not compared (noisy, and auto-added by fully-qualified `brew` names).
+#
+# To edit the tracked list (it's a template partial, so `chezmoi edit` won't
+# reach it — open it directly):
+#   $EDITOR "$(chezmoi source-path)/.chezmoitemplates/Brewfile"
+
+set -e
+
+for cmd in chezmoi brew; do
+    command -v "$cmd" >/dev/null 2>&1 || { echo "$cmd not found on PATH." >&2; exit 1; }
+done
+
+KINDS='^(brew|cask|mas) '
+
+tmpd=$(mktemp -d)
+trap 'rm -rf "$tmpd"' EXIT
+
+chezmoi execute-template '{{ template "Brewfile" . }}' | grep -E "$KINDS" | sort -u > "$tmpd/tracked"
+brew bundle dump --file=- 2>/dev/null      | grep -E "$KINDS" | sort -u > "$tmpd/installed"
+
+if cmp -s "$tmpd/installed" "$tmpd/tracked"; then
+    echo "In sync: tracked Brewfile matches installed packages (brew/cask/mas)."
+    exit 0
+fi
+
+echo "  '<' = installed but not tracked (consider adding to the Brewfile)"
+echo "  '>' = tracked but not installed (removed upstream, or not yet applied)"
+echo
+diff "$tmpd/installed" "$tmpd/tracked" || true

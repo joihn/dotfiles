@@ -1,0 +1,107 @@
+# Single source of truth for Homebrew packages, tracked by chezmoi.
+#
+# Consumed by:
+#   - run_onchange_install-brew-packages.sh.tmpl  (via the {{ "{{ template ... }}" }} directive)
+#   - the `brewdiff` helper                        (to show drift vs. installed)
+#
+# Only HIGH-LEVEL packages are listed (formulae installed on request, i.e. what
+# `brew bundle dump` emits) — transitive dependencies are omitted on purpose,
+# since `brew` reinstalls them automatically. Regenerate/compare with `brewdiff`.
+#
+# macOS-only entries (casks, App Store apps, mac-specific brews/taps) are guarded
+# by an OS check so this renders to a clean, linuxbrew-safe file on Linux.
+# Homebrew casks are macOS-only by definition, so they all live in that block.
+#
+# Workflow:
+#   brewdiff        # show what's installed but not tracked here (and vice versa)
+#   then edit this file to add what you want to keep, and `chezmoi apply`.
+
+# --- cross-platform CLI tools (macOS Homebrew + Linux linuxbrew) ---
+brew "awscli"
+brew "bat"
+brew "bazel"
+brew "broot"
+brew "btop"
+brew "chezmoi"
+brew "fzf"
+brew "gemini-cli"
+brew "gh"
+brew "git-delta"
+brew "git-lfs"
+brew "go"
+brew "grpc"
+brew "grpcurl"
+brew "hstr"
+brew "kanata"
+brew "kubernetes-cli"
+brew "lazydocker"
+brew "lazygit"
+brew "llvm"
+brew "neovim"
+brew "node"
+brew "openjdk@17"
+brew "openjdk@21"
+brew "ripgrep"
+brew "stress-ng"
+brew "tig"
+brew "tmux"
+brew "uv"
+brew "zellij"
+
+{{ if eq .chezmoi.os "darwin" -}}
+# --- macOS-only: taps, mac-specific brews, GUI casks, App Store ---
+tap "devsunb/tap"
+tap "yqrashawn/goku"
+
+brew "coreutils"
+brew "duti"
+brew "firefoxpwa"
+brew "mas"
+brew "ssh-copy-id"
+# kanata keyboard tooling (macOS-only; brew marks these not-on-request, so they
+# won't show in `brew bundle dump` — pinned here intentionally for reproducibility).
+brew "devsunb/tap/kanata-vk-agent"
+brew "yqrashawn/goku/goku"
+
+cask "adobe-acrobat-reader"
+cask "aldente"
+cask "android-platform-tools"
+cask "background-music"
+cask "badgeify"
+cask "betterdisplay"
+cask "brave-browser"
+cask "daptify14/tap/chezit", trusted: true
+cask "claude"
+cask "contexts"
+cask "cursor"
+cask "firefox"
+cask "font-meslo-lg-nerd-font"
+cask "forklift"
+cask "gcloud-cli"
+cask "gpg-suite"
+cask "homerow"
+cask "inkscape"
+cask "iterm2"
+cask "karabiner-elements"
+cask "keycastr"
+cask "kindavim"
+cask "linearmouse"
+cask "macfuse"
+cask "meld"
+cask "monodraw"
+cask "raycast"
+cask "scroll-reverser"
+cask "skim"
+cask "spotify"
+cask "sublime-text"
+cask "teamviewer"
+cask "tuple"
+cask "visual-studio-code"
+cask "vivaldi"
+cask "vlc"
+cask "warp"
+cask "wispr-flow"
+
+# App Store apps: `mas` is installed above. Run `mas list` and add lines like:
+#   mas "Things", id: 904280696
+{{ end -}}

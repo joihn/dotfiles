@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# Install Cursor editor extensions from the tracked list.
+#
+# The list lives in .chezmoitemplates/cursor-extensions (single source of truth)
+# and is inlined here at render time. run_onchange: chezmoi re-runs this only
+# when the list changes. `cursor --install-extension` is idempotent (already
+# installed extensions are skipped), and the list is cross-platform.
+#
+# To refresh the tracked list from what's currently installed:
+#   cursor --list-extensions > "$(chezmoi source-path)/.chezmoitemplates/cursor-extensions"
+
+if ! command -v cursor >/dev/null 2>&1; then
+    echo "note: 'cursor' CLI not found on PATH; skipping Cursor extension install." >&2
+    exit 0
+fi
+
+cat <<'EXT_EOF' | while IFS= read -r ext; do
+{{ template "cursor-extensions" . }}
+EXT_EOF
+    [ -z "$ext" ] && continue
+    cursor --install-extension "$ext" >/dev/null 2>&1 \
+        && echo "ok   $ext" \
+        || echo "FAIL $ext" >&2
+done
