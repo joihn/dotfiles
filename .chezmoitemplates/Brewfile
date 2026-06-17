@@ -51,7 +51,6 @@ brew "zellij"
 {{ if eq .chezmoi.os "darwin" -}}
 # --- macOS-only: taps, mac-specific brews, GUI casks, App Store ---
 tap "devsunb/tap"
-tap "yqrashawn/goku"
 
 brew "coreutils"
 brew "duti"
@@ -61,7 +60,6 @@ brew "ssh-copy-id"
 # kanata keyboard tooling (macOS-only; brew marks these not-on-request, so they
 # won't show in `brew bundle dump` — pinned here intentionally for reproducibility).
 brew "devsunb/tap/kanata-vk-agent"
-brew "yqrashawn/goku/goku"
 
 cask "adobe-acrobat-reader"
 cask "aldente"
