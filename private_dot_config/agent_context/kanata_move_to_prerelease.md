@@ -1,5 +1,12 @@
 # Runbook: move kanata to 1.12.0-prerelease-2 to fix the macOS sleep/wake bug
 
+> ⚠️ **SUPERSEDED (2026-06-17) — DO NOT FOLLOW THIS RUNBOOK.** The 1.12.0-prerelease approach
+> below did **not** hold up: that prerelease is a macOS regression that crashes/wedges on wake
+> (upstream issue #2008), and 1.11.0 stable does not have that bug. The current, working approach
+> is **brew-stable kanata + a sleepwatcher restart-on-wake daemon + disabling the Karabiner-Elements
+> grabber**. Use **`kanata_post_sleep_recovery.md`** instead. This file is kept only for history
+> and for the still-useful Input-Monitoring / binary-variant / launchd notes.
+
 **Audience:** an AI agent (or human) setting up a *second* macOS machine the same way the
 first one was done on 2026-06-15.
 
