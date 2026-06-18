@@ -1,5 +1,4 @@
 ;; my_config.kbd - Kanata configuration for macOS
-;; Converted from keyd configuration
 
 (defcfg
   process-unmapped-keys yes
@@ -9,7 +8,7 @@
   rapid-event-delay 5
 )
 
-;; Define source keys - adjust this based on your keyboard layout
+
 (defsrc
   esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
   nubs  1    2    3    4    5    6    7    8    9    0    -    =    bspc
@@ -19,7 +18,7 @@
 fn  lctl lalt lmet          spc            ralt rmet rctl 
 )
 
-;; Define variables for timeouts
+
 (defvar
   tap-timeout 200
   hold-timeout 200
@@ -32,11 +31,8 @@ fn  lctl lalt lmet          spc            ralt rmet rctl
 )
 
 
-;; Define aliases
 (defalias
-  ;; Basic remapping
-  esc-grv grv  ;; escape becomes backtick
-    
+  esc-grv grv  ;; escape becomes backtick    
   ;; Special characters (using unicode or compose sequences)
   é (unicode é)
   à (unicode à)
@@ -76,6 +72,8 @@ fn  lctl lalt lmet          spc            ralt rmet rctl
   ;; CHANGED: Using tap-hold-press for immediate response
   cap-spc (tap-hold-press $tap-timeout $hold-timeout @underscore (layer-while-held capslock-space))
   
+
+  ;;ping (cmd bash -c "su - $(stat -f%Su /dev/console) -c 'afplay /System/Library/Sounds/Ping.aiff'")
   ;; Volume and brightness controls
   vup volu
   vdn vold
@@ -84,14 +82,31 @@ fn  lctl lalt lmet          spc            ralt rmet rctl
   bdn brdn
 )
 
+;; --- Keyboard physical-type compensation (macOS ISO/ANSI grave-key swap) ---
+;; macOS sends the `grv` HID keycode for a different physical key depending on
+;; the keyboard's physical type, so this one slot must differ per machine:
+;;   - ANSI (US priv laptop): `grv` = the real backtick key      -> backtick
+;;   - ISO  (UK pro  laptop): `grv` = junk key next to left-shift -> shift
+;; Selected by the KANATA_KB env var (set per machine; see launchd plist).
+;; Unset/empty defaults to ANSI.
+(environment (KANATA_KB iso)
+  (defalias grvkey lsft)
+)
+(environment (KANATA_KB ansi)
+  (defalias grvkey grv)
+)
+(environment (KANATA_KB "")
+  (defalias grvkey grv)
+)
+
 ;; Main layer
 (deflayer main
   @esc-grv  🔅   🔆    ✗    ✗    ✗    ✗    ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊
   grv       1    2    3    4    5    6    7    8    9    0    -    =    bspc
   @tab      q    w    e    r    t    z   u    i    o    p    [    ]    \
   @caps     a    s    d    f    g    h    j    k    l    ;    '    ret
-  lsft      lsft y   x    c    v    b    n    m    ,    .    @slsh rsft
-fn lctl      lalt lmet          @spc            ralt rmet rctl 
+  lsft      @grvkey y   x    c    v    b    n    m    ,    .    @slsh rsft
+lctl lctl      lalt lmet          @spc            ralt rmet rctl 
   ;;        command  option (ignore the swapped representation)
 )
 
@@ -104,7 +119,7 @@ fn lctl      lalt lmet          @spc            ralt rmet rctl
 fn  _    _    _    _              _              _    _    _
 )
 
-;; Capslock layer (Control behavior)
+
 (deflayer capslock-layer
   _    _     _     _     _     _     _     _     _     _     _     _     _
   _    _     _     _     _     _     _     _     _     _     _     _     _     _
@@ -114,7 +129,6 @@ fn  _    _    _    _              _              _    _    _
 _  _    lmet   lalt          (t! unmeta @cap-spc)  _     _     _
 )
 
-;; Capslock + Space layer
 (deflayer capslock-space
   _    _    _    _    _    _    _    _    _    _    _    _    _
   _    _    _    _    _    _    _    _    _    _    _    _    _    _
@@ -124,7 +138,6 @@ _  _    lmet   lalt          (t! unmeta @cap-spc)  _     _     _
 fn  _    _    _              _              _    _    _
 )
 
-;; Tab layer (number pad)
 (deflayer tab-layer
   _    _    _    _    _    _    _    _    _    _    _    _    _
   _    _    _    _    _    _    _    _    _    _    _    _    _    bspc
@@ -134,7 +147,6 @@ fn  _    _    _              _              _    _    _
 fn  _    _    _                  0              _    _    _
 )
 
-;; Meta layer
 (deflayer meta-layer
   _    _    _    _    _    _    _    _    _    _    _    _    _
   _    _    _    _    _    _    _    _    _    _    _    _    _    _
@@ -144,22 +156,18 @@ fn  _    _    _                  0              _    _    _
 fn  _    _    _    _              _              _    _    _
 )
 
-;; Control layer
 (deflayermap (control-layer)
   tab C-tab
 )
 
-;; Control+Shift layer
 (deflayermap (control-shift-layer)
   tab C-S-tab
 )
 
-;; Shift layer
 (deflayermap (shift-layer)
   esc S-grv  ;; tilde
 )
 
-;; Additional layer definitions for modifier combinations
 (deflayermap (capslock-shift)
   h S-left
   j S-down
