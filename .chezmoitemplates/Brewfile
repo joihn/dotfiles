@@ -39,7 +39,7 @@ brew "tig"
 brew "tmux"
 brew "uv"
 brew "wget"
-
+brew "raine/claude-history/claude-history"
 {{ if eq .chezmoi.os "linux" -}}
 # --- Linux-only: provided by the system on macOS (built-in zsh, Xcode CLT git) ---
 brew "git"
