@@ -38,7 +38,7 @@ on `PORT` (the daemon listens with `-p PORT`; the agent connects with `-p PORT`)
 - `USER` = `maximegardoni`, `HOME` = `/Users/maximegardoni`, Apple Silicon → `HOMEBREW` = `/opt/homebrew`
 - `KANATA_BIN` = `/opt/homebrew/bin/kanata`
 - `VK_AGENT_BIN` = `/opt/homebrew/bin/kanata-vk-agent`
-- `KBD_CONFIG` = `/Users/maximegardoni/code/kanata/cfg_samples/my_config.kbd`
+- `KBD_CONFIG` = `/Users/maximegardoni/.config/kanata/my_config.kbd`  (stable, chezmoi-managed; not in the ~/code/kanata git tree)
 - `PORT` = `5829` (must match in BOTH plists)
 - `TERM_BUNDLE_ID` = `net.kovidgoyal.kitty` (kitty — the app vk-agent does app-aware switching for, passed as `-b`)
 - kanata `1.11.0` → pinned Karabiner driver `6.2.0`
