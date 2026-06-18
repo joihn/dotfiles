@@ -48,7 +48,7 @@ BREW_PREFIX="$(brew --prefix)"            # /opt/homebrew (arm64) or /usr/local 
 DAEMON_LABEL="dev.kanata.kanata"
 PIN=40a8b17                               # source commit to build (bump intentionally, not by accident)
 NEWBIN="/usr/local/bin/kanata-main-${PIN}"
-CONFIG="$HOME/code/kanata/cfg_samples/my_config.kbd"   # the daemon's -c path
+CONFIG="$HOME/.config/kanata/my_config.kbd"   # the daemon's -c path (stable, chezmoi-managed)
 ```
 
 > **sudo:** several steps need root. If you are an agent and hit a blocked-sudo message, ask the
@@ -56,7 +56,7 @@ CONFIG="$HOME/code/kanata/cfg_samples/my_config.kbd"   # the daemon's -c path
 
 ## Step 1 — pull dotfiles (gets the config, scripts, and this runbook)
 
-chezmoi carries the **config itself** (`code/kanata/cfg_samples/my_config.kbd`), the wake hook
+chezmoi carries the **config itself** (`~/.config/kanata/my_config.kbd`), the wake hook
 (`~/.local/bin/kanata-wake-restart.sh`), `launch_kanata.sh`, and the agent_context runbooks. The
 config is delivered by **chezmoi**, NOT by a git branch (machine #1's `better_no_cmd_issue` branch
 is local-only and cannot be pushed to the upstream remote).
@@ -67,10 +67,11 @@ test -f "$CONFIG" && echo "config present" || echo "MISSING — run: chezmoi app
 ls -l ~/.local/bin/kanata-wake-restart.sh   # should exist, +x
 ```
 
-> ⚠️ **Config-path fragility:** `$CONFIG` lives *inside* the `~/code/kanata` git working tree, so a
-> `git checkout <other-branch>` can make it disappear and a later kanata restart would fail to find
-> it. chezmoi owns the file; `chezmoi apply` restores it. Build in an isolated worktree (Step 2) so
-> you never have to switch the main checkout's branch.
+> **Config location:** the daemon reads `~/.config/kanata/my_config.kbd` — a *stable* path owned by
+> chezmoi (history via the joihn/dotfiles repo). It is deliberately NOT inside the `~/code/kanata`
+> git working tree, so kanata-repo branch switches can never make the live config vanish. Edit the
+> config there directly; the old `~/code/kanata/cfg_samples/my_config.kbd` is no longer used by the
+> daemon and is no longer chezmoi-managed.
 
 ## Step 2 — build the binary from `main` (isolated worktree, no branch switching)
 
@@ -117,7 +118,7 @@ Edit `/Library/LaunchDaemons/dev.kanata.kanata.plist` so `ProgramArguments[0]` i
     <array>
         <string>/usr/local/bin/kanata-main-40a8b17</string>   <!-- = $NEWBIN -->
         <string>-c</string>
-        <string>/Users/CHANGEME/code/kanata/cfg_samples/my_config.kbd</string>  <!-- = $CONFIG -->
+        <string>/Users/CHANGEME/.config/kanata/my_config.kbd</string>  <!-- = $CONFIG -->
         <string>-p</string>
         <string>5829</string>
     </array>
