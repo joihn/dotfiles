@@ -1,5 +1,13 @@
 # Runbook: fix kanata "dead after sleep" on macOS (brew-stable + sleepwatcher wake daemon)
 
+> **PARTIALLY SUPERSEDED (2026-06-18) by `kanata_main_build_setup.md`.** Machine #1 has since moved
+> off brew-stable **1.11.0** to a **source build of `jtroo/kanata` `main`** (commit `40a8b17`),
+> because 1.11.0 has no post-wake recovery while `main` carries #2041 (crash-safe restart) +
+> DriverKit sink auto-recovery. Use **`kanata_main_build_setup.md`** for the binary + permissions
+> (note: `main` needs BOTH Input Monitoring AND Accessibility). This file remains the canonical
+> reference for the **sleepwatcher wake daemon** (Step 5), the **Karabiner grabber disable** (Step 4),
+> and the launchd/Input-Monitoring background — all still in force.
+
 **Audience:** an AI agent (Claude Code) or human bringing a *second* macOS machine to the same
 working state as machine #1, set up on **2026-06-17**.
 
