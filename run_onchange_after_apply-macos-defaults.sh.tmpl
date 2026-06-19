@@ -100,6 +100,36 @@ defaults write cc.ffitch.shottr uploadS3SharingMode -string "none"
 defaults write cc.ffitch.shottr windowShadow -string "transparent"
 defaults write cc.ffitch.shottr windowSolidColor -string "#404448"
 
+# --- Contexts (com.contextsformac.Contexts) — window switcher prefs ---
+# (excludes install id, usage counters, AppCenter telemetry, Sparkle state)
+defaults write com.contextsformac.Contexts CTAppearanceTheme -string "CTAppearanceNamedVibrantDark"
+defaults write com.contextsformac.Contexts CTPreferenceAppearanceContentSizeCategory -int 3
+defaults write com.contextsformac.Contexts CTPreferenceApplicationSlideGestureSelectionMode -string "CTSlideGestureSelectionModePanel"
+defaults write com.contextsformac.Contexts CTPreferenceInputDoubleTouchSwitchGestureActive -bool true
+defaults write com.contextsformac.Contexts CTPreferenceInputSourceIdToUse -string "kCTInputSourceIdNone"
+defaults write com.contextsformac.Contexts CTPreferencePanelRecentSwitcherShowAfterDelay -bool false
+defaults write com.contextsformac.Contexts CTPreferenceRecentItemsSwitcherSearchEnabled -bool false
+defaults write com.contextsformac.Contexts CTPreferenceSidebarDisplayMode -string "CTDisplayModeNone"
+defaults write com.contextsformac.Contexts CTPreferenceSidebarWidth -int 0
+defaults write com.contextsformac.Contexts CTSidebarHorizontalAlignment -string "CTWindowHorizontalAlignmentRight"
+defaults write com.contextsformac.Contexts CTSidebarInactiveMaximumWidth -int 1
+
+# --- Maccy (org.p0deje.Maccy) — clipboard manager prefs ---
+# (excludes window position/size, migrations, Sparkle state, pasteboard-type cache)
+defaults write org.p0deje.Maccy KeyboardShortcuts_delete -string '{"carbonKeyCode":51,"carbonModifiers":2048}'
+defaults write org.p0deje.Maccy KeyboardShortcuts_pin -string '{"carbonKeyCode":35,"carbonModifiers":2048}'
+defaults write org.p0deje.Maccy KeyboardShortcuts_popup -string '{"carbonKeyCode":9,"carbonModifiers":2048}'
+defaults write org.p0deje.Maccy pasteByDefault -bool true
+defaults write org.p0deje.Maccy pinTo -string "bottom"
+defaults write org.p0deje.Maccy popupPosition -string "window"
+defaults write org.p0deje.Maccy popupScreen -int 0
+defaults write org.p0deje.Maccy previewDelay -int 90000
+defaults write org.p0deje.Maccy removeFormattingByDefault -bool true
+defaults write org.p0deje.Maccy searchMode -string "fuzzy"
+defaults write org.p0deje.Maccy showFooter -bool true
+defaults write org.p0deje.Maccy showSearch -bool true
+defaults write org.p0deje.Maccy showTitle -bool true
+
 # Apply changes without a logout.
 for app in Dock Finder SystemUIServer Spotlight; do
     killall "$app" 2>/dev/null || true

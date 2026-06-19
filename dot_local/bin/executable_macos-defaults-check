@@ -65,7 +65,11 @@ while IFS= read -r line; do
     in_array=1; a_domain="$domain"; a_key="$key"; a_items=()
     continue
   fi
-  val="$rest"; val="${val%\"}"; val="${val#\"}"       # strip surrounding quotes
+  val="$rest"                                         # strip surrounding quotes (single or double)
+  case "$val" in
+    \"*\") val="${val#\"}"; val="${val%\"}";;
+    \'*\') val="${val#\'}"; val="${val%\'}";;
+  esac
   val="${val//\$HOME/$HOME}"                          # expand $HOME like the script would
   add_scalar "$domain" "$key" "${type#-}" "$val"
 done < <(chezmoi execute-template < "$SRC")
