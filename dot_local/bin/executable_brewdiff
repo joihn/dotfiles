@@ -6,7 +6,7 @@
 # Installed = `brew bundle dump` (high-level packages only — leaves + casks).
 #
 #   < lines  : installed but NOT tracked  -> candidates to add to the Brewfile
-#   > lines  : tracked but NOT installed  -> removed upstream, or not yet applied
+#   > lines  : tracked but NOT installed  -> removed locally, or not yet applied
 #
 # Taps are not compared (noisy, and auto-added by fully-qualified `brew` names).
 #
@@ -34,6 +34,6 @@ if cmp -s "$tmpd/installed" "$tmpd/tracked"; then
 fi
 
 echo "  '<' = installed but not tracked (consider adding to the Brewfile)"
-echo "  '>' = tracked but not installed (removed upstream, or not yet applied)"
+echo "  '>' = tracked but not installed (removed locally, or not yet applied)"
 echo
 diff "$tmpd/installed" "$tmpd/tracked" || true
