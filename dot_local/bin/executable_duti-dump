@@ -4,13 +4,15 @@
 # ready to paste into .chezmoitemplates/duti-settings.
 #
 # Apple stock handlers (the macOS defaults) are skipped, so you only capture
-# associations you've actually customised. Read-only: never changes anything.
+# associations you've actually customised. Extensions with no stable UTI (which
+# duti cannot set — "error -50") are emitted COMMENTED OUT, so you can see them
+# but they won't break the applier. Read-only: never changes anything.
 #
 # Usage:
 #   duti-dump                 # probe a built-in list of common code/text/doc types
 #   duti-dump md py pdf conf  # probe only the extensions you name
 #
-# Tip:   duti-dump > >(pbcopy)     # straight to clipboard
+# Tip:   duti-dump | pbcopy
 
 set -uo pipefail
 
@@ -21,11 +23,38 @@ if [ "${#exts[@]}" -eq 0 ]; then
         pdf rtf c cpp h hpp java kt swift go rs rb php lua epub)
 fi
 
+# Classify each extension's UTI as stable ("ok") or dynamic ("dyn") in one pass.
+# UTType needs macOS 11+ and swift (ships with the Xcode CLT). If swift is
+# missing we skip classification and emit every handler as active.
+utimap=""
+if command -v swift >/dev/null 2>&1; then
+  # exts passed as ARGUMENTS (stdin is consumed by `swift -` reading the program)
+  utimap="$(swift - "${exts[@]}" 2>/dev/null <<'SWIFT'
+import Foundation
+import UniformTypeIdentifiers
+for ext in CommandLine.arguments.dropFirst() {
+  let t = UTType(filenameExtension: ext)
+  let kind = (t == nil || t!.identifier.hasPrefix("dyn.")) ? "dyn" : "ok"
+  print("\(ext)\t\(kind)")
+}
+SWIFT
+)"
+fi
+
+is_dynamic() {  # returns 0 (true) only if we KNOW the ext has no stable UTI
+  [ -z "$utimap" ] && return 1
+  printf '%s\n' "$utimap" | awk -v e="$1" '$1==e {print $2}' | grep -q '^dyn$'
+}
+
 for e in "${exts[@]}"; do
   h="$(duti -x "$e" 2>/dev/null | tail -1)"
   [ -z "$h" ] && h="$(duti -x "$e" 2>/dev/null | tail -1)"   # retry: duti -x throttles in tight loops
   case "$h" in
     ""|com.apple.*) continue ;;                              # unset or Apple default -> skip
   esac
-  printf '%s  .%s  all\n' "$h" "$e"
+  if is_dynamic "$e"; then
+    printf '# %s  .%s  all   # no stable UTI — unsettable via duti\n' "$h" "$e"
+  else
+    printf '%s  .%s  all\n' "$h" "$e"
+  fi
 done

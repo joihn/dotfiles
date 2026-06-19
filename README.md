@@ -218,6 +218,14 @@ machine-specific binary plist you must not copy. We set them declaratively with
   cleanly if `duti` isn't installed.
 - `~/.local/bin/duti-dump` — prints your current custom handlers as ready-to-paste
   `duti-settings` lines (`duti-dump` for a common list, or `duti-dump md py …`).
+  It comments out extensions with no stable UTI (see below) so they never break
+  the applier.
+- **UTI limitation**: duti can only bind an extension that has a *stable* UTI.
+  Extensions with none (e.g. `.go .vue .dockerfile .rs .conf` — anything no
+  installed app declares) resolve to a per-machine dynamic `dyn.*` UTI that
+  LaunchServices refuses to set (`error -50`). Those are kept commented at the
+  bottom of `duti-settings` to record intent; set them per machine via Finder's
+  "Open With → Always Open With". `duti-dump` flags them automatically.
 
 ### Externals (`.chezmoiexternal.toml`)
 

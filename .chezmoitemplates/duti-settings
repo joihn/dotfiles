@@ -6,6 +6,13 @@
 # Re-capture / extend with:  duti-dump            (see ~/.local/bin)
 # NB: full-line # comments and blank lines are stripped before duti runs
 #     (duti itself has no comment syntax).
+#
+# IMPORTANT: an extension can only be set here if the system has a *stable* UTI
+# for it. Extensions with no declared UTI resolve to a per-machine dynamic UTI
+# ("dyn.*"), which LaunchServices refuses to bind (duti: "error -50"). Those are
+# listed (commented out) at the bottom so the intent is preserved; they must be
+# set via Finder's "Open With > Always Open With" per machine. Run `duti-dump`
+# to see which of your current handlers are settable.
 
 # --- PDF: Adobe Acrobat ---
 com.adobe.Acrobat.Pro  .pdf  all
@@ -15,55 +22,59 @@ com.google.Chrome  .html  all
 com.google.Chrome  .htm   all
 
 # --- Sublime Text: text / code / config ---
-com.sublimetext.4  .md     all
-com.sublimetext.4  .markdown  all
-com.sublimetext.4  .txt    all
-com.sublimetext.4  .text   all
-com.sublimetext.4  .log    all
-com.sublimetext.4  .py     all
-com.sublimetext.4  .js     all
-com.sublimetext.4  .mjs    all
-com.sublimetext.4  .ts     all
-com.sublimetext.4  .tsx    all
-com.sublimetext.4  .json   all
-com.sublimetext.4  .csv    all
-com.sublimetext.4  .yaml   all
-com.sublimetext.4  .yml    all
-com.sublimetext.4  .toml   all
-com.sublimetext.4  .ini    all
-com.sublimetext.4  .cfg    all
-com.sublimetext.4  .sh     all
-com.sublimetext.4  .bash   all
-com.sublimetext.4  .xml    all
-com.sublimetext.4  .css    all
-com.sublimetext.4  .sql    all
-com.sublimetext.4  .c      all
-com.sublimetext.4  .cpp    all
-com.sublimetext.4  .h      all
-com.sublimetext.4  .java   all
-com.sublimetext.4  .swift  all
-com.sublimetext.4  .rb     all
-com.sublimetext.4  .php    all
-com.sublimetext.4  .bib    all
-com.sublimetext.4  .conf  all
-# --- Cursor (ToDesktop bundle id) ---
-com.todesktop.230313mzl4w4u92  .mdown  all
-com.todesktop.230313mzl4w4u92  .jsx    all
-com.todesktop.230313mzl4w4u92  .scss   all
-com.todesktop.230313mzl4w4u92  .less   all
-com.todesktop.230313mzl4w4u92  .go     all
-com.todesktop.230313mzl4w4u92  .rs     all
-com.todesktop.230313mzl4w4u92  .lua    all
-com.todesktop.230313mzl4w4u92  .vue    all
-com.todesktop.230313mzl4w4u92  .cjs    all
-com.todesktop.230313mzl4w4u92  .properties  all
-com.todesktop.230313mzl4w4u92  .lock   all
-com.todesktop.230313mzl4w4u92  .cmake  all
-com.todesktop.230313mzl4w4u92  .dockerfile  all
-com.todesktop.230313mzl4w4u92  .makefile    all
-com.todesktop.230313mzl4w4u92  .rst    all
-com.todesktop.230313mzl4w4u92  .tex    all
-com.todesktop.230313mzl4w4u92  .ps1    all
-com.todesktop.230313mzl4w4u92  .bat    all
-com.todesktop.230313mzl4w4u92  .gitignore   all
+com.sublimetext.4  .md       all
+com.sublimetext.4  .markdown all
+com.sublimetext.4  .txt      all
+com.sublimetext.4  .text     all
+com.sublimetext.4  .log      all
+com.sublimetext.4  .py       all
+com.sublimetext.4  .js       all
+com.sublimetext.4  .mjs      all
+com.sublimetext.4  .ts       all
+com.sublimetext.4  .tsx      all
+com.sublimetext.4  .json     all
+com.sublimetext.4  .csv      all
+com.sublimetext.4  .yaml     all
+com.sublimetext.4  .yml      all
+com.sublimetext.4  .toml     all
+com.sublimetext.4  .ini      all
+com.sublimetext.4  .cfg      all
+com.sublimetext.4  .sh       all
+com.sublimetext.4  .bash     all
+com.sublimetext.4  .xml      all
+com.sublimetext.4  .css      all
+com.sublimetext.4  .sql      all
+com.sublimetext.4  .c        all
+com.sublimetext.4  .cpp      all
+com.sublimetext.4  .h        all
+com.sublimetext.4  .java     all
+com.sublimetext.4  .swift    all
+com.sublimetext.4  .rb       all
+com.sublimetext.4  .php      all
 
+# ============================================================================
+# UNSETTABLE via duti — these extensions have no stable UTI on this system
+# (resolve to a dynamic "dyn.*" UTI -> LaunchServices error -50). Kept here to
+# record intent; set them per machine via Finder "Open With > Always Open With".
+# ============================================================================
+# com.sublimetext.4              .bib
+# com.todesktop.230313mzl4w4u92  .mdown
+# com.todesktop.230313mzl4w4u92  .jsx
+# com.todesktop.230313mzl4w4u92  .scss
+# com.todesktop.230313mzl4w4u92  .less
+# com.todesktop.230313mzl4w4u92  .go
+# com.todesktop.230313mzl4w4u92  .rs
+# com.todesktop.230313mzl4w4u92  .lua
+# com.todesktop.230313mzl4w4u92  .vue
+# com.todesktop.230313mzl4w4u92  .cjs
+# com.todesktop.230313mzl4w4u92  .properties
+# com.todesktop.230313mzl4w4u92  .lock
+# com.todesktop.230313mzl4w4u92  .cmake
+# com.todesktop.230313mzl4w4u92  .dockerfile
+# com.todesktop.230313mzl4w4u92  .makefile
+# com.todesktop.230313mzl4w4u92  .rst
+# com.todesktop.230313mzl4w4u92  .tex
+# com.todesktop.230313mzl4w4u92  .ps1
+# com.todesktop.230313mzl4w4u92  .bat
+# com.todesktop.230313mzl4w4u92  .gitignore
+# dev.warp.Warp-Stable           .conf
