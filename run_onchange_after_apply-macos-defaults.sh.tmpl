@@ -23,14 +23,14 @@ defaults write NSGlobalDomain InitialKeyRepeat -int 33
 # --- Dock ---
 defaults write com.apple.dock autohide -bool true
 defaults write com.apple.dock tilesize -int 48
-defaults write com.apple.dock orientation -string "bottom"
+defaults write com.apple.dock orientation -string "left"
 
 # --- Finder ---
 defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
 defaults write com.apple.finder ShowPathbar -bool true
 
 # --- Screenshots ---
-defaults write com.apple.screencapture location -string "~/Documents/"
+defaults write com.apple.screencapture location -string "~/Pictures/"
 
 # --- Spotlight: categories EXCLUDED from search results ---
 # Counterintuitively, `EnabledPreferenceRules` is the list of DISABLED categories
