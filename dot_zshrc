@@ -273,8 +273,8 @@ get_backend(){ps aux | grep '/lqib64/ld-linux-x86-64.so.2'  | grep -o ".\{0,1\}/
 scaling(){dconf write /org/gnome/desktop/interface/text-scaling-factor $1}
 
 alias lg="lazygit"
-alias ch="setxkbmap ch -variant fr -option && setxkbmap ch -variant fr -option caps:escape"
-alias eur="setxkbmap maximekey -option && setxkbmap maximekey -option lv3:lsgt_switch -option caps:escape"
+alias ch="claude-history"
+alias cc="claude"
 
 #vim mode in cli
 #bindkey -v

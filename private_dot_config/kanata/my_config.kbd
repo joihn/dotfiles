@@ -5,8 +5,7 @@
   danger-enable-cmd no
   sequence-timeout 1000
   concurrent-tap-hold yes
-  rapid-event-delay 5
-  tap-hold-require-prior-idle 150
+  rapid-event-delay 1
 )
 
 
@@ -66,7 +65,6 @@ fn  lctl lalt lmet          spc            ralt rmet rctl
   caps (tap-hold-press $tap-timeout $hold-timeout esc (multi lmet (layer-while-held capslock-layer)))  
 
   tab (tap-hold-press $tap-timeout $hold-timeout tab (layer-while-held tab-layer))
-  slsh (tap-hold-press $tap-timeout $hold-timeout / lsft)
   ;; Space is hold (spc-layer) ONLY when caps follows it; every other key
   ;; forces an immediate space tap, so fast/slow rolls never eat the space.
   spc (tap-hold-keys $tap-timeout $hold-timeout spc (layer-while-held spc-layer)
@@ -111,7 +109,7 @@ fn  lctl lalt lmet          spc            ralt rmet rctl
   grv       1    2    3    4    5    6    7    8    9    0    -    =    bspc
   @tab      q    w    e    r    t    z   u    i    o    p    [    ]    \
   @caps     a    s    d    f    g    h    j    k    l    ;    '    ret
-  lsft      @grvkey y   x    c    v    b    n    m    ,    .    @slsh rsft
+  lsft      @grvkey y   x    c    v    b    n    m    ,    .    /    rsft
 lctl lctl      lalt lmet          @spc            ralt rmet rctl 
   ;;        command  option (ignore the swapped representation)
 )
