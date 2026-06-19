@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+#
+# macos-defaults-check — dry-run preview of the tracked macOS defaults.
+#
+# Builds a unified diff of "live machine" vs "tracked (chezmoi)" for every
+# `defaults write` in run_onchange_after_apply-macos-defaults.sh.tmpl, then
+# colorizes it with delta. This is what `chezmoi apply` would actually change —
+# the value-level view `chezmoi diff` can't give you (it only knows the script
+# will run, not its effect). Read-only: never writes.
+#
+# Lines:  - red   = current value on this machine
+#         + green = value chezmoi would set
+#
+# Usage: macos-defaults-check
+
+set -uo pipefail   # NB: no -e; we must walk every setting, diffs return non-zero
+
+SRC="$(chezmoi source-path)/run_onchange_after_apply-macos-defaults.sh.tmpl"
+[ -f "$SRC" ] || { echo "not found: $SRC" >&2; exit 1; }
+
+have_file="$(mktemp)"; want_file="$(mktemp)"
+trap 'rm -f "$have_file" "$want_file"' EXIT
+changes=0
+
+norm_bool() { case "$1" in true|1|yes) echo 1;; false|0|no) echo 0;; *) echo "$1";; esac; }
+
+add_scalar() {
+  local domain="$1" key="$2" type="$3" want="$4" have
+  if have="$(defaults read "$domain" "$key" 2>/dev/null)"; then :; else have='(unset)'; fi
+  if [ "$type" = bool ]; then
+    want="$(norm_bool "$want")"
+    [ "$have" != '(unset)' ] && have="$(norm_bool "$have")"
+  fi
+  printf '%s %s = %s\n' "$domain" "$key" "$have" >>"$have_file"
+  printf '%s %s = %s\n' "$domain" "$key" "$want" >>"$want_file"
+  [ "$have" != "$want" ] && changes=$((changes + 1))
+  return 0
+}
+
+add_array() {
+  local domain="$1" key="$2"; shift 2
+  local want_sorted have_sorted=''
+  want_sorted="$(printf '%s\n' "$@" | sort)"
+  local raw
+  if raw="$(defaults read "$domain" "$key" 2>/dev/null)"; then
+    have_sorted="$(printf '%s\n' "$raw" | grep -oE '"[^"]+"' | tr -d '"' | sort)"
+  fi
+  while IFS= read -r id; do [ -n "$id" ] && printf '%s %s[] = %s\n' "$domain" "$key" "$id"; done <<<"$have_sorted" >>"$have_file"
+  while IFS= read -r id; do [ -n "$id" ] && printf '%s %s[] = %s\n' "$domain" "$key" "$id"; done <<<"$want_sorted" >>"$want_file"
+  [ "$have_sorted" != "$want_sorted" ] && changes=$((changes + 1))
+  return 0
+}
+
+in_array=0; a_domain=''; a_key=''; declare -a a_items=()
+while IFS= read -r line; do
+  l="${line#"${line%%[![:space:]]*}"}"               # strip leading whitespace
+  if [ "$in_array" -eq 1 ]; then
+    [[ "$l" =~ \"([^\"]+)\" ]] && a_items+=("${BASH_REMATCH[1]}")
+    [[ "$l" == *\\ ]] || { add_array "$a_domain" "$a_key" "${a_items[@]}"; in_array=0; a_items=(); }
+    continue
+  fi
+  case "$l" in "defaults write "*) ;; *) continue ;; esac
+  read -r _ _ domain key type rest <<<"$l"
+  if [ "$type" = "-array" ]; then
+    in_array=1; a_domain="$domain"; a_key="$key"; a_items=()
+    continue
+  fi
+  val="$rest"; val="${val%\"}"; val="${val#\"}"       # strip surrounding quotes
+  val="${val//\$HOME/$HOME}"                          # expand $HOME like the script would
+  add_scalar "$domain" "$key" "${type#-}" "$val"
+done < <(chezmoi execute-template < "$SRC")
+
+if [ "$changes" -eq 0 ]; then
+  echo "All tracked macOS defaults already match this machine — apply is a no-op."
+  exit 0
+fi
+
+diff -u --label "live machine" --label "tracked (chezmoi)" "$have_file" "$want_file" \
+  | { command -v delta >/dev/null 2>&1 && delta --paging=never || cat; }
+
+echo
+echo "$changes setting(s) would change on apply."

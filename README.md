@@ -156,6 +156,43 @@ chezmoi apply
 lines to the darwin block. Caveat: `mas` only reinstalls apps tied to your Apple
 ID and is flaky on recent macOS.
 
+### macOS defaults (`defaults write`)
+
+macOS preferences live in plists. We track them the portable, diffable way — an
+explicit list of `defaults write` commands, **not** copied binary plists.
+
+- `run_onchange_after_apply-macos-defaults.sh.tmpl` — the single source of truth.
+  An OS-guarded (`{{ if eq .chezmoi.os "darwin" }}`) list of `defaults write`
+  lines (real values captured from a live machine), grouped by area (Keyboard,
+  Dock, Finder, Screenshots, Spotlight, plus app prefs like Shottr
+  `cc.ffitch.shottr`). It ends by `killall`-ing Dock / Finder / SystemUIServer /
+  Spotlight so changes apply without a logout.
+- **Spotlight categories gotcha**: the disabled categories are stored in
+  `com.apple.Spotlight` → `EnabledPreferenceRules`, which (despite the name) is
+  the list of categories turned **OFF** — verified empirically: enabling a
+  category *removes* its id, disabling *adds* it. We capture that array verbatim.
+  To change it, toggle in System Settings > Spotlight, then re-capture with
+  `defaults read com.apple.Spotlight EnabledPreferenceRules | grep -oE '"[^"]+"'`.
+- `run_onchange_` + idempotent `defaults write` ⇒ it re-applies automatically
+  whenever you edit the list, and is a cheap no-op otherwise. Renders to nothing
+  (never runs) on Linux.
+- Only **portable** prefs belong here. ByHost/UUID prefs (e.g. menu-bar icon
+  order, under `~/Library/Preferences/ByHost/`) are machine-specific — skip them.
+- App prefs are **cherry-picked** (only the keys that matter), never whole-plist
+  dumps — many apps pollute their domain with telemetry / device IDs.
+
+**Adding a setting** — let the helper find the exact line for you:
+
+```sh
+macos-pref-diff                 # snapshot → toggle ONE setting in System Settings → diff
+macos-pref-diff cc.ffitch.shottr  # scope to one app's domain (less noise)
+# paste the printed `defaults write ...` line into the right section, then:
+chezmoi edit --apply ~/.local/share/chezmoi  # or just: chezmoi apply
+```
+
+This script is at the repo root (not a partial), so plain `chezmoi edit` reaches
+it; or open `$(chezmoi source-path)/run_onchange_after_apply-macos-defaults.sh.tmpl`.
+
 ### Externals (`.chezmoiexternal.toml`)
 
 Third-party content pulled in at apply time (refreshed on a `refreshPeriod`):
@@ -201,6 +238,7 @@ data:  { DISPLAY_VAR: <$DISPLAY or :1> }   # consumed by templates
 .chezmoitemplates/        Brewfile, cursor-extensions (partials, NOT written to $HOME)
 run_onchange_install-brew-packages.sh.tmpl      brew bundle the Brewfile
 run_onchange_install-cursor-extensions.sh.tmpl  install tracked Cursor extensions
+run_onchange_after_apply-macos-defaults.sh.tmpl macOS `defaults write` settings (darwin only)
 dot_*                     ~/.* dotfiles (zshrc, bashrc, p10k.zsh, tmux.conf, vimrc, ...)
 dot_local/bin/            helper scripts (see below) → ~/.local/bin
 private_dot_config/       ~/.config/* (nvim, kitty, btop, kanata, ...)
@@ -216,6 +254,10 @@ A few worth knowing (full list in `dot_local/bin/`):
 - `chezlg` — git config swap helper around lazygit.
 - `gdf` — browse/preview git diffs through fzf + delta.
 - `launch_kanata.sh` — start the kanata keyboard remapper.
+- `macos-pref-diff` — snapshot/diff `defaults` to find the key a setting changes.
+- `macos-defaults-check` — dry-run: which tracked `defaults` differ from this
+  machine (what `chezmoi apply` would actually change; `chezmoi diff` can't show it).
+- `plist_inspect` — fzf-browse macOS `defaults` domains with previews.
 
 ---
 

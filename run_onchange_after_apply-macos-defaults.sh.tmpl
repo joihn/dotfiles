@@ -1,0 +1,107 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/bin/sh
+
+# Apply tracked macOS defaults — system preferences + cherry-picked app prefs.
+#
+# This file IS the single source of truth: an explicit, declarative list of
+# `defaults write` commands (the portable, diffable convention — we never copy
+# binary plists). run_onchange: chezmoi re-runs this only when the list below
+# changes, and every `defaults write` is idempotent, so re-runs are cheap/safe.
+# Guarded for darwin, so it renders to nothing (never runs) on Linux.
+#
+# Values below were captured from a live machine. To add a setting, discover
+# its exact line with:
+#   macos-pref-diff            # snapshot -> change a setting in System Settings -> diff
+#   macos-pref-diff <domain>   # scope to one domain, e.g. cc.ffitch.shottr
+
+set -eu
+
+# --- Keyboard ---
+defaults write NSGlobalDomain KeyRepeat -int 2
+defaults write NSGlobalDomain InitialKeyRepeat -int 33
+
+# --- Dock ---
+defaults write com.apple.dock autohide -bool true
+defaults write com.apple.dock tilesize -int 48
+defaults write com.apple.dock orientation -string "bottom"
+
+# --- Finder ---
+defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
+defaults write com.apple.finder ShowPathbar -bool true
+
+# --- Screenshots ---
+defaults write com.apple.screencapture location -string "~/Documents/"
+
+# --- Spotlight: categories EXCLUDED from search results ---
+# Counterintuitively, `EnabledPreferenceRules` is the list of DISABLED categories
+# (verified empirically: enabling a category REMOVES its id; disabling ADDS it).
+# So every id below is a category that is turned OFF. Captured verbatim.
+# To update: toggle categories in System Settings > Spotlight, then re-capture with:
+#   defaults read com.apple.Spotlight EnabledPreferenceRules | grep -oE '"[^"]+"'
+defaults write com.apple.Spotlight EnabledPreferenceRules -array \
+    "com.apple.AppStore" \
+    "com.apple.iBooksX" \
+    "com.apple.calculator" \
+    "com.apple.iCal" \
+    "com.apple.AddressBook" \
+    "com.apple.Dictionary" \
+    "com.apple.freeform" \
+    "com.apple.iWork.Keynote" \
+    "com.apple.mail" \
+    "ch.admin.meteoswiss" \
+    "com.apple.Notes" \
+    "com.apple.iWork.Pages" \
+    "com.apple.Photos" \
+    "com.apple.podcasts" \
+    "com.apple.reminders" \
+    "com.apple.Safari" \
+    "com.apple.shortcuts" \
+    "com.apple.tips" \
+    "app.tuple.app" \
+    "com.apple.VoiceMemos" \
+    "com.apple.Safari.WebApp" \
+    "System.files" \
+    "System.folders" \
+    "System.iphoneApps"
+
+# --- Shottr (cc.ffitch.shottr) — user prefs only (no telemetry / IDs / update state) ---
+defaults write cc.ffitch.shottr afterGrabCopy -bool true
+defaults write cc.ffitch.shottr afterGrabSave -bool false
+defaults write cc.ffitch.shottr afterGrabShow -bool false
+defaults write cc.ffitch.shottr allowTelemetry -bool false
+defaults write cc.ffitch.shottr altZoomDirection -bool false
+defaults write cc.ffitch.shottr alwaysOnTop -bool false
+defaults write cc.ffitch.shottr areaCaptureMode -string "preview"
+defaults write cc.ffitch.shottr areaCustomGrabber -bool true
+defaults write cc.ffitch.shottr captureCursor -string "auto"
+defaults write cc.ffitch.shottr colorFormat -string "HEX"
+defaults write cc.ffitch.shottr copyOnEsc -bool true
+defaults write cc.ffitch.shottr customBackdropColor -string "#6080A0"
+defaults write cc.ffitch.shottr customGradFrom -string "#221448"
+defaults write cc.ffitch.shottr customGradTo -string "#919BD2"
+defaults write cc.ffitch.shottr downscaleOnSave -bool false
+defaults write cc.ffitch.shottr expandableCanvas -bool true
+defaults write cc.ffitch.shottr notificationType -string "custom"
+defaults write cc.ffitch.shottr ocrRemoveBreaks -bool false
+defaults write cc.ffitch.shottr preferLargeWindow -bool true
+defaults write cc.ffitch.shottr primaryOCRLang -string "en-US"
+defaults write cc.ffitch.shottr realPixels -bool false
+defaults write cc.ffitch.shottr saveFormat -string "Auto"
+defaults write cc.ffitch.shottr saveOnEsc -bool false
+defaults write cc.ffitch.shottr scrollingManualEnabled -bool false
+defaults write cc.ffitch.shottr scrollingMax -int 20000
+defaults write cc.ffitch.shottr scrollingReverseAutoscroll -bool false
+defaults write cc.ffitch.shottr scrollingSpeed -int 2
+defaults write cc.ffitch.shottr snappingMode -int 2
+defaults write cc.ffitch.shottr thumbnailClosing -string "manual"
+defaults write cc.ffitch.shottr uploadMode -string "none"
+defaults write cc.ffitch.shottr uploadS3PresignExpiration -int 604800
+defaults write cc.ffitch.shottr uploadS3SharingMode -string "none"
+defaults write cc.ffitch.shottr windowShadow -string "transparent"
+defaults write cc.ffitch.shottr windowSolidColor -string "#404448"
+
+# Apply changes without a logout.
+for app in Dock Finder SystemUIServer Spotlight; do
+    killall "$app" 2>/dev/null || true
+done
+{{ end -}}

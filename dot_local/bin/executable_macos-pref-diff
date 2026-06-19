@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+#
+# macos-pref-diff — discover which `defaults` key a System Settings toggle changes.
+#
+# Workflow: snapshot defaults -> you change ONE setting in the UI -> snapshot
+# again -> diff. The changed key/value is printed as a ready-to-paste
+# `defaults write ...` line for run_onchange_after_apply-macos-defaults.sh.tmpl.
+#
+# Usage:
+#   macos-pref-diff            # diff across ALL domains (noisier, catches anything)
+#   macos-pref-diff <domain>   # scope to one domain, e.g. cc.ffitch.shottr
+#
+# Read-only: this script only ever runs `defaults read`, never writes.
+
+set -euo pipefail
+
+domain="${1:-}"
+
+snapshot() {
+  if [ -n "$domain" ]; then
+    defaults read "$domain" 2>/dev/null || true
+  else
+    defaults read 2>/dev/null || true
+  fi
+}
+
+before="$(mktemp -t macos-pref-before)"
+after="$(mktemp -t macos-pref-after)"
+trap 'rm -f "$before" "$after"' EXIT
+
+if [ -n "$domain" ]; then
+  echo "Watching domain: $domain" >&2
+else
+  echo "Watching ALL domains" >&2
+fi
+
+snapshot > "$before"
+
+printf '\n>>> Now change ONE setting in System Settings (or the app), then press Enter...\n' >&2
+read -r _
+
+snapshot > "$after"
+
+echo >&2
+if diff -q "$before" "$after" >/dev/null; then
+  echo "No change detected. (Some prefs are cached — try toggling again, or the app may use a non-defaults store.)" >&2
+  exit 0
+fi
+
+echo "Changed keys (lines starting with > are the new values):" >&2
+echo "----------------------------------------------------------" >&2
+diff "$before" "$after" || true
+echo "----------------------------------------------------------" >&2
+
+if [ -n "$domain" ]; then
+  cat >&2 <<EOF
+
+Turn a changed line into a tracked command, e.g.:
+  defaults write $domain <key> -bool true
+  defaults write $domain <key> -int 42
+  defaults write $domain <key> -string "value"
+
+Tip: 'defaults read-type $domain <key>' tells you the type to use.
+EOF
+fi
