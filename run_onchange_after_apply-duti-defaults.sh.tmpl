@@ -1,0 +1,28 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/bin/sh
+
+# Apply default "Open with" handlers (macOS LaunchServices associations) from
+# the tracked list. These are NOT `defaults` keys — they live in the
+# LaunchServices database (a machine-specific binary plist you must not copy),
+# so we set them declaratively with `duti` instead.
+#
+# Single source of truth: .chezmoitemplates/duti-settings, inlined below.
+# run_onchange: chezmoi re-runs this only when the list changes; `duti` is
+# idempotent (re-setting the current handler is a no-op). Full-line # comments
+# and blank lines are stripped first, since duti has no comment syntax.
+#
+# To edit the list:    $EDITOR "$(chezmoi source-path)/.chezmoitemplates/duti-settings"
+# To capture handlers: duti-dump            (see ~/.local/bin)
+
+if ! command -v duti >/dev/null 2>&1; then
+    echo "note: 'duti' not found on PATH; skipping default-app associations." >&2
+    exit 0
+fi
+
+# Strip comments/blanks, then hand the clean settings to duti. `|| true`: a
+# missing app on one line (e.g. not installed on this Mac) prints an error to
+# stderr but must not fail the whole apply.
+grep -vE '^[[:space:]]*(#|$)' <<'DUTI_EOF' | duti || true
+{{ template "duti-settings" . }}
+DUTI_EOF
+{{ end -}}

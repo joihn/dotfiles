@@ -1,0 +1,69 @@
+# Default "Open with" handlers (LaunchServices), applied by
+# run_onchange_after_apply-duti-defaults.sh.tmpl via `duti`.
+#
+# Format:  <app-bundle-id>  <.ext | UTI | url-scheme>  <role>      role = all | viewer | editor
+# Only non-default (non-Apple) associations are tracked, to minimise conflicts.
+# Re-capture / extend with:  duti-dump            (see ~/.local/bin)
+# NB: full-line # comments and blank lines are stripped before duti runs
+#     (duti itself has no comment syntax).
+
+# --- PDF: Adobe Acrobat ---
+com.adobe.Acrobat.Pro  .pdf  all
+
+# --- Web: Chrome ---
+com.google.Chrome  .html  all
+com.google.Chrome  .htm   all
+
+# --- Sublime Text: text / code / config ---
+com.sublimetext.4  .md     all
+com.sublimetext.4  .markdown  all
+com.sublimetext.4  .txt    all
+com.sublimetext.4  .text   all
+com.sublimetext.4  .log    all
+com.sublimetext.4  .py     all
+com.sublimetext.4  .js     all
+com.sublimetext.4  .mjs    all
+com.sublimetext.4  .ts     all
+com.sublimetext.4  .tsx    all
+com.sublimetext.4  .json   all
+com.sublimetext.4  .csv    all
+com.sublimetext.4  .yaml   all
+com.sublimetext.4  .yml    all
+com.sublimetext.4  .toml   all
+com.sublimetext.4  .ini    all
+com.sublimetext.4  .cfg    all
+com.sublimetext.4  .sh     all
+com.sublimetext.4  .bash   all
+com.sublimetext.4  .xml    all
+com.sublimetext.4  .css    all
+com.sublimetext.4  .sql    all
+com.sublimetext.4  .c      all
+com.sublimetext.4  .cpp    all
+com.sublimetext.4  .h      all
+com.sublimetext.4  .java   all
+com.sublimetext.4  .swift  all
+com.sublimetext.4  .rb     all
+com.sublimetext.4  .php    all
+com.sublimetext.4  .bib    all
+com.sublimetext.4  .conf  all
+# --- Cursor (ToDesktop bundle id) ---
+com.todesktop.230313mzl4w4u92  .mdown  all
+com.todesktop.230313mzl4w4u92  .jsx    all
+com.todesktop.230313mzl4w4u92  .scss   all
+com.todesktop.230313mzl4w4u92  .less   all
+com.todesktop.230313mzl4w4u92  .go     all
+com.todesktop.230313mzl4w4u92  .rs     all
+com.todesktop.230313mzl4w4u92  .lua    all
+com.todesktop.230313mzl4w4u92  .vue    all
+com.todesktop.230313mzl4w4u92  .cjs    all
+com.todesktop.230313mzl4w4u92  .properties  all
+com.todesktop.230313mzl4w4u92  .lock   all
+com.todesktop.230313mzl4w4u92  .cmake  all
+com.todesktop.230313mzl4w4u92  .dockerfile  all
+com.todesktop.230313mzl4w4u92  .makefile    all
+com.todesktop.230313mzl4w4u92  .rst    all
+com.todesktop.230313mzl4w4u92  .tex    all
+com.todesktop.230313mzl4w4u92  .ps1    all
+com.todesktop.230313mzl4w4u92  .bat    all
+com.todesktop.230313mzl4w4u92  .gitignore   all
+

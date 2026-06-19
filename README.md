@@ -202,6 +202,23 @@ chezmoi edit --apply ~/.local/share/chezmoi  # or just: chezmoi apply
 This script is at the repo root (not a partial), so plain `chezmoi edit` reaches
 it; or open `$(chezmoi source-path)/run_onchange_after_apply-macos-defaults.sh.tmpl`.
 
+### Default apps — "Open with" (`duti`)
+
+File-type and URL-scheme handlers are **not** `defaults` keys — they live in the
+LaunchServices database (`com.apple.launchservices.secure.plist`), a
+machine-specific binary plist you must not copy. We set them declaratively with
+[`duti`](https://github.com/moretension/duti) (tracked in the Brewfile).
+
+- `.chezmoitemplates/duti-settings` — single source of truth, one
+  `app-bundle-id  .ext  role` line per association (same partial pattern as the
+  Brewfile). Only **non-Apple** handlers are tracked (Sublime, Cursor, Chrome,
+  Acrobat, Warp…); stock Apple defaults are left alone to minimise conflicts.
+- `run_onchange_after_apply-duti-defaults.sh.tmpl` — strips `#` comments/blanks
+  (duti has no comment syntax) and pipes the list to `duti`. Idempotent; skips
+  cleanly if `duti` isn't installed.
+- `~/.local/bin/duti-dump` — prints your current custom handlers as ready-to-paste
+  `duti-settings` lines (`duti-dump` for a common list, or `duti-dump md py …`).
+
 ### Externals (`.chezmoiexternal.toml`)
 
 Third-party content pulled in at apply time (refreshed on a `refreshPeriod`):
@@ -248,6 +265,7 @@ data:  { DISPLAY_VAR: <$DISPLAY or :1> }   # consumed by templates
 run_onchange_install-brew-packages.sh.tmpl      brew bundle the Brewfile
 run_onchange_install-cursor-extensions.sh.tmpl  install tracked Cursor extensions
 run_onchange_after_apply-macos-defaults.sh.tmpl macOS `defaults write` settings (darwin only)
+run_onchange_after_apply-duti-defaults.sh.tmpl  default "Open with" handlers via duti (darwin only)
 dot_*                     ~/.* dotfiles (zshrc, bashrc, p10k.zsh, tmux.conf, vimrc, ...)
 dot_local/bin/            helper scripts (see below) → ~/.local/bin
 private_dot_config/       ~/.config/* (nvim, kitty, btop, kanata, ...)
@@ -266,6 +284,7 @@ A few worth knowing (full list in `dot_local/bin/`):
 - `macos-pref-diff` — snapshot/diff `defaults` to find the key a setting changes.
 - `macos-defaults-check` — dry-run: which tracked `defaults` differ from this
   machine (what `chezmoi apply` would actually change; `chezmoi diff` can't show it).
+- `duti-dump` — print current custom "Open with" handlers as duti settings lines.
 - `plist_inspect` — fzf-browse macOS `defaults` domains with previews.
 
 ---

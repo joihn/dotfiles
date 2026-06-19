@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+#
+# duti-dump — print current default "Open with" handlers as duti settings lines,
+# ready to paste into .chezmoitemplates/duti-settings.
+#
+# Apple stock handlers (the macOS defaults) are skipped, so you only capture
+# associations you've actually customised. Read-only: never changes anything.
+#
+# Usage:
+#   duti-dump                 # probe a built-in list of common code/text/doc types
+#   duti-dump md py pdf conf  # probe only the extensions you name
+#
+# Tip:   duti-dump > >(pbcopy)     # straight to clipboard
+
+set -uo pipefail
+
+exts=("$@")
+if [ "${#exts[@]}" -eq 0 ]; then
+  exts=(md markdown mdown txt text log py js jsx ts tsx json json5 yaml yml
+        toml ini conf cfg sh bash zsh xml html htm css scss less sql csv tsv
+        pdf rtf c cpp h hpp java kt swift go rs rb php lua epub)
+fi
+
+for e in "${exts[@]}"; do
+  h="$(duti -x "$e" 2>/dev/null | tail -1)"
+  [ -z "$h" ] && h="$(duti -x "$e" 2>/dev/null | tail -1)"   # retry: duti -x throttles in tight loops
+  case "$h" in
+    ""|com.apple.*) continue ;;                              # unset or Apple default -> skip
+  esac
+  printf '%s  .%s  all\n' "$h" "$e"
+done
