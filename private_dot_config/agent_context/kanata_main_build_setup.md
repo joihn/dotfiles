@@ -25,7 +25,9 @@ working state as machine #1, set up on **2026-06-18**.
    (the `main` build needs both — 1.11.0 only needed Input Monitoring; this is the #1 gotcha).
 3. The Karabiner-Elements **grabber** is disabled (conflicts with kanata); the Karabiner
    **VirtualHIDDevice daemon** kanata requires stays running.
-4. The sleepwatcher `dev.kanata.wake` daemon stays loaded as a backstop.
+4. **Two** recovery daemons stay loaded: `dev.kanata.wake` (sleepwatcher, fast full-wake path) and
+   `dev.kanata.wake-watchdog` (catches DarkWake/scheduled wakes that sleepwatcher misses — issue
+   #2094). See Step 7.
 
 ---
 
@@ -175,13 +177,44 @@ pgrep -fl karabiner_grabber || echo "grabber down (good)"
 pgrep -fl VirtualHIDDevice-Daemon >/dev/null && echo "VHID daemon up (good)"
 ```
 
-## Step 7 — sleepwatcher wake hook (backstop; same as the post_sleep_recovery runbook)
+## Step 7 — TWO recovery layers: sleepwatcher hook + wake WATCHDOG (both required)
 
-`main` does the real recovery now, but keep the hook as a full-wake backstop. Install per
-`kanata_post_sleep_recovery.md` Step 5 (brew install sleepwatcher; create
-`/Library/LaunchDaemons/dev.kanata.wake.plist` with your real `$SLEEPWATCHER` + `$HOME` paths;
-bootstrap it). The script `~/.local/bin/kanata-wake-restart.sh` arrives via chezmoi. No `SETTLE`
-tuning needed.
+Real-world finding (2026-06-19, issue **#2094**): `main` recovers the DriverKit **output sink** on
+wake, but the keyboard **input grab** can still silently die on a **DarkWake / scheduled-alarm wake**
+(e.g. a `calaccessd` calendar alarm) — kanata logs nothing, the output/TCP path stays alive, and it
+sits grabbed-but-deaf until kickstarted. sleepwatcher's `-w` only fires on **full** wakes, so it
+misses exactly these. Hence two layers:
+
+**7a. sleepwatcher hook (fast path, full wakes).** Install per `kanata_post_sleep_recovery.md`
+Step 5 (`brew install sleepwatcher`; create `/Library/LaunchDaemons/dev.kanata.wake.plist` with your
+real `$SLEEPWATCHER` + `$HOME` paths; bootstrap it). Runs `~/.local/bin/kanata-wake-restart.sh`
+(arrives via chezmoi). No `SETTLE` tuning.
+
+**7b. wake watchdog (closes the DarkWake gap).** `~/.local/bin/kanata-wake-watchdog.sh` (chezmoi)
+runs on a launchd `StartInterval` and kickstarts kanata whenever the most-recent wake (full **or**
+DarkWake, from `pmset -g log`) is newer than the kanata process start — i.e. re-grab after *any*
+wake, self-deduping. It calls `kanata-wake-restart.sh` (shared self-expiring lock dedupes against
+sleepwatcher). launchd defers `StartInterval` while asleep → ~no battery cost. Install:
+
+```xml
+<!-- /Library/LaunchDaemons/dev.kanata.wake-watchdog.plist  (root) -->
+<dict>
+    <key>Label</key><string>dev.kanata.wake-watchdog</string>
+    <key>UserName</key><string>root</string>
+    <key>ProgramArguments</key>
+    <array><string>/Users/CHANGEME/.local/bin/kanata-wake-watchdog.sh</string></array>  <!-- $HOME -->
+    <key>StartInterval</key><integer>15</integer>
+    <key>RunAtLoad</key><true/>
+    <key>StandardOutPath</key><string>/var/log/kanata-wake.log</string>
+    <key>StandardErrorPath</key><string>/var/log/kanata-wake.log</string>
+</dict>
+```
+```bash
+WP=/Library/LaunchDaemons/dev.kanata.wake-watchdog.plist
+sudo chown root:wheel "$WP" && sudo chmod 644 "$WP"
+sudo launchctl bootout system/dev.kanata.wake-watchdog 2>/dev/null || true
+sudo launchctl bootstrap system "$WP"
+```
 
 ## Step 8 — verify, then the real test
 
