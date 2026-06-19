@@ -26,6 +26,8 @@ else
 fi
 
 # Rendered Brewfile content (from .chezmoitemplates/Brewfile).
-"$BREW" bundle --file=/dev/stdin <<'BREWFILE_EOF'
+# --no-upgrade: only install missing packages, never upgrade already-installed
+# ones. Keeps `chezmoi apply/update` fast. Upgrade separately with `brew upgrade`.
+"$BREW" bundle --no-upgrade --file=/dev/stdin <<'BREWFILE_EOF'
 {{ template "Brewfile" . }}
 BREWFILE_EOF
