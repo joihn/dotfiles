@@ -2,9 +2,10 @@ gui:
   sidePanelWidth: 0.23 # gives you more space to show things side-by-side
   experimentalShowBranchHeads: true
 git:
-  pagers:
-    - colorArg: always
-      pager: delta --dark --paging=never
+  paging:
+    colorArg: always
+    pager: delta --dark --paging=never
+    useConfig: false
   parseEmoji: true
   overrideGpg: true
 keybinding:

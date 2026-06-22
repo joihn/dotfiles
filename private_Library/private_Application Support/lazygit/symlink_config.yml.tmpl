@@ -1,0 +1,2 @@
+{{- /* macOS: bridge lazygit's Library config path to the single source of truth in ~/.config (used natively on Linux). Renders empty on non-darwin, so chezmoi creates no symlink there. */ -}}
+{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/.config/lazygit/config.yml{{ end }}
