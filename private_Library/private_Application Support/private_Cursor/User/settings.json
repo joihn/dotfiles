@@ -180,6 +180,22 @@
       ]
     },
     {
+      "after" : [ "\"", "_", "c" ],
+      "before" : [ "c" ]
+    },
+    {
+      "after" : [ "\"", "_", "C" ],
+      "before" : [ "C" ]
+    },
+    {
+      "after" : [ "\"", "_", "s" ],
+      "before" : [ "s" ]
+    },
+    {
+      "after" : [ "\"", "_", "S" ],
+      "before" : [ "S" ]
+    },
+    {
       "after" : [
       "\"",
         "*",
@@ -214,6 +230,18 @@
       "before" : [
         "d"
       ]
+    },
+    {
+      "after" : [ "\"", "_", "x" ],
+      "before" : [ "x" ]
+    },
+    {
+      "after" : [ "\"", "_", "c" ],
+      "before" : [ "c" ]
+    },
+    {
+      "after" : [ "\"", "_", "s" ],
+      "before" : [ "s" ]
     },
     {
       "after" : [
@@ -372,8 +400,7 @@
 "window.autoDetectColorScheme": false,
 "security.workspace.trust.enabled": true,
 "extensions.installCooldownHours": 24,
-"window.zoomLevel": 2,
-"terminal.integrated.fontSize": 10
+"terminal.integrated.fontSize": 13
 
   
 }

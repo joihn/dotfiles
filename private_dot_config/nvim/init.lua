@@ -296,18 +296,28 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
--- ===================== 'd is for delete' & 'leader-d is for cut' =====================
--- Delete operations go to black hole register (don't affect clipboard)
+-- ===================== 'd is for delete' & ',d is for cut' =====================
+-- Single register == the system clipboard. Delete & change-family go to the black hole
+-- register so they NEVER touch the clipboard; only yank (y) and cut (,d / ,dd) do.
 vim.keymap.set('n', 'x', '"_x', { desc = 'Delete char (no clipboard)' })
 vim.keymap.set('n', 'X', '"_X', { desc = 'Delete char before (no clipboard)' })
 vim.keymap.set('n', 'd', '"_d', { desc = 'Delete (no clipboard)' })
 vim.keymap.set('n', 'D', '"_D', { desc = 'Delete to end of line (no clipboard)' })
+vim.keymap.set('n', 'c', '"_c', { desc = 'Change (no clipboard)' })
+vim.keymap.set('n', 'C', '"_C', { desc = 'Change to end of line (no clipboard)' })
+vim.keymap.set('n', 's', '"_s', { desc = 'Substitute char (no clipboard)' })
+vim.keymap.set('n', 'S', '"_S', { desc = 'Substitute line (no clipboard)' })
 vim.keymap.set('v', 'd', '"_d', { desc = 'Delete selection (no clipboard)' })
+vim.keymap.set('v', 'x', '"_x', { desc = 'Delete selection (no clipboard)' })
+vim.keymap.set('v', 'c', '"_c', { desc = 'Change selection (no clipboard)' })
+vim.keymap.set('v', 's', '"_s', { desc = 'Substitute selection (no clipboard)' })
 
--- Cut operations (leader-d) yank to register then delete (triggers clipboard sync)
-vim.keymap.set('n', '<leader>d', 'd', { desc = 'Cut (to clipboard)' })
-vim.keymap.set('n', '<leader>D', 'D', { desc = 'Cut to end of line (to clipboard)' })
-vim.keymap.set('v', '<leader>d', 'd', { desc = 'Cut selection (to clipboard)' })
+-- Cut (,d / ,dd / ,D) = plain delete into the default register, which the TextYankPost
+-- (OSC 52) autocmd below syncs to the system clipboard on the 'd' operator.
+--  ,dd  cuts the whole line (,d -> d operator, then a second d -> linewise).
+vim.keymap.set('n', ',d', 'd', { desc = 'Cut (to clipboard)' })
+vim.keymap.set('n', ',D', 'D', { desc = 'Cut to end of line (to clipboard)' })
+vim.keymap.set('v', ',d', 'd', { desc = 'Cut selection (to clipboard)' })
 
 -- ===================== Kitty Clipboard Integration (OSC 52) =====================
 -- Syncs all yank/paste operations with system clipboard via OSC 52 escape sequences
@@ -333,10 +343,25 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
--- For paste, we use kitty's native paste (Ctrl+Shift+V or Cmd+V) or configure
--- Neovim to read from the clipboard. Since OSC 52 paste requires terminal support
--- and is more complex, we'll keep paste using the default register which gets
--- synced on yank. For explicit system paste, use your terminal's paste shortcut.
+-- Paste pulls from the system clipboard via kitten, so p / P stay in sync with copies
+-- made in other apps and with the OSC 52 copy path above (one shared register).
+-- OSC 52 paste (querying the terminal) is unreliable, so we read it through kitten.
+if vim.fn.executable 'kitten' == 1 then
+  local function paste_from_kitten(before)
+    local text = vim.fn.system 'kitten clipboard --get-clipboard'
+    if vim.v.shell_error ~= 0 then
+      vim.notify('Failed to read kitten clipboard', vim.log.levels.ERROR)
+      return
+    end
+    -- Trailing newline => linewise paste (e.g. after a ,dd line cut), else charwise.
+    local regtype = text:sub(-1) == '\n' and 'l' or 'c'
+    vim.fn.setreg('"', text, regtype)
+    vim.cmd('normal! ' .. (before and 'P' or 'p'))
+  end
+  vim.keymap.set('n', 'p', function() paste_from_kitten(false) end, { desc = 'Paste from clipboard' })
+  vim.keymap.set('n', 'P', function() paste_from_kitten(true) end, { desc = 'Paste before (from clipboard)' })
+  vim.keymap.set('x', 'p', function() paste_from_kitten(false) end, { desc = 'Paste over selection (from clipboard)' })
+end
 -- ===================== End Kitty Clipboard Integration =====================
 
 -- Autosave on focus lost or buffer leave
