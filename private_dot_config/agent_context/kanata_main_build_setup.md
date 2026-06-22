@@ -177,13 +177,21 @@ pgrep -fl karabiner_grabber || echo "grabber down (good)"
 pgrep -fl VirtualHIDDevice-Daemon >/dev/null && echo "VHID daemon up (good)"
 ```
 
-## Step 7 — TWO recovery layers: sleepwatcher hook + wake WATCHDOG (both required)
+## Step 7 — THREE recovery layers: sleepwatcher hook + wake WATCHDOG + vk-agent log TRIGGER
 
 Real-world finding (2026-06-19, issue **#2094**): `main` recovers the DriverKit **output sink** on
 wake, but the keyboard **input grab** can still silently die on a **DarkWake / scheduled-alarm wake**
 (e.g. a `calaccessd` calendar alarm) — kanata logs nothing, the output/TCP path stays alive, and it
 sits grabbed-but-deaf until kickstarted. sleepwatcher's `-w` only fires on **full** wakes, so it
-misses exactly these. Hence two layers:
+misses exactly these.
+
+Second real-world finding (2026-06-22): the grab/socket can also die with **no system sleep at all**
+— a display-wake, a power-adapter attach, or virtual-HID churn (`IOHIDLibUserClient` open/close on
+the Karabiner keyboard) is enough. `pmset` shows no `Wake`/`DarkWake`, so **neither** the sleepwatcher
+hook **nor** the watchdog fires; both are wake-event-based. The only distinctive signal is in the
+vk-agent log (`failed to write message to kanata: Broken pipe`). Hence a third, symptom-based layer.
+
+All three are installed on machine #1 as of 2026-06-22. The three layers:
 
 **7a. sleepwatcher hook (fast path, full wakes).** Install per `kanata_post_sleep_recovery.md`
 Step 5 (`brew install sleepwatcher`; create `/Library/LaunchDaemons/dev.kanata.wake.plist` with your
@@ -215,17 +223,62 @@ sudo chown root:wheel "$WP" && sudo chmod 644 "$WP"
 sudo launchctl bootout system/dev.kanata.wake-watchdog 2>/dev/null || true
 sudo launchctl bootstrap system "$WP"
 ```
+(`launchctl print system/dev.kanata.wake-watchdog` shows `state = not running` between its 15s
+ticks — that is correct for a `StartInterval` job; check `runs =` climbs and `last exit code = 0`.)
+
+**7c. vk-agent log trigger (closes the NON-wake gap).** `~/.local/bin/kanata-vkagent-log-trigger.sh`
+(chezmoi) tails the vk-agent log and, on the `Broken pipe` / `failed to write message to kanata` line
+(and ONLY that line — never the `failed to connect within 2 seconds` panic, which fires after every
+kickstart and would loop), calls `kanata-wake-restart.sh`. Feedback-loop guard is stateless: it
+ignores any match while the kanata daemon process is younger than `COOLDOWN` (45s) — our own kickstart
+kills the socket and produces another broken pipe, but the just-restarted daemon's small age skips it.
+Root (kickstart needs root); `KeepAlive` so the long-running `tail -F` self-heals on log rotation.
+Caveat: a broken pipe doesn't *prove* the grab died, so this can occasionally do a ~4s restart on a
+transient socket blip. Install:
+
+```xml
+<!-- /Library/LaunchDaemons/dev.kanata.vkagent-trigger.plist  (root) -->
+<dict>
+    <key>Label</key><string>dev.kanata.vkagent-trigger</string>
+    <key>UserName</key><string>root</string>
+    <key>ProgramArguments</key>
+    <array><string>/Users/CHANGEME/.local/bin/kanata-vkagent-log-trigger.sh</string></array>  <!-- $HOME -->
+    <key>RunAtLoad</key><true/>
+    <key>KeepAlive</key><true/>
+    <key>ThrottleInterval</key><integer>10</integer>
+    <key>StandardOutPath</key><string>/var/log/kanata-wake.log</string>
+    <key>StandardErrorPath</key><string>/var/log/kanata-wake.log</string>
+</dict>
+```
+```bash
+TP=/Library/LaunchDaemons/dev.kanata.vkagent-trigger.plist
+sudo chown root:wheel "$TP" && sudo chmod 644 "$TP"
+sudo launchctl bootout system/dev.kanata.vkagent-trigger 2>/dev/null || true
+sudo launchctl bootstrap system "$TP"
+```
 
 ## Step 8 — verify, then the real test
 
 ```bash
 ~/.local/bin/launch_kanata.sh status      # daemon on $NEWBIN, wake daemon loaded
+# All four jobs should be present (kanata + the 3 recovery layers):
+for L in dev.kanata.kanata dev.kanata.wake dev.kanata.wake-watchdog dev.kanata.vkagent-trigger; do
+  echo "$L: $(sudo launchctl print system/$L 2>/dev/null | awk -F'= ' '/state =/{print $2; exit}')"
+done
 # Unattended sleep/wake cycle (timer wake; software can't wake the Mac otherwise):
 sudo pmset relative wake 35 && pmset sleepnow
 ```
 
 After wake: remaps must work with **no manual kickstart**. Repeat once **waking with a keypress**
 (validates #2041). Watch `/var/log/kanata.log`.
+
+Test the 7c trigger without a sleep cycle — inject the signal line into the vk-agent log and confirm
+a re-grab fires in `/var/log/kanata-wake.log` (this WILL kickstart kanata, ~4s):
+```bash
+echo "$(date '+%H:%M:%S') [ERROR] failed to write message to kanata: Broken pipe (os error 32)" \
+  >> ~/.local/log/kanata-vk-agent.log
+sleep 12 && tail -n 5 /var/log/kanata-wake.log   # expect: vkagent-trigger ... triggering re-grab
+```
 
 ## Notes & gotchas
 

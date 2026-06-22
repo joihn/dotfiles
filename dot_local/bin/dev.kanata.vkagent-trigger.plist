@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Symptom-based recovery layer: tails the vk-agent log and re-grabs kanata
+         when the agent reports a dead daemon socket ("Broken pipe"). Catches
+         grab/sink breakage from NON-system-wake events (display-wake, power
+         attach, virtual-HID churn) that the sleepwatcher hook and the pmset
+         watchdog miss. Logic + feedback-loop cooldown live in the script.
+         Root because kickstarting a system LaunchDaemon needs root. KeepAlive so
+         the long-running tail is resurrected if the log is rotated away. -->
+    <key>Label</key><string>dev.kanata.vkagent-trigger</string>
+    <key>UserName</key><string>root</string>
+    <key>ProgramArguments</key>
+    <array><string>/Users/maximegardoni/.local/bin/kanata-vkagent-log-trigger.sh</string></array>
+    <key>RunAtLoad</key><true/>
+    <key>KeepAlive</key><true/>
+    <key>ThrottleInterval</key><integer>10</integer>
+    <key>StandardOutPath</key><string>/var/log/kanata-wake.log</string>
+    <key>StandardErrorPath</key><string>/var/log/kanata-wake.log</string>
+</dict>
+</plist>

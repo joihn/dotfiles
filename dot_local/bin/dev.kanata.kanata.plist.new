@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>dev.kanata.kanata</string>
+
+    <!-- kanata must run as root on macOS: the Karabiner virtual HID daemon
+         exposes its IPC under /Library/Application Support/org.pqrs/tmp/rootonly/.
+         Running it from a LaunchDaemon means launchd starts it as root for us,
+         so there is never an interactive sudo password to type. -->
+    <key>UserName</key>
+    <string>root</string>
+
+    <!-- Built from jtroo/kanata main (source commit 40a8b17, 2026-06-16) — this
+         is ~40 commits past the v1.12.0-prerelease-2 binary and includes the
+         macOS wake fixes (#2041 crash-safe restart, sink auto-recovery) that
+         1.11.0 lacks. Pinned path so `brew upgrade` never touches it; the brew
+         1.11.0 binary at /opt/homebrew/bin/kanata stays as instant rollback. -->
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/local/bin/kanata-main-40a8b17</string>
+        <string>-c</string>
+        <!-- Config lives in ~/.config/kanata (stable, chezmoi-managed via
+             joihn/dotfiles). NOT in the ~/code/kanata git tree, so kanata-repo
+             branch switches can never make it vanish out from under the daemon. -->
+        <string>/Users/maximegardoni/.config/kanata/my_config.kbd</string>
+        <string>-p</string>
+        <string>5829</string>
+    </array>
+
+    <key>RunAtLoad</key>
+    <true/>
+
+    <!-- Restart kanata if it ever crashes, but not if it exits cleanly. -->
+    <key>KeepAlive</key>
+    <dict>
+        <key>SuccessfulExit</key>
+        <false/>
+    </dict>
+
+    <key>ThrottleInterval</key>
+    <integer>5</integer>
+
+    <key>StandardOutPath</key>
+    <string>/var/log/kanata.log</string>
+    <key>StandardErrorPath</key>
+    <string>/var/log/kanata.log</string>
+</dict>
+</plist>
