@@ -1,0 +1,20 @@
+# Herdr configuration
+# Docs: https://herdr.dev  |  print defaults with `herdr --default-config`
+
+[keys]
+# Prefix key to enter prefix mode. Default is "ctrl+b".
+# The Command key can't travel over legacy terminal input, so kitty is
+# configured (map cmd+a -> \x1b[97;9u in ~/.config/kitty/kitty.conf) to emit
+# the kitty-keyboard-protocol encoding for super+a, which Herdr decodes here.
+prefix = "cmd+a"
+
+[ui]
+# Keep split panes visually separated instead of sharing divider borders.
+# false = compact shared divider (much less separation between panes).
+pane_gaps = false
+
+agent_panel_sort = "spaces"
+[ui.toast]
+# "system" = native macOS notification (osascript), fires when an agent
+# finishes or needs input.
+delivery = "system"
