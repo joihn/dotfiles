@@ -18,3 +18,7 @@ agent_panel_sort = "spaces"
 # "system" = native macOS notification (osascript), fires when an agent
 # finishes or needs input.
 delivery = "system"
+
+[theme]
+name = "dracula"
+auto_switch = false
