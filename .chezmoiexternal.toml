@@ -1,41 +1,42 @@
 [".oh-my-zsh"]
-    type = "archive"
-    url = "https://github.com/ohmyzsh/ohmyzsh/archive/master.tar.gz"
-    
-    stripComponents = 1
+    type = "git-repo"
+    url = "https://github.com/ohmyzsh/ohmyzsh.git"
     refreshPeriod = "168h"
 
-# Plugins are fetched as archives (HTTPS tarballs) rather than git-repo, so they
-# need no `git` binary — a fresh machine can apply before git is installed.
-# refreshPeriod still controls how often they re-download.
-[".oh-my-zsh/custom/plugins/fast-syntax-highlighting"]
-    type = "archive"
-    url = "https://github.com/zdharma-continuum/fast-syntax-highlighting/archive/master.tar.gz"
-    stripComponents = 1
-    refreshPeriod = "504h"
-[".oh-my-zsh/custom/plugins/zsh-vi-mode"]
-    type = "archive"
-    url = "https://github.com/joihn/zsh-vi-mode/archive/master.tar.gz"
-    stripComponents = 1
-    refreshPeriod = "504h"
-[".oh-my-zsh/custom/plugins/conda-zsh-completion"]
-    type = "archive"
-    url = "https://github.com/conda-incubator/conda-zsh-completion/archive/main.tar.gz"
-    stripComponents = 1
-    refreshPeriod = "504h"
-[".oh-my-zsh/custom/plugins/zsh-autosuggestions"]
-    type = "archive"
-    url = "https://github.com/zsh-users/zsh-autosuggestions/archive/master.tar.gz"
-    stripComponents = 1
+# oh-my-zsh, its plugins, and themes are git-repo externals: chezmoi clones each
+# once and runs `git pull` every refreshPeriod. Their contents do NOT appear in
+# `chezmoi diff`, so upstream updates never show up as drift to review/overwrite.
+# Trade-off vs the old archive setup: a `git` binary is required at apply time
+# (fine on macOS; a chezmoi bootstrap needs git anyway).
+#
+# Custom plugins/themes live in a separate ZSH_CUSTOM dir (~/.oh-my-zsh-custom,
+# set in .zshrc), NOT inside ~/.oh-my-zsh: a git-repo external must own its
+# directory exclusively, so nothing else may be layered into ~/.oh-my-zsh.
+[".oh-my-zsh-custom/plugins/fast-syntax-highlighting"]
+    type = "git-repo"
+    url = "https://github.com/zdharma-continuum/fast-syntax-highlighting.git"
     refreshPeriod = "504h"
 
-# powerlevel10k prompt theme. Fetched as an archive (same rationale as the
-# plugins: no git binary needed) into the oh-my-zsh custom themes dir so
+# zsh-vi-mode points at your own fork, so this clone is a real git checkout you
+# can edit, commit, and `git push` back to joihn/zsh-vi-mode.
+[".oh-my-zsh-custom/plugins/zsh-vi-mode"]
+    type = "git-repo"
+    url = "https://github.com/joihn/zsh-vi-mode.git"
+    refreshPeriod = "504h"
+[".oh-my-zsh-custom/plugins/conda-zsh-completion"]
+    type = "git-repo"
+    url = "https://github.com/conda-incubator/conda-zsh-completion.git"
+    refreshPeriod = "504h"
+[".oh-my-zsh-custom/plugins/zsh-autosuggestions"]
+    type = "git-repo"
+    url = "https://github.com/zsh-users/zsh-autosuggestions.git"
+    refreshPeriod = "504h"
+
+# powerlevel10k prompt theme, cloned into the ZSH_CUSTOM themes dir so
 # `ZSH_THEME="powerlevel10k/powerlevel10k"` in .zshrc resolves it.
-[".oh-my-zsh/custom/themes/powerlevel10k"]
-    type = "archive"
-    url = "https://github.com/romkatv/powerlevel10k/archive/master.tar.gz"
-    stripComponents = 1
+[".oh-my-zsh-custom/themes/powerlevel10k"]
+    type = "git-repo"
+    url = "https://github.com/romkatv/powerlevel10k.git"
     refreshPeriod = "504h"
 
 # kitten: single static binary, used for clipboard passthrough over SSH.

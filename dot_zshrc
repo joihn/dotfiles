@@ -98,7 +98,10 @@ ZSH_THEME="powerlevel10k/powerlevel10k" #agnoster_docker_context
 # HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
+# Custom plugins/themes are kept OUTSIDE $ZSH so chezmoi can manage $ZSH as a
+# pure git-repo external (see .chezmoiexternal.toml). Must be set before the
+# `source $ZSH/oh-my-zsh.sh` line below.
+ZSH_CUSTOM="$HOME/.oh-my-zsh-custom"
 ##########
 # HISTORY
 ##########
