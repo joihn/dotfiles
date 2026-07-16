@@ -167,6 +167,24 @@ ENABLE_CORRECTION="true"
 export GEM_HOME="$HOME/gems"
 export PATH="$HOME/gems/bin:$PATH"
 alias pt=~/Documents/pt
+# Wrap chezmoi so `apply`/`diff` show a reminder of the diff legend.
+chezmoi() {
+  local reminder="   %F{red}- on disk%f  %F{green}+ chezmoi repo%f"
+  case "$1" in
+    diff)
+      # `diff` pipes through a fullscreen pager, which wipes anything printed
+      # beforehand — so inject the reminder as the first line of the paged
+      # output. We page ourselves (hence --no-pager + forced color); less -F
+      # prints inline for short diffs so the reminder stays on screen.
+      { print -P "$reminder"; command chezmoi --color=on --no-pager "$@"; } | less -FRX
+      return
+      ;;
+    apply)
+      print -P "$reminder"
+      ;;
+  esac
+  command chezmoi "$@"
+}
 alias cm=chezmoi
 alias cmlg="lazygit -p $HOME/.local/share/chezmoi"
 alias cmdf="chezmoi diff"
