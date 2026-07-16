@@ -2,7 +2,7 @@
   "permissions": {
     "defaultMode": "auto"
   },
-  "model": "opus",
+  "model": "opus[1m]",
   "hooks": {
     "PreToolUse": [
       {
@@ -43,11 +43,13 @@
     }
   },
   "alwaysThinkingEnabled": true,
+  "tui": "fullscreen",
   "voice": {
     "enabled": true,
     "mode": "hold"
   },
   "skipDangerousModePermissionPrompt": true,
-  "voiceEnabled": true, 
-  "editorMode": "vim"
+  "editorMode": "vim",
+  "voiceEnabled": true,
+  "effortLevel": "xhigh"
 }
