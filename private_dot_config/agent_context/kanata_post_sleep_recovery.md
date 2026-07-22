@@ -1,3 +1,5 @@
+> ⚠️ **SUPERSEDED 2026-07-22.** The custom source-build + watchdog design described below was torn down. The live setup is now a single minimal LaunchDaemon on the Homebrew binary, no watchdogs. See **kanata_state_2026-07-22.md** for the current state.
+
 # Runbook: fix kanata "dead after sleep" on macOS (brew-stable + sleepwatcher wake daemon)
 
 > **PARTIALLY SUPERSEDED (2026-06-18) by `kanata_main_build_setup.md`.** Machine #1 has since moved

@@ -2,18 +2,18 @@
 #
 # kanata control helper.
 #
-# Autostart is now handled by launchd, NOT by this script and NOT by screen:
-#   - kanata          -> /Library/LaunchDaemons/dev.kanata.kanata.plist   (root, starts at boot)
+# Autostart is handled by launchd (two jobs — no watchdogs anymore):
+#   - kanata          -> /Library/LaunchDaemons/dev.kanata.kanata.plist    (root, at boot)
 #   - kanata-vk-agent -> ~/Library/LaunchAgents/dev.kanata.vk-agent.plist  (your user, at login)
-#   - wake recovery   -> /Library/LaunchDaemons/dev.kanata.wake.plist      (root, sleepwatcher)
 #
-# kanata can deadlock after the laptop wakes from sleep (stuck looping on
-# "virtual_hid_keyboard_ready true", never re-grabbing the keyboard). The wake
-# daemon runs sleepwatcher, which kickstarts the kanata daemon on every wake to
-# force a re-grab. See kanata-wake-restart.sh.
+# The daemon runs the Homebrew binary /opt/homebrew/bin/kanata with -p 5829 so the
+# vk-agent can drive app-aware layer switching over TCP. Post-wake recovery is
+# handled by kanata itself (1.12.0+) plus launchd KeepAlive on hard crashes; the
+# old sleepwatcher / wake-watchdog / vkagent-trigger recovery layers were removed
+# on 2026-07-22.
 #
-# Because kanata runs from a root LaunchDaemon, launchd starts it as root for
-# you -- there is no more sudo password to type and no screen session to attach.
+# Because kanata runs from a root LaunchDaemon, launchd starts it as root for you --
+# there is no sudo password to type and no screen session to attach.
 #
 # This script just wraps launchctl for convenient manual control.
 set -euo pipefail
@@ -60,14 +60,11 @@ case "$cmd" in
     sudo launchctl print "system/${DAEMON_LABEL}" 2>/dev/null | grep -E 'state|pid|program' | head || echo "not loaded"
     echo "== agent (kanata-vk-agent, user) =="
     launchctl print "${GUI}/${AGENT_LABEL}" 2>/dev/null | grep -E 'state|pid|program' | head || echo "not loaded"
-    echo "== wake daemon (sleepwatcher, root) =="
-    sudo launchctl print "system/dev.kanata.wake" 2>/dev/null | grep -E 'state|pid|program' | head || echo "not loaded"
     echo "== processes =="
     pgrep -fl 'kanata' || echo "(no kanata processes)"
-    pgrep -fl 'sleepwatcher' || echo "(no sleepwatcher process)"
     ;;
   logs)
-    tail -n 40 -f /var/log/kanata.log /var/log/kanata-wake.log "${HOME}/.local/log/kanata-vk-agent.log"
+    tail -n 40 -f /var/log/kanata.log "${HOME}/.local/log/kanata-vk-agent.log"
     ;;
   *)
     usage; exit 1 ;;

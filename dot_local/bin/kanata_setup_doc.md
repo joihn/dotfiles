@@ -1,3 +1,5 @@
+> **Updated 2026-07-22:** kanata is now Homebrew stable **1.12.0** (this doc predates that and says 1.11.0 / driver 6.2.0). It needs **BOTH Input Monitoring AND Accessibility** — Gotcha #3 below mentions only Input Monitoring. The `install_kanata_launchd.sh` installer referenced below is **retired**; current setup/recovery steps live in `~/.config/agent_context/kanata_state_2026-07-22.md`. The two-job architecture (root daemon + user agent, KeepAlive, no watchdogs) documented here is still current.
+
 # kanata setup — reference doc for an agent
 
 This documents how **kanata** (keyboard remapper) + **kanata-vk-agent** (app-aware

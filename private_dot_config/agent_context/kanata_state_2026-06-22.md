@@ -1,3 +1,5 @@
+> ⚠️ **SUPERSEDED 2026-07-22.** The custom source-build + watchdog design described below was torn down. The live setup is now a single minimal LaunchDaemon on the Homebrew binary, no watchdogs. See **kanata_state_2026-07-22.md** for the current state.
+
 # kanata setup — state snapshot as of 2026-06-22
 
 A point-in-time description of how kanata is actually running on machine #1 right now. For the

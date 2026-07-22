@@ -1,3 +1,5 @@
+> ⚠️ **SUPERSEDED 2026-07-22.** The custom source-build + watchdog design described below was torn down. The live setup is now a single minimal LaunchDaemon on the Homebrew binary, no watchdogs. See **kanata_state_2026-07-22.md** for the current state.
+
 # Runbook: move kanata to 1.12.0-prerelease-2 to fix the macOS sleep/wake bug
 
 > ⚠️ **SUPERSEDED (2026-06-17) — DO NOT FOLLOW THIS RUNBOOK.** The 1.12.0-prerelease approach

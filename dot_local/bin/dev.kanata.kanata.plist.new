@@ -7,23 +7,29 @@
 
     <!-- kanata must run as root on macOS: the Karabiner virtual HID daemon
          exposes its IPC under /Library/Application Support/org.pqrs/tmp/rootonly/.
-         Running it from a LaunchDaemon means launchd starts it as root for us,
-         so there is never an interactive sudo password to type. -->
+         Running from a LaunchDaemon means launchd starts it as root, so there is
+         no interactive sudo password to type. -->
     <key>UserName</key>
     <string>root</string>
 
-    <!-- Built from jtroo/kanata main (source commit 40a8b17, 2026-06-16) — this
-         is ~40 commits past the v1.12.0-prerelease-2 binary and includes the
-         macOS wake fixes (#2041 crash-safe restart, sink auto-recovery) that
-         1.11.0 lacks. Pinned path so `brew upgrade` never touches it; the brew
-         1.11.0 binary at /opt/homebrew/bin/kanata stays as instant rollback. -->
+    <!-- Uses the Homebrew-managed binary (stable, updated by `brew upgrade`).
+         We keep this tiny LaunchDaemon instead of `sudo brew services start kanata`
+         for ONE reason: the app-aware agent (kanata-vk-agent) drives layer
+         switching over kanata's TCP server on -p 5829, and that port is a CLI-only
+         flag. Homebrew's service block runs `kanata --no-wait --cfg ...` with no
+         -p, so brew services would silently disable app-aware switching. Hence the
+         explicit -p here.
+
+         TCC NOTE: Input Monitoring + Accessibility are keyed to the resolved binary
+         path. /opt/homebrew/bin/kanata resolves to the versioned Cellar path, so a
+         `brew upgrade kanata` that bumps the version requires RE-GRANTING both
+         permissions to the new binary (System Settings -> Privacy & Security). -->
     <key>ProgramArguments</key>
     <array>
-        <string>/usr/local/bin/kanata-main-40a8b17</string>
+        <string>/opt/homebrew/bin/kanata</string>
         <string>-c</string>
-        <!-- Config lives in ~/.config/kanata (stable, chezmoi-managed via
-             joihn/dotfiles). NOT in the ~/code/kanata git tree, so kanata-repo
-             branch switches can never make it vanish out from under the daemon. -->
+        <!-- Config lives in ~/.config/kanata (stable, chezmoi-managed). NOT in the
+             ~/code/kanata git tree, so branch switches can't make it vanish. -->
         <string>/Users/maximegardoni/.config/kanata/my_config.kbd</string>
         <string>-p</string>
         <string>5829</string>
@@ -32,7 +38,10 @@
     <key>RunAtLoad</key>
     <true/>
 
-    <!-- Restart kanata if it ever crashes, but not if it exits cleanly. -->
+    <!-- Restart kanata if it crashes, but not if it exits cleanly. This is the
+         ONLY recovery mechanism now: the sleepwatcher wake hook, the pmset
+         wake-watchdog, and the vk-agent log trigger were all removed on
+         2026-07-22 in favour of kanata 1.12.0's built-in post-wake recovery. -->
     <key>KeepAlive</key>
     <dict>
         <key>SuccessfulExit</key>

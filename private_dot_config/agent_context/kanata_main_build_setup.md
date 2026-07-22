@@ -1,3 +1,5 @@
+> ⚠️ **SUPERSEDED 2026-07-22.** The custom source-build + watchdog design described below was torn down. The live setup is now a single minimal LaunchDaemon on the Homebrew binary, no watchdogs. See **kanata_state_2026-07-22.md** for the current state.
+
 # Runbook: kanata on macOS via a source build of `main` (dual TCC permission)
 
 **Audience:** an AI agent (Claude Code) or human bringing a *second* macOS machine to the same
