@@ -1,0 +1,12 @@
+approvals_reviewer = "auto_review"
+model = "gpt-5.6-sol"
+model_reasoning_effort = "max"
+service_tier = "default"
+[projects."/home/maximegardoni/code/malicious-code-screener"]
+trust_level = "trusted"
+
+[projects."/home/maximegardoni"]
+trust_level = "trusted"
+
+[tui.model_availability_nux]
+"gpt-5.6-sol" = 2
