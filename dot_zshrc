@@ -602,6 +602,7 @@ fi
 
 if [[ "$MACHINE" == "mac_pro" ]]; then
   alias todo='open "obsidian://open?path=/Users/maximegardoni/Documents/max_pro_vault/TODO.md"'
+  alias hr='herdr --remote workstation'
 
   # bun completions
   [ -s "/Users/maximegardoni/.bun/_bun" ] && source "/Users/maximegardoni/.bun/_bun"
@@ -642,7 +643,6 @@ if [[ "$MACHINE" == "workstation" ]]; then
   export TELEPORT_LOGIN_BIND_ADDR=localhost:8000 
 
   alias code='cd /home/maximegardoni/code'
-
   export CLAUDE_STARAGENT_REPO=/home/maximegardoni/code/claude_staragent
   export AUTOFIX_VECTORSTORE_PATH=/home/maximegardoni/code/autorfix_vectorstore
   export AUTOFIX_MODEL_ARTIFACT_PATH="$HOME/autofix_model"
