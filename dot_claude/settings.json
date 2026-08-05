@@ -3,6 +3,7 @@
     "defaultMode": "auto"
   },
   "model": "opus",
+  "outputStyle": "brief-hierarchical",
   "hooks": {
     "PreToolUse": [
       {
