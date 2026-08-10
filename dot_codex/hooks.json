@@ -7,7 +7,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/home/maximegardoni/.codex/hooks/sudo-guard.sh",
+            "command": "~/.codex/hooks/sudo-guard.sh",
             "timeout": 5,
             "statusMessage": "Checking sudo timestamp"
           }

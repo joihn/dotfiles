@@ -66,6 +66,7 @@ cask "betterdisplay"
 cask "brave-browser"
 cask "daptify14/tap/chezit", trusted: true
 cask "claude"
+cask "codex"
 cask "contexts"
 cask "cursor"
 cask "firefox"
