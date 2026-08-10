@@ -15,27 +15,13 @@ status_line = [
     "weekly-limit",
 ]
 
+
 [tui.model_availability_nux]
 "gpt-5.6-sol" = 4
 
 [notice]
 hide_full_access_warning = true
 
-[projects."/home/maximegardoni/code/malicious-code-screener"]
-trust_level = "trusted"
 
-[projects."/home/maximegardoni"]
-trust_level = "trusted"
 
-[projects."/home/maximegardoni/code"]
-trust_level = "trusted"
 
-[marketplaces.snyk-internal]
-last_updated = "2026-07-24T16:29:08Z"
-source_type = "local"
-source = "/home/maximegardoni/.claude/plugins/marketplaces/snyk-internal"
-
-[hooks.state]
-
-[hooks.state."/home/maximegardoni/.codex/hooks.json:pre_tool_use:0:0"]
-trusted_hash = "sha256:5052cfcf4b9e3335ce8ac4608429435b43f4949f3e5eccb4902fa4408b9fb87f"
