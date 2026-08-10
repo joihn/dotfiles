@@ -1,0 +1,18 @@
+{
+  "description": "Personal Codex safety hooks migrated from Claude Code.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "^Bash$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/home/maximegardoni/.codex/hooks/sudo-guard.sh",
+            "timeout": 5,
+            "statusMessage": "Checking sudo timestamp"
+          }
+        ]
+      }
+    ]
+  }
+}
