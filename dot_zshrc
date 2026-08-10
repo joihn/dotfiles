@@ -668,8 +668,7 @@ alias mnt_work='sshfs workstation:/home/maximegardoni ~/mnt_workstation -o recon
 export DO_NOT_TRACK=1
 export CODEBOARDING_TELEMETRY=false
 
-# Load portable Codex settings from ~/.codex/dotfiles.config.toml while
-# keeping machine-local trust and state in ~/.codex/config.toml.
+# .codex/locals.config.toml  is NOT synced
 codex() {
   command codex --profile locals "$@"
 }
