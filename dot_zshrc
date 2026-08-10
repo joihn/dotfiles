@@ -585,8 +585,6 @@ fi
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#AAAAAA"
 
 
-# cursh alias
-alias cursh='cursor --remote ssh-remote+workstation'
 
 
 # The next line updates PATH for the Google Cloud SDK.
@@ -604,6 +602,8 @@ fi
 
 if [[ "$MACHINE" == "mac_pro" ]]; then
   alias todo='open "obsidian://open?path=/Users/maximegardoni/Documents/max_pro_vault/TODO.md"'
+  # cursh alias
+  alias cursh='cursor --remote ssh-remote+workstation'
 
   # bun completions
   [ -s "/Users/maximegardoni/.bun/_bun" ] && source "/Users/maximegardoni/.bun/_bun"
@@ -667,3 +667,9 @@ alias mnt_work='sshfs workstation:/home/maximegardoni ~/mnt_workstation -o recon
 #codeboarding telem off
 export DO_NOT_TRACK=1
 export CODEBOARDING_TELEMETRY=false
+
+# Load portable Codex settings from ~/.codex/dotfiles.config.toml while
+# keeping machine-local trust and state in ~/.codex/config.toml.
+codex() {
+  command codex --profile locals "$@"
+}
