@@ -12,12 +12,21 @@
 # old sleepwatcher / wake-watchdog / vkagent-trigger recovery layers were removed
 # on 2026-07-22.
 #
-# Because kanata runs from a root LaunchDaemon, launchd starts it as root for you --
-# there is no sudo password to type and no screen session to attach.
+# Because kanata runs from a root LaunchDaemon, launchd starts it as root at boot
+# and there is no screen session to attach. Driving the daemon by hand still needs
+# root, so the four privileged launchctl calls below are granted passwordless via
+# /etc/sudoers.d/kanata -- each pinned to its exact argv against this one label.
+#
+# That pinning is why launchctl is called through $LAUNCHCTL as an absolute path:
+# sudoers matches the resolved binary, so a PATH-resolved bare `launchctl` may not
+# match the rule (and would silently prompt for a password). It also keeps the
+# script working under the minimal environment Shortcuts.app runs scripts in --
+# the "Restart kanata" shortcut (hotkey) invokes `launch_kanata.sh restart`.
 #
 # This script just wraps launchctl for convenient manual control.
 set -euo pipefail
 
+LAUNCHCTL="/bin/launchctl"
 DAEMON_LABEL="dev.kanata.kanata"
 AGENT_LABEL="dev.kanata.vk-agent"
 DAEMON_PLIST="/Library/LaunchDaemons/${DAEMON_LABEL}.plist"
@@ -39,27 +48,27 @@ EOF
 cmd="${1:-status}"
 case "$cmd" in
   start)
-    sudo launchctl bootstrap system "$DAEMON_PLIST" 2>/dev/null || \
-      sudo launchctl kickstart -k "system/${DAEMON_LABEL}"
-    launchctl bootstrap "$GUI" "$AGENT_PLIST" 2>/dev/null || \
-      launchctl kickstart -k "${GUI}/${AGENT_LABEL}"
+    sudo "$LAUNCHCTL" bootstrap system "$DAEMON_PLIST" 2>/dev/null || \
+      sudo "$LAUNCHCTL" kickstart -k "system/${DAEMON_LABEL}"
+    "$LAUNCHCTL" bootstrap "$GUI" "$AGENT_PLIST" 2>/dev/null || \
+      "$LAUNCHCTL" kickstart -k "${GUI}/${AGENT_LABEL}"
     echo "started."
     ;;
   stop)
-    launchctl bootout "${GUI}/${AGENT_LABEL}" 2>/dev/null || true
-    sudo launchctl bootout "system/${DAEMON_LABEL}" 2>/dev/null || true
+    "$LAUNCHCTL" bootout "${GUI}/${AGENT_LABEL}" 2>/dev/null || true
+    sudo "$LAUNCHCTL" bootout "system/${DAEMON_LABEL}" 2>/dev/null || true
     echo "stopped."
     ;;
   restart)
-    sudo launchctl kickstart -k "system/${DAEMON_LABEL}"
-    launchctl kickstart -k "${GUI}/${AGENT_LABEL}"
+    sudo "$LAUNCHCTL" kickstart -k "system/${DAEMON_LABEL}"
+    "$LAUNCHCTL" kickstart -k "${GUI}/${AGENT_LABEL}"
     echo "restarted."
     ;;
   status)
     echo "== daemon (kanata, root) =="
-    sudo launchctl print "system/${DAEMON_LABEL}" 2>/dev/null | grep -E 'state|pid|program' | head || echo "not loaded"
+    sudo "$LAUNCHCTL" print "system/${DAEMON_LABEL}" 2>/dev/null | grep -E 'state|pid|program' | head || echo "not loaded"
     echo "== agent (kanata-vk-agent, user) =="
-    launchctl print "${GUI}/${AGENT_LABEL}" 2>/dev/null | grep -E 'state|pid|program' | head || echo "not loaded"
+    "$LAUNCHCTL" print "${GUI}/${AGENT_LABEL}" 2>/dev/null | grep -E 'state|pid|program' | head || echo "not loaded"
     echo "== processes =="
     pgrep -fl 'kanata' || echo "(no kanata processes)"
     ;;
