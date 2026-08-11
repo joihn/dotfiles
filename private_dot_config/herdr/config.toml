@@ -37,6 +37,10 @@ rows = [
 # finishes or needs input.
 delivery = "system"
 
+# Keep mouse selections copying automatically, but suppress the confirmation.
+[ui.toast.clipboard]
+enabled = false
+
 [theme]
 name = "catppuccin"
 auto_switch = false
