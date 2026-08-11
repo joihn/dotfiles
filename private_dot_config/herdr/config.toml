@@ -5,9 +5,44 @@ onboarding = false
 [keys]
 # Prefix key to enter prefix mode. Default is "ctrl+b".
 # The Command key can't travel over legacy terminal input, so kitty is
-# configured (map cmd+a -> \x1b[97;9u in ~/.config/kitty/kitty.conf) to emit
-# the kitty-keyboard-protocol encoding for super+a, which Herdr decodes here.
-prefix = "cmd+a"
+# configured (map cmd+s -> \x1b[115;9u in ~/.config/kitty/kitty.conf) to emit
+# the kitty-keyboard-protocol encoding for super+s, which Herdr decodes here.
+prefix = "cmd+s"
+
+# Direct pane controls. All other Herdr actions keep their usual prefix bindings.
+cycle_pane_next = "ctrl+tab"
+cycle_pane_previous = "ctrl+shift+tab"
+zoom = "ctrl+shift+x"
+copy_mode = "ctrl+shift+h"
+swap_pane_left = "ctrl+shift+z"
+close_pane = "ctrl+shift+w"
+
+# Keep one full-height main pane on the left and append new panes at the
+# bottom of the right-hand stack. The normal prefix+v split remains available.
+[[keys.command]]
+key = "ctrl+shift+n"
+type = "shell"
+description = "new pane at bottom of right stack"
+command = '''
+herdr_bin=${HERDR_BIN_PATH:-herdr}
+layout_json=$("$herdr_bin" pane layout --pane "$HERDR_ACTIVE_PANE_ID") || exit 1
+pane_count=$(printf '%s\n' "$layout_json" | jq -r '.result.layout.panes | length') || exit 1
+
+if [ "$pane_count" -le 1 ]; then
+    exec "$herdr_bin" pane split "$HERDR_ACTIVE_PANE_ID" --direction right --ratio 0.5 --focus
+fi
+
+bottom_right_pane=$(printf '%s\n' "$layout_json" | jq -r '
+    .result.layout.panes
+    | (map(.rect.x + .rect.width) | max) as $right_edge
+    | map(select((.rect.x + .rect.width) == $right_edge))
+    | max_by(.rect.y + .rect.height)
+    | .pane_id
+') || exit 1
+
+[ -n "$bottom_right_pane" ] && [ "$bottom_right_pane" != "null" ] || exit 1
+exec "$herdr_bin" pane split "$bottom_right_pane" --direction down --focus
+'''
 
 [ui]
 # Keep split panes visually separated instead of sharing divider borders.
