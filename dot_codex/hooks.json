@@ -3,13 +3,24 @@
   "hooks": {
     "PreToolUse": [
       {
-        "matcher": "^Bash$",
         "hooks": [
           {
-            "type": "command",
             "command": "~/.codex/hooks/sudo-guard.sh",
+            "statusMessage": "Checking sudo timestamp",
             "timeout": 5,
-            "statusMessage": "Checking sudo timestamp"
+            "type": "command"
+          }
+        ],
+        "matcher": "^Bash$"
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "command": "bash '/home/maximegardoni/.codex/herdr-agent-state.sh' session",
+            "timeout": 10,
+            "type": "command"
           }
         ]
       }
