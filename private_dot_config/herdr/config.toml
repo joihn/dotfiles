@@ -42,5 +42,5 @@ delivery = "system"
 enabled = false
 
 [theme]
-name = "catppuccin"
+name = "dracula"
 auto_switch = false
