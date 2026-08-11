@@ -1,0 +1,245 @@
+{
+  "prefs": {
+    "cache": {
+      "splitKeybinds": [
+        {
+          "shortcut": [
+            53
+          ],
+          "value": "dismiss"
+        },
+        {
+          "shortcut": [
+            55,
+            6
+          ],
+          "value": "undo"
+        },
+        {
+          "shortcut": [
+            55,
+            9
+          ],
+          "value": "paste_event"
+        },
+        {
+          "shortcut": [
+            18,
+            58
+          ],
+          "value": "polish"
+        },
+        {
+          "shortcut": [
+            19,
+            58
+          ],
+          "value": "polish_prompt_1"
+        },
+        {
+          "shortcut": [
+            38,
+            55,
+            56
+          ],
+          "value": "popo"
+        },
+        {
+          "shortcut": [
+            100,
+            55,
+            63
+          ],
+          "value": "lens"
+        },
+        {
+          "shortcut": [
+            58,
+            63,
+            98
+          ],
+          "value": "ptt"
+        },
+        {
+          "shortcut": [
+            101,
+            58,
+            63
+          ],
+          "value": "paste_last_text"
+        },
+        {
+          "shortcut": [
+            109,
+            58,
+            63
+          ],
+          "value": "copy_last_text"
+        }
+      ]
+    },
+    "user": {
+      "shouldMuteAudio": false,
+      "streamAudio": false,
+      "shouldAutoLearnWords": true,
+      "shouldOCRScreenCapture": false,
+      "enableSounds": true,
+      "selectedSoundFolder": null,
+      "hideAppInDock": true,
+      "openAtLogin": true,
+      "hideMeetingRecorderInScreenShare": true,
+      "autoDetectMeetingsEnabled": true,
+      "notetakerCalendarNotificationTiming": "15_seconds_before",
+      "notetakerCalendarNotificationsEnabled": true,
+      "notetakerAutoEndEnabled": true,
+      "notetakerLongMeetingCheckInEnabled": true,
+      "notetakerMaxRecordingLength": "2hr",
+      "notetakerLiveTranscriptEnabled": true,
+      "notetakerAttributeNamesEnabled": true,
+      "notetakerAutoDetectParticipantNamesEnabled": true,
+      "notetakerSplitScreenJoinEnabled": false,
+      "notetakerOpenWindowOnRecord": true,
+      "notetakerTripleTapShortcutEnabled": true,
+      "shareUsageData": false,
+      "cloudSync": false,
+      "hideFlowBarPermanently": true,
+      "useAxContext": true,
+      "cursorIdeIntegration": false,
+      "ideFileTagging": true,
+      "emailAutoSignature": false,
+      "emailSignatureOption": "written_with_flow",
+      "selectedLanguages": [
+        "en"
+      ],
+      "uiLocale": null,
+      "emailLocale": null,
+      "shortcuts": {
+        "53": "dismiss",
+        "18+58": "polish",
+        "19+58": "polish_prompt_1",
+        "38+55+56": "popo",
+        "100+55+63": "lens",
+        "58+63+98": "ptt",
+        "101+58+63": "paste_last_text",
+        "109+58+63": "copy_last_text"
+      },
+      "scratchpadInFlowBar": true,
+      "lastSetScratchpadShortcut": "",
+      "stashedScratchpadShortcuts": {},
+      "modifierShortcut": "48",
+      "defaultTranscriptionFormat": "Apply AI formatting",
+      "appTranscriptionFormats": [],
+      "aiFormatting": true,
+      "polishInstructions": {
+        "custom": {},
+        "default": {
+          "Make more concise": true,
+          "Clarify main point": false,
+          "Maintain your tone": true,
+          "Reword for clarity": true,
+          "Reorder for readability": true,
+          "Refine phrasing for impact": false,
+          "Add structure for readability": true
+        }
+      },
+      "polishEnabled": true,
+      "polishAutoPaste": true,
+      "autoPolishAfterDictation": {
+        "active": false,
+        "promptName": "polish"
+      },
+      "creatorMode": false,
+      "commandModeEnabled": false,
+      "styleDetectionEnabled": true,
+      "autoCleanup": {
+        "level": "light"
+      },
+      "dictionarySort": "Newest",
+      "personalizationStyles": {
+        "work": "casual",
+        "email": "casual",
+        "other": "casual",
+        "unset": "default",
+        "personal": "casual"
+      },
+      "userVoices": {
+        "work": {
+          "id": "work",
+          "source": "builtIn",
+          "name": "Work Messages",
+          "appNames": [
+            "Slack",
+            "Microsoft Teams"
+          ],
+          "autoCleanupLevel": "light",
+          "stylePreference": "casual"
+        },
+        "email": {
+          "id": "email",
+          "source": "builtIn",
+          "name": "Email",
+          "appNames": [
+            "Gmail",
+            "Microsoft Outlook",
+            "Superhuman"
+          ],
+          "autoCleanupLevel": "light",
+          "stylePreference": "casual"
+        },
+        "personal": {
+          "id": "personal",
+          "source": "builtIn",
+          "name": "Texting",
+          "appNames": [
+            "Messages",
+            "WhatsApp",
+            "WeChat",
+            "Messenger"
+          ],
+          "autoCleanupLevel": "light",
+          "stylePreference": "casual"
+        },
+        "other": {
+          "id": "other",
+          "source": "builtIn",
+          "name": "Others",
+          "appNames": [],
+          "autoCleanupLevel": "light",
+          "stylePreference": "casual"
+        }
+      },
+      "notesViewType": "grid",
+      "showTIY": false,
+      "processingDelayNotificationEnabled": true,
+      "pressEnterCommandEnabled": false,
+      "stackedMessagesEnabled": false,
+      "bulkImportEnabled": false,
+      "focusModeEnabled": false,
+      "focusModeBlockedApps": [
+        {
+          "bundleId": "com.tinyspeck.slackmacgap",
+          "name": "Slack"
+        },
+        {
+          "bundleId": "com.superhuman.electron",
+          "name": "Superhuman"
+        }
+      ],
+      "focusModeBlockedUrls": [
+        "app.hex.tech",
+        "app.slack.com",
+        "mail.google.com",
+        "mail.superhuman.com",
+        "x.com",
+        "twitter.com"
+      ],
+      "localDataPolicy": "store_normally",
+      "defaultNoteVisibility": "anyone_with_link",
+      "jabraWearDetectionEnabled": false,
+      "internalDataSharingEnabled": false,
+      "instructInternalDataSharingEnabled": true,
+      "statusDockEdge": "bottom",
+      "theme": "light"
+    }
+  }
+}

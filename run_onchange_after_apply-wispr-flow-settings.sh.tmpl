@@ -1,0 +1,43 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/bin/sh
+
+# Merge portable Wispr Flow settings into electron-store's config.json.
+#
+# Do not track config.json wholesale: it also contains account identity, device
+# IDs, usage counters, notification timestamps, and cached statistics. This
+# script keeps those local values intact and replaces only the curated settings
+# in the JSON fragment below.
+#
+# Wispr Flow writes config.json while running. Refuse to race it; quit Flow and
+# rerun `chezmoi apply` if this script reports that the app is open.
+
+set -eu
+
+config_dir="$HOME/Library/Application Support/Wispr Flow"
+config="$config_dir/config.json"
+
+if pgrep -x "Wispr Flow" >/dev/null 2>&1; then
+    echo "Wispr Flow is running; quit it and rerun chezmoi apply." >&2
+    exit 1
+fi
+
+mkdir -p "$config_dir"
+settings_file="$(mktemp "${TMPDIR:-/tmp}/wispr-flow-settings.XXXXXX")"
+output_file="$(mktemp "$config_dir/.config.json.XXXXXX")"
+trap 'rm -f "$settings_file" "$output_file"' EXIT HUP INT TERM
+
+cat > "$settings_file" <<'WISPR_FLOW_SETTINGS'
+{{ template "wispr-flow-settings.json" . }}
+WISPR_FLOW_SETTINGS
+
+if [ -f "$config" ]; then
+    jq --slurpfile desired "$settings_file" \
+        '. * $desired[0]' "$config" > "$output_file"
+else
+    jq --slurpfile desired "$settings_file" \
+        -n '$desired[0]' > "$output_file"
+fi
+
+chmod 600 "$output_file"
+mv "$output_file" "$config"
+{{ end -}}

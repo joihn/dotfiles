@@ -202,6 +202,24 @@ chezmoi edit --apply ~/.local/share/chezmoi  # or just: chezmoi apply
 This script is at the repo root (not a partial), so plain `chezmoi edit` reaches
 it; or open `$(chezmoi source-path)/run_onchange_after_apply-macos-defaults.sh.tmpl`.
 
+### Wispr Flow
+
+Wispr Flow keeps its local state in `~/Library/Application Support/Wispr Flow`.
+The user-facing settings and shortcuts are inside `config.json`, but that file
+also contains identity, device, usage, and cache data, so it is deliberately not
+tracked wholesale.
+
+- `.chezmoitemplates/wispr-flow-settings.json` contains the portable, curated
+  preference and shortcut snapshot.
+- `run_onchange_after_apply-wispr-flow-settings.sh.tmpl` recursively merges that
+  fragment into Flow's `config.json`, preserving all untracked local state. It
+  can initialize the file before Flow's first launch.
+- Quit Wispr Flow before `chezmoi apply`. The script fails safely when Flow is
+  running so the app cannot overwrite the update concurrently.
+- Auth/session data (`session.json`), transcripts/history (`flow.sqlite*`),
+  device-specific audio choices, window geometry, counters, and timestamps are
+  intentionally excluded.
+
 ### Default apps — "Open with" (`duti`)
 
 File-type and URL-scheme handlers are **not** `defaults` keys — they live in the
