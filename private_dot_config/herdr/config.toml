@@ -1,3 +1,4 @@
+onboarding = false
 # Herdr configuration
 # Docs: https://herdr.dev  |  print defaults with `herdr --default-config`
 
@@ -20,5 +21,5 @@ agent_panel_sort = "spaces"
 delivery = "system"
 
 [theme]
-name = "dracula"
+name = "catppuccin"
 auto_switch = false
