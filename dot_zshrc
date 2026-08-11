@@ -604,7 +604,7 @@ if [[ "$MACHINE" == "mac_pro" ]]; then
   alias todo='open "obsidian://open?path=/Users/maximegardoni/Documents/max_pro_vault/TODO.md"'
   # cursh alias
   alias cursh='cursor --remote ssh-remote+workstation'
-
+  alias hr='herdr --remote workstation'
   # bun completions
   [ -s "/Users/maximegardoni/.bun/_bun" ] && source "/Users/maximegardoni/.bun/_bun"
 
