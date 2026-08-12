@@ -75,6 +75,14 @@
             63
           ],
           "value": "copy_last_text"
+        },
+        {
+          "shortcut": [
+            103,
+            58,
+            63
+          ],
+          "value": "open_meeting_recorder"
         }
       ]
     },
@@ -121,7 +129,8 @@
         "100+55+63": "lens",
         "58+63+98": "ptt",
         "101+58+63": "paste_last_text",
-        "109+58+63": "copy_last_text"
+        "109+58+63": "copy_last_text",
+        "103+58+63": "open_meeting_recorder"
       },
       "scratchpadInFlowBar": true,
       "lastSetScratchpadShortcut": "",
