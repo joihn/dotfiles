@@ -27,9 +27,12 @@ pane_gaps = false
 agent_panel_sort = "spaces"
 
 [ui.sidebar.agents]
+# $cwd is a custom token: herdr has no built-in path token, so the pane's
+# directory is reported as pane metadata by the hook in ~/.zshrc (chpwd +
+# shell startup), which is the directory the agent was started in.
 rows = [
   ["state_icon", { token = "$task", bold = true, dim = false }],
-  ["workspace", "tab"],
+  ["$cwd", "tab"],
 ]
 
 [ui.toast]
