@@ -672,3 +672,17 @@ export CODEBOARDING_TELEMETRY=false
 codex() {
   command codex --profile locals "$@"
 }
+
+# herdr: report this pane's directory as the $cwd sidebar token (agent panel).
+# herdr has no built-in path token, so we feed one as pane metadata. The value
+# freezes while an agent runs in the foreground, so it shows the directory the
+# agent was started in.
+if [[ -n "$HERDR_PANE_ID" ]] && (( $+commands[herdr] )); then
+  _herdr_report_cwd() {
+    herdr pane report-metadata "$HERDR_PANE_ID" \
+      --source zsh:cwd --token "cwd=${PWD/#$HOME/~}" >/dev/null 2>&1 &!
+  }
+  autoload -Uz add-zsh-hook
+  add-zsh-hook chpwd _herdr_report_cwd
+  _herdr_report_cwd
+fi
