@@ -476,6 +476,21 @@ fpcc() {
   rm "$tmpfile"
 }
 
+# copy the text CONTENT of a file to the clipboard
+fcc() {
+  if [[ $# -ne 1 ]]; then
+    echo "Usage: fcc <file>"
+    return 1
+  fi
+
+  if [[ ! -f $1 ]]; then
+    echo "Error: '$1' is not a valid file."
+    return 1
+  fi
+
+  cat -- "$1" | kitten clipboard
+}
+
 
 alias setup="cd /mnt/home/maxime/setup"
 alias setup2="cd /mnt/erx/setup"
