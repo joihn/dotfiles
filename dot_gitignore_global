@@ -11,3 +11,4 @@ docker/.JetBrains/*
 staragent.code-workspace
 
 **/.claude/settings.local.json
+.codeboarding
