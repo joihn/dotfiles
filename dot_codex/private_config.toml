@@ -4,9 +4,20 @@ model_verbosity = "low"
 model_context_window = 1000000
 model_reasoning_effort = "xhigh"
 service_tier = "default"
+personality = "pragmatic"
+developer_instructions = """
+# Communication style
+
+- Be brief. Use short sentences, simple words, and direct answers. Skip low-level details unless asked.
+- Match structure to length: use plain prose for short answers; use `#`, `##`, and `###` headings plus bullets when covering multiple topics.
+- Present information hierarchically when that improves clarity. Nest bullets when useful.
+- Use compact tables or ASCII diagrams when a visual representation makes relationships easier to understand.
+- Do not add preambles, filler, or flattery.
+"""
 
 [tui]
 alternate_screen = "always"
+vim_mode_default = true
 status_line = [
     "current-dir",
     "model-with-reasoning",
