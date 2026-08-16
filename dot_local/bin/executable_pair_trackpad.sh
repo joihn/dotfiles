@@ -9,12 +9,12 @@ readonly device_address="BC:D0:74:B8:BD:F6"
 readonly pairing_timeout=30
 
 if [[ "$(uname -s)" != "Darwin" ]]; then
-    echo "forget_trackpad.sh: this script only supports macOS." >&2
+    echo "pair_trackpad.sh: this script only supports macOS." >&2
     exit 1
 fi
 
 if ! command -v blueutil >/dev/null 2>&1; then
-    echo "forget_trackpad.sh: blueutil is required." >&2
+    echo "pair_trackpad.sh: blueutil is required." >&2
     echo "Install it with: brew install blueutil" >&2
     exit 127
 fi
@@ -50,6 +50,6 @@ while true; do
     pairing_attempt=$((pairing_attempt + 1))
 done
 
-printf 'forget_trackpad.sh: could not pair Bluetooth device after %d seconds: %s (%s)\n' \
+printf 'pair_trackpad.sh: could not pair Bluetooth device after %d seconds: %s (%s)\n' \
     "$pairing_elapsed" "$device_name" "$device_address" >&2
 exit 1
