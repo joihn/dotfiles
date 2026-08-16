@@ -46,7 +46,7 @@ while true; do
     fi
 
     printf 'Pairing failed; retrying...\n' >&2
-    sleep 1
+    sleep 0.5
     pairing_attempt=$((pairing_attempt + 1))
 done
 
