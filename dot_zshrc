@@ -395,6 +395,8 @@ alias broot="broot -c :toggle_preview"
 if [[ "$OS" == "mac" ]]; then
   [[ -r "$HOME/Library/Application Support/org.dystroy.broot/launcher/bash/br" ]] && \
     source "$HOME/Library/Application Support/org.dystroy.broot/launcher/bash/br"
+  [[ -r "$HOME/.config/broot/launcher/bash/br" ]] && \
+    source "$HOME/.config/broot/launcher/bash/br"
 elif [[ "$OS" == "linux" ]]; then
   [[ -r "$HOME/.config/broot/launcher/bash/br" ]] && \
     source "$HOME/.config/broot/launcher/bash/br"
