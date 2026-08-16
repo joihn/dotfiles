@@ -14,8 +14,8 @@
 # set via Finder's "Open With > Always Open With" per machine. Run `duti-dump`
 # to see which of your current handlers are settable.
 
-# --- PDF: Adobe Acrobat ---
-com.adobe.Acrobat.Pro  .pdf  all
+# --- PDF: Preview ---
+com.apple.Preview  .pdf  all
 
 # --- Web: Chrome ---
 com.google.Chrome  .html  all
