@@ -17,7 +17,7 @@ developer_instructions = """
 
 [tui]
 alternate_screen = "always"
-vim_mode_default = true
+vim_mode_default = false
 status_line = [
     "current-dir",
     "model-with-reasoning",
