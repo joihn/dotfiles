@@ -51,6 +51,37 @@ add_array() {
   return 0
 }
 
+# Check for a dictionary appended with `defaults write ... -array-add` without
+# comparing/replacing unrelated dictionaries already present in the array.
+add_array_add() {
+  local domain="$1" key="$2" want="$3" raw content_type role_all have='(absent)'
+  if [[ "$want" =~ LSHandlerContentType=\"([^\"]+)\" ]]; then
+    content_type="${BASH_REMATCH[1]}"
+  else
+    content_type=''
+  fi
+  if [[ "$want" =~ LSHandlerRoleAll=\"([^\"]+)\" ]]; then
+    role_all="${BASH_REMATCH[1]}"
+  else
+    role_all=''
+  fi
+  if [ -n "$content_type" ] && [ -n "$role_all" ] && \
+     raw="$(defaults read "$domain" "$key" 2>/dev/null)" && \
+     printf '%s\n' "$raw" | awk -v content_type="$content_type" -v role_all="$role_all" '
+       /^[[:space:]]*\{/ { content = 0; role = 0 }
+       index($0, "LSHandlerContentType = \"" content_type "\";") { content = 1 }
+       index($0, "LSHandlerRoleAll = \"" role_all "\";") { role = 1 }
+       /^[[:space:]]*\},?$/ { if (content && role) found = 1 }
+       END { exit(found ? 0 : 1) }
+     '; then
+    have="$want"
+  fi
+  printf '%s %s[] = %s\n' "$domain" "$key" "$have" >>"$have_file"
+  printf '%s %s[] = %s\n' "$domain" "$key" "$want" >>"$want_file"
+  [ "$have" != "$want" ] && changes=$((changes + 1))
+  return 0
+}
+
 in_array=0; a_domain=''; a_key=''; declare -a a_items=()
 while IFS= read -r line; do
   l="${line#"${line%%[![:space:]]*}"}"               # strip leading whitespace
@@ -71,6 +102,10 @@ while IFS= read -r line; do
     \'*\') val="${val#\'}"; val="${val%\'}";;
   esac
   val="${val//\$HOME/$HOME}"                          # expand $HOME like the script would
+  if [ "$type" = "-array-add" ]; then
+    add_array_add "$domain" "$key" "$val"
+    continue
+  fi
   add_scalar "$domain" "$key" "${type#-}" "$val"
 done < <(chezmoi execute-template < "$SRC")
 

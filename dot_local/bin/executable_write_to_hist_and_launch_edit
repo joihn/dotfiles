@@ -25,16 +25,18 @@ if [[ ${#editor_argv[@]} -eq 0 ]] || ! command -v "${editor_argv[0]}" >/dev/null
     exit 127
 fi
 
-editor_args=()
+# Keep this array nonempty: Bash 3.2 treats an empty-array expansion as an
+# unbound variable when `set -u` is enabled (the default Bash on macOS).
+editor_command=("${editor_argv[@]}")
 if [[ $line =~ ^[0-9]+$ ]] && (( line > 0 )); then
-    editor_args+=("+$line")
+    editor_command+=("+$line")
 fi
+editor_command+=(-- "$file")
 
 # Write a valid, reusable command to zsh's extended history. %q keeps paths
 # containing whitespace, quotes, or other shell characters intact.
 history_file=${HISTFILE:-${ZDOTDIR:-$HOME}/.zsh_history}
-printf -v history_command '%q ' "${editor_argv[@]}" "${editor_args[@]}" -- "$file"
+printf -v history_command '%q ' "${editor_command[@]}"
 printf ': %s:0;%s\n' "$(date +%s)" "${history_command% }" >> "$history_file"
 
-exec "${editor_argv[@]}" "${editor_args[@]}" -- "$file"
-
+exec "${editor_command[@]}"

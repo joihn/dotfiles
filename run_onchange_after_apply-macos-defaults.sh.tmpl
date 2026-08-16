@@ -29,6 +29,22 @@ defaults write com.apple.dock orientation -string "left"
 defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
 defaults write com.apple.finder ShowPathbar -bool true
 
+# --- Default file viewer ---
+defaults write NSGlobalDomain NSFileViewer -string "com.binarynights.ForkLift"
+
+# duti rejects public.folder with error -50, so use ForkLift's documented
+# LaunchServices setting. Only append it when the exact handler is absent;
+# `defaults write -array-add` otherwise creates duplicates on every apply.
+if ! defaults read com.apple.LaunchServices/com.apple.launchservices.secure LSHandlers 2>/dev/null | awk '
+    /^[[:space:]]*\{/ { folder = 0; forklift = 0 }
+    /LSHandlerContentType = "public.folder";/ { folder = 1 }
+    /LSHandlerRoleAll = "com.binarynights.ForkLift";/ { forklift = 1 }
+    /^[[:space:]]*\},?$/ { if (folder && forklift) found = 1 }
+    END { exit(found ? 0 : 1) }
+'; then
+    defaults write com.apple.LaunchServices/com.apple.launchservices.secure LSHandlers -array-add '{LSHandlerContentType="public.folder";LSHandlerRoleAll="com.binarynights.ForkLift";}'
+fi
+
 # --- Screenshots ---
 defaults write com.apple.screencapture location -string "~/Pictures/"
 
@@ -129,6 +145,20 @@ defaults write org.p0deje.Maccy searchMode -string "fuzzy"
 defaults write org.p0deje.Maccy showFooter -bool true
 defaults write org.p0deje.Maccy showSearch -bool true
 defaults write org.p0deje.Maccy showTitle -bool true
+
+# --- Login items ---
+# Google Drive is a GUI app, so "start at boot" means start when this user logs
+# in. Keep apply portable by doing nothing on Macs where the app is not installed.
+if [ -d "/Applications/Google Drive.app" ]; then
+    osascript <<'APPLESCRIPT' || \
+        echo "note: could not add Google Drive to Login Items" >&2
+tell application "System Events"
+    if not (exists login item "Google Drive") then
+        make login item at end with properties {name:"Google Drive", path:"/Applications/Google Drive.app", hidden:false}
+    end if
+end tell
+APPLESCRIPT
+fi
 
 # Apply changes without a logout.
 for app in Dock Finder SystemUIServer Spotlight; do

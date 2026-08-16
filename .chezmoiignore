@@ -2,6 +2,10 @@ config_terminator
 copyq.conf
 warp_config.json
 
+{{ if ne .chezmoi.os "darwin" }}
+Google Drive
+{{ end }}
+
 # oh-my-zsh writes these at runtime; never track them as managed files.
 .oh-my-zsh/cache
 .oh-my-zsh/log

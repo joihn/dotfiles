@@ -10,6 +10,8 @@
 # run_onchange: chezmoi re-runs this only when the list changes; `duti` is
 # idempotent (re-setting the current handler is a no-op). Full-line # comments
 # and blank lines are stripped first, since duti has no comment syntax.
+# LaunchServices classes that duti rejects (notably public.folder) are tracked
+# separately in run_onchange_after_apply-macos-defaults.sh.tmpl.
 #
 # To edit the list:    $EDITOR "$(chezmoi source-path)/.chezmoitemplates/duti-settings"
 # To capture handlers: duti-dump            (see ~/.local/bin)
