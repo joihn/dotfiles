@@ -108,6 +108,13 @@
       "notetakerSplitScreenJoinEnabled": false,
       "notetakerOpenWindowOnRecord": true,
       "notetakerTripleTapShortcutEnabled": true,
+      "notificationSettings": {
+        "tipsAndSuggestions": false,
+        "featureHighlights": false,
+        "milestonesAndProgress": false,
+        "teamUpdates": false,
+        "teamLeaderboardUpdates": false
+      },
       "shareUsageData": false,
       "cloudSync": false,
       "hideFlowBarPermanently": true,
