@@ -32,6 +32,10 @@ defaults write com.apple.finder ShowPathbar -bool true
 # --- Default file viewer ---
 defaults write NSGlobalDomain NSFileViewer -string "com.binarynights.ForkLift"
 
+# --- ForkLift ---
+# Copy Path > UNIX (absolute POSIX path): Command-Shift-C
+defaults write com.binarynights.ForkLift NSUserKeyEquivalents -dict-add "UNIX" '@$c'
+
 # duti rejects public.folder with error -50, so use ForkLift's documented
 # LaunchServices setting. Only append it when the exact handler is absent;
 # `defaults write -array-add` otherwise creates duplicates on every apply.
