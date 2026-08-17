@@ -4,6 +4,8 @@ warp_config.json
 
 {{ if ne .chezmoi.os "darwin" }}
 Google Drive
+Applications/myocr.app
+Applications/myqr.app
 {{ end }}
 
 # oh-my-zsh writes these at runtime; never track them as managed files.

@@ -202,6 +202,22 @@ chezmoi edit --apply ~/.local/share/chezmoi  # or just: chezmoi apply
 This script is at the repo root (not a partial), so plain `chezmoi edit` reaches
 it; or open `$(chezmoi source-path)/run_onchange_after_apply-macos-defaults.sh.tmpl`.
 
+### Personal macOS apps
+
+`myqr.app` and `myocr.app` are tracked as exact bundles and deploy to
+`~/Applications`, which Spotlight indexes without requiring administrator access.
+The destination is relative to chezmoi's target home, so usernames and home paths
+can differ between machines. `.chezmoiignore` excludes both bundles on non-macOS
+hosts.
+
+The current executables require macOS 13 or newer and Apple Silicon (`arm64`). On
+a new Mac, macOS may ask for screen-capture permission the first time each app is
+used. To capture a rebuilt bundle later:
+
+```sh
+chezmoi add --exact ~/Applications/myqr.app ~/Applications/myocr.app
+```
+
 ### Wispr Flow
 
 Wispr Flow keeps its local state in `~/Library/Application Support/Wispr Flow`.
@@ -296,6 +312,7 @@ dot_*                     ~/.* dotfiles (zshrc, bashrc, p10k.zsh, tmux.conf, vim
 dot_local/bin/            helper scripts (see below) → ~/.local/bin
 private_dot_config/       ~/.config/* (nvim, kitty, btop, kanata, ...)
 private_dot_config/executable_auto_deploy.sh    Tier-0 fresh-machine bootstrap
+private_Applications/     macOS-only personal apps → ~/Applications
 private_Library/          macOS ~/Library bits
 ```
 
