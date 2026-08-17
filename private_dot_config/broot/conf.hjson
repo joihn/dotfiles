@@ -224,8 +224,15 @@ lines_after_match_in_preview: 1
 # Below are two examples that you may uncomment and adapt:
 #
 preview_transformers: [
-     # Use mutool to render any PDF file as an image
-     # In this example we use placeholders for the input and output files
+    # Render the first page of PDF files as a high-resolution image.
+    # Broot displays the resulting PNG with Kitty's graphics protocol.
+    {
+        input_extensions: [ "pdf" ] // case doesn't matter
+        output_extension: png
+        mode: image
+        command: [ "mutool", "draw", "-w", "1000", "-o", "{output-path}", "{input-path}", "1" ]
+    }
+
      {
          input_extensions: [ "html" ] // case doesn't matter
          output_extension: py
