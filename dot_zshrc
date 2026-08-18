@@ -172,11 +172,20 @@ chezmoi() {
   local reminder="   %F{red}- on disk%f  %F{green}+ chezmoi repo%f"
   case "$1" in
     diff)
-      # Feed the raw unified diff to delta so it can format and highlight it.
-      # Delta starts less itself; -F keeps short diffs inline so the reminder
-      # remains visible after the command exits.
-      { print -P "$reminder"; command chezmoi --color=off --no-pager "$@"; } | delta --pager="less -FRX"
-      return
+      # Capture the raw unified diff once, then prepend Git's compact diffstat
+      # before delta formats the full diff. Paging stays disabled.
+      local diff_output diff_status
+      diff_output="$(command chezmoi --color=off --no-pager "$@")"
+      diff_status=$?
+      {
+        print -P "$reminder"
+        if [[ -n "$diff_output" ]]; then
+          print -r -- "$diff_output" | git apply --stat
+          print
+          print -r -- "$diff_output"
+        fi
+      } | delta --paging=never
+      return $diff_status
       ;;
     apply)
       print -P "$reminder"
