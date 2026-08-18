@@ -16,4 +16,39 @@ return {
       { '<leader>gf', function() Snacks.lazygit.log_file() end, desc = 'Lazygit current [F]ile history' },
     },
   },
+  {
+    'MeanderingProgrammer/render-markdown.nvim',
+    ft = { 'markdown' },
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+      'nvim-mini/mini.nvim',
+    },
+    opts = {
+      heading = { enabled = false },
+      paragraph = { enabled = false },
+      code = { enabled = false },
+      dash = { enabled = false },
+      document = { enabled = false },
+      bullet = { enabled = false },
+      checkbox = { enabled = false },
+      quote = { enabled = false },
+      link = { enabled = false },
+      sign = { enabled = false },
+      inline_highlight = { enabled = false },
+      indent = { enabled = false },
+      html = { enabled = false },
+      latex = { enabled = false },
+      yaml = { enabled = false },
+      pipe_table = {
+        cell = 'padded',
+      },
+    },
+    keys = {
+      {
+        '<leader>mt',
+        '<cmd>RenderMarkdown buf_toggle<cr>',
+        desc = '[M]arkdown [T]oggle rendering',
+      },
+    },
+  },
 }
