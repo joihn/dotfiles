@@ -111,12 +111,21 @@ vim.o.mouse = 'a'
 vim.o.showmode = false
 
 -- Sync clipboard between OS and Neovim.
---  We use kitty clipboard integration instead of Neovim's built-in clipboard provider.
---  See the "Kitty Clipboard Integration" section below for details.
---  If you're not using kitty, uncomment the following:
--- vim.schedule(function()
---   vim.o.clipboard = 'unnamedplus'
--- end)
+-- Kitty's clipboard kitten works locally and reaches the host clipboard over SSH.
+-- Route both Vim clipboard registers to the same host clipboard.
+if vim.fn.executable 'kitten' == 1 then
+  local copy = { 'kitten', 'clipboard' }
+  local paste = { 'kitten', 'clipboard', '--get-clipboard' }
+  vim.g.clipboard = {
+    name = 'Kitty clipboard',
+    copy = { ['+'] = copy, ['*'] = copy },
+    paste = { ['+'] = paste, ['*'] = paste },
+    cache_enabled = 0,
+  }
+end
+
+-- Make the unnamed register, + register, and host clipboard one logical register.
+vim.o.clipboard = 'unnamedplus'
 
 -- Enable break indent
 vim.o.breakindent = true
@@ -323,57 +332,18 @@ vim.keymap.set('v', 'x', '"_x', { desc = 'Delete selection (no clipboard)' })
 vim.keymap.set('v', 'c', '"_c', { desc = 'Change selection (no clipboard)' })
 vim.keymap.set('v', 's', '"_s', { desc = 'Substitute selection (no clipboard)' })
 
--- Cut (,d / ,dd / ,D) = plain delete into the default register, which the TextYankPost
--- (OSC 52) autocmd below syncs to the system clipboard on the 'd' operator.
+-- Cut (,d / ,dd / ,D) = plain delete into the default register, which
+-- 'unnamedplus' routes to the system clipboard.
 --  ,dd  cuts the whole line (,d -> d operator, then a second d -> linewise).
 vim.keymap.set('n', ',d', 'd', { desc = 'Cut (to clipboard)' })
 vim.keymap.set('n', ',D', 'D', { desc = 'Cut to end of line (to clipboard)' })
 vim.keymap.set('v', ',d', 'd', { desc = 'Cut selection (to clipboard)' })
-
--- ===================== Kitty Clipboard Integration (OSC 52) =====================
--- Syncs all yank/paste operations with system clipboard via OSC 52 escape sequences
--- This works in kitty and most modern terminals
-
--- Function to copy text to clipboard using OSC 52
-local function osc52_copy(text)
-  local b64 = vim.base64.encode(text)
-  local osc = string.format('\x1b]52;c;%s\x1b\\', b64)
-  vim.api.nvim_chan_send(vim.v.stderr, osc)
-end
-
--- Copy yanked text to system clipboard after any yank operation
-vim.api.nvim_create_autocmd('TextYankPost', {
-  desc = 'Copy yanked text to system clipboard via OSC 52',
-  group = vim.api.nvim_create_augroup('osc52-clipboard-yank', { clear = true }),
-  callback = function()
-    -- Sync on yank or cut (leader-d) using default or unnamed register
-    if (vim.v.event.operator == 'y' or vim.v.event.operator == 'd') and (vim.v.event.regname == '' or vim.v.event.regname == '"') then
-      local content = vim.fn.getreg '"'
-      osc52_copy(content)
-    end
-  end,
-})
-
--- Paste pulls from the system clipboard via kitten, so p / P stay in sync with copies
--- made in other apps and with the OSC 52 copy path above (one shared register).
--- OSC 52 paste (querying the terminal) is unreliable, so we read it through kitten.
-if vim.fn.executable 'kitten' == 1 then
-  local function paste_from_kitten(before)
-    local text = vim.fn.system 'kitten clipboard --get-clipboard'
-    if vim.v.shell_error ~= 0 then
-      vim.notify('Failed to read kitten clipboard', vim.log.levels.ERROR)
-      return
-    end
-    -- Trailing newline => linewise paste (e.g. after a ,dd line cut), else charwise.
-    local regtype = text:sub(-1) == '\n' and 'l' or 'c'
-    vim.fn.setreg('"', text, regtype)
-    vim.cmd('normal! ' .. (before and 'P' or 'p'))
-  end
-  vim.keymap.set('n', 'p', function() paste_from_kitten(false) end, { desc = 'Paste from clipboard' })
-  vim.keymap.set('n', 'P', function() paste_from_kitten(true) end, { desc = 'Paste before (from clipboard)' })
-  vim.keymap.set('x', 'p', function() paste_from_kitten(false) end, { desc = 'Paste over selection (from clipboard)' })
-end
--- ===================== End Kitty Clipboard Integration =====================
+-- Always fetch the current host clipboard, including after another app copies text.
+vim.keymap.set('n', 'p', '"+p', { desc = 'Paste from clipboard' })
+vim.keymap.set('n', 'P', '"+P', { desc = 'Paste before (from clipboard)' })
+-- Replacing a selection must not overwrite the clipboard with the replaced text.
+vim.keymap.set('x', 'p', '"_d"+P', { desc = 'Paste over selection (from clipboard)' })
+vim.keymap.set('x', 'P', '"_d"+P', { desc = 'Paste over selection (from clipboard)' })
 
 -- Autosave on focus lost or buffer leave
 vim.api.nvim_create_autocmd({ 'FocusLost', 'BufLeave' }, {
