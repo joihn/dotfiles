@@ -33,6 +33,9 @@ defaults write com.apple.finder ShowPathbar -bool true
 defaults write NSGlobalDomain NSFileViewer -string "com.binarynights.ForkLift"
 
 # --- ForkLift ---
+# Include nested folders in searches started with Control-F
+defaults write com.binarynights.ForkLift recursiveSearch -bool true
+
 # Copy Path > UNIX (absolute POSIX path): Command-Shift-C
 defaults write com.binarynights.ForkLift NSUserKeyEquivalents -dict-add "UNIX" '@$c'
 
