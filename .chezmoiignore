@@ -12,3 +12,7 @@ Applications/myqr.app
 .oh-my-zsh/cache
 .oh-my-zsh/log
 .zcompdump*
+
+# Handy's runtime directory can contain API keys, transcripts, and recordings.
+# Its curated settings are applied by run_onchange_after_apply-handy-settings.
+Library/Application Support/com.pais.handy

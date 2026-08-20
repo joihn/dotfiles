@@ -236,6 +236,19 @@ tracked wholesale.
   device-specific audio choices, window geometry, counters, and timestamps are
   intentionally excluded.
 
+### Handy
+
+Handy keeps its settings in
+`~/Library/Application Support/com.pais.handy/settings_store.json`.
+
+- `.chezmoitemplates/handy-settings.json` contains the portable settings,
+  shortcuts, model choice, and post-processing prompts.
+- `run_onchange_after_apply-handy-settings.sh.tmpl` merges that snapshot into
+  Handy's local settings file and preserves `post_process_api_keys` if present.
+- Quit Handy before `chezmoi apply` so the app cannot overwrite the update.
+- API keys, `history.db`, recordings, and downloaded models are intentionally
+  excluded from the public repository.
+
 ### Default apps — "Open with" (`duti`)
 
 File-type and URL-scheme handlers are **not** `defaults` keys — they live in the
