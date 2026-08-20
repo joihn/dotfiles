@@ -201,14 +201,18 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Navigate screen lines when a long line is wrapped.
 -- Kitty sends macOS Cmd+Left/Cmd+Right as Home/End.
+-- Herdr can occasionally leave stale cells after Neovim scrolls a wrapped line,
+-- so force a full repaint after vertical screen-line motions only inside Herdr.
+local herdr_redraw = vim.env.HERDR_PANE_ID and '<Cmd>redraw!<CR>' or ''
+
 vim.keymap.set({ 'n', 'x' }, '<Home>', 'g0', { desc = 'Start of wrapped screen line' })
 vim.keymap.set({ 'n', 'x' }, '<End>', 'g$', { desc = 'End of wrapped screen line' })
-vim.keymap.set({ 'n', 'x' }, '<Up>', 'gk', { desc = 'Previous wrapped screen line' })
-vim.keymap.set({ 'n', 'x' }, '<Down>', 'gj', { desc = 'Next wrapped screen line' })
+vim.keymap.set({ 'n', 'x' }, '<Up>', 'gk' .. herdr_redraw, { desc = 'Previous wrapped screen line' })
+vim.keymap.set({ 'n', 'x' }, '<Down>', 'gj' .. herdr_redraw, { desc = 'Next wrapped screen line' })
 vim.keymap.set('i', '<Home>', '<C-o>g0', { desc = 'Start of wrapped screen line' })
 vim.keymap.set('i', '<End>', '<C-o>g$', { desc = 'End of wrapped screen line' })
-vim.keymap.set('i', '<Up>', '<C-o>gk', { desc = 'Previous wrapped screen line' })
-vim.keymap.set('i', '<Down>', '<C-o>gj', { desc = 'Next wrapped screen line' })
+vim.keymap.set('i', '<Up>', '<C-o>gk' .. herdr_redraw, { desc = 'Previous wrapped screen line' })
+vim.keymap.set('i', '<Down>', '<C-o>gj' .. herdr_redraw, { desc = 'Next wrapped screen line' })
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
