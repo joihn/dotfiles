@@ -136,6 +136,53 @@ defaults write com.contextsformac.Contexts CTPreferenceSidebarDisplayMode -strin
 defaults write com.contextsformac.Contexts CTPreferenceSidebarWidth -int 0
 defaults write com.contextsformac.Contexts CTSidebarHorizontalAlignment -string "CTWindowHorizontalAlignmentRight"
 defaults write com.contextsformac.Contexts CTSidebarInactiveMaximumWidth -int 1
+# These two NSKeyedArchiver blobs contain only the configured shortcuts and
+# switcher definitions. They exclude app-instance and analytics identifiers.
+defaults write com.contextsformac.Contexts CTPreferenceSearchShortcutModal -data '62706c6973743030d4010203040506070a582476657273696f6e592461726368697665725424746f7058246f626a6563747312000186a05f100f4e534b657965644172636869766572d1080954726f6f748001a30b0c1355246e756c6cd30d0e0f101112574b6579436f64655624636c6173735d4d6f646966696572466c616773102e80021200080000d2141516175a24636c6173736e616d655824636c61737365735a435453686f7274637574a31618195b4d415353686f7274637574584e534f626a65637408111a24293237494c5153575d646c738183858a8f9aa3aeb2be0000000000000101000000000000001a000000000000000000000000000000c7'
+defaults write com.contextsformac.Contexts CTPreferenceSwitchers -data '62706c6973743030d4010203040506070a582476657273696f6e592461726368697665725424746f7058246f626a6563747312000186a05f100f4e534b657965644172636869766572d1080954726f6f748001af101d0b0c1626272d343738393d48494d50515a5b5e616b6d7071787a7c7d7e55246e756c6cd20d0e0f155a4e532e6f626a656374735624636c617373a510111213148002800a800f80138017801cd80e1718191a1b1c1d1e1f201f221f24255f10176d696e696d697a656457696e646f7773446973706c617957656e61626c65645f101a77696e646f776c65737350726f636573736573446973706c61795c6e65787453686f72746375745f101468696464656e57696e646f7773446973706c61795c7370616365734f7074696f6e5f101070726576696f757353686f7274637574800980088003800880048008800780061000d3280e292a2b2c574b6579436f64655d4d6f646966696572466c616773102880051200040000d22e2f30315a24636c6173736e616d655824636c61737365735a435453686f7274637574a33032335b4d415353686f7274637574584e534f626a656374d3280e29352b2c102680055f101143545370616365734f7074696f6e416c6c5f101343544974656d446973706c61794e6f726d616cd22e2f3a3b5a43545377697463686572a23c335a43545377697463686572d93e0e18191a171b1c1d1f1e4142431f1f24475f10196e6f6e61637469766550726f636573736573446973706c617980088009800b800e800c800880088007800d1001d3280e294a2b4c103080051200100000d3280e294a2b4f800512001200005f101c43544974656d446973706c6179496e536570617261746547726f7570d80e1718191a1b1c1d1e1f541f561f24598009800880108008801180088007801208d3280e294a2b5d80051200080000d3280e295f2b5d10328005d93e0e18191a171b1c1d621e541f661f1f246a801680098010800880148008800880078015d3280e295f2b5d8005d3280e295f2b6f800512000a00005f101343544974656d446973706c617948696464656ed61d0e183e191a721e4175767780198009800b801a801b8018d3280e292a2b5d8005d3280e29352b5d80055f101343544974656d446973706c61794e6f726d616c5f101c43544974656d446973706c6179496e536570617261746547726f7570d22e2f7f80574e534172726179a27f3300080011001a00240029003200370049004c0051005300730079007e0089009000960098009a009c009e00a000a200b300cd00d500f200ff0116012301360138013a013c013e01400142014401460148014f0157016501670169016e0173017e01870192019601a201ab01b201b401b601ca01e001e501f001f301fe0211022d022f02310233023502370239023b023d023f02410248024a024c02510258025a025f027e028f02910293029502970299029b029d029f02a002a702a902ae02b502b702b902cc02ce02d002d202d402d602d802da02dc02de02e502e702ee02f002f5030b0318031a031c031e032003220324032b032d03340336034c036b03700378000000000000020100000000000000810000000000000000000000000000037b'
+
+# --- Moom (com.manytricks.Moom) — nested controls + portable prefs ---
+# Moom mixes these values with window geometry and Sparkle state. Merge only
+# the curated fragment so local/volatile values survive on each Mac.
+defaults write com.manytricks.Moom 'Grid Spacing' -bool true
+defaults write com.manytricks.Moom 'Grid Spacing: Auto-Enabled Default Spacing' -bool true
+defaults write com.manytricks.Moom 'Grid Spacing: Gap' -int 1
+defaults write com.manytricks.Moom Hover -bool false
+defaults write com.manytricks.Moom 'Key Control: Arrow' -int 31
+defaults write com.manytricks.Moom 'Mouse Controls Trigger' -int 0
+defaults write com.manytricks.Moom Snap -bool true
+defaults write com.manytricks.Moom 'Snap Delay' -float 0
+defaults write com.manytricks.Moom 'Snap: 3' -int 11
+
+moom_settings_file="$(mktemp "${TMPDIR:-/tmp}/moom-settings.XXXXXX")"
+moom_preferences_file="$(mktemp "${TMPDIR:-/tmp}/moom-preferences.XXXXXX")"
+trap 'rm -f "$moom_settings_file" "$moom_preferences_file"' EXIT HUP INT TERM
+
+cat > "$moom_settings_file" <<'MOOM_SETTINGS'
+{{ template "moom-settings.json" . }}
+MOOM_SETTINGS
+
+if ! defaults export com.manytricks.Moom - > "$moom_preferences_file" 2>/dev/null; then
+    plutil -create xml1 "$moom_preferences_file"
+fi
+
+jq -r 'keys[]' "$moom_settings_file" | while IFS= read -r preference_key; do
+    preference_value="$(jq -c --arg key "$preference_key" '.[$key]' "$moom_settings_file")"
+    if plutil -type "$preference_key" "$moom_preferences_file" >/dev/null 2>&1; then
+        plutil -replace "$preference_key" -json "$preference_value" "$moom_preferences_file"
+    else
+        plutil -insert "$preference_key" -json "$preference_value" "$moom_preferences_file"
+    fi
+done
+
+defaults import com.manytricks.Moom "$moom_preferences_file"
+rm -f "$moom_settings_file" "$moom_preferences_file"
+trap - EXIT HUP INT TERM
+
+# --- LinearMouse (com.lujjjh.LinearMouse) — UI prefs only ---
+# Device/pointer/scroll settings live in ~/.config/linearmouse/linearmouse.json.
+defaults write com.lujjjh.LinearMouse autoSwitchToActiveDevice -bool false
+defaults write com.lujjjh.LinearMouse menuBarVisibilityMode -string "always"
 
 # --- Maccy (org.p0deje.Maccy) — clipboard manager prefs ---
 # (excludes window position/size, migrations, Sparkle state, pasteboard-type cache)

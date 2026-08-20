@@ -165,17 +165,22 @@ explicit list of `defaults write` commands, **not** copied binary plists.
   An OS-guarded (`{{ if eq .chezmoi.os "darwin" }}`) list of `defaults write`
   lines (real values captured from a live machine), grouped by area (Keyboard,
   Dock, Finder, Screenshots, Spotlight) plus per-app prefs: Shottr
-  (`cc.ffitch.shottr`), Contexts (`com.contextsformac.Contexts`), Maccy
+  (`cc.ffitch.shottr`), Contexts (`com.contextsformac.Contexts`), Moom
+  (`com.manytricks.Moom`), LinearMouse (`com.lujjjh.LinearMouse`), and Maccy
   (`org.p0deje.Maccy`). It ends by `killall`-ing Dock / Finder / SystemUIServer /
   Spotlight so changes apply without a logout.
 - **App pref capture rule**: cherry-pick the user-facing keys; exclude volatile /
   machine-specific keys (install ids, usage counters, telemetry/AppCenter,
   Sparkle `SU*` update state, window position/size). That exclusion — not the
   value itself — is what prevents cross-machine conflicts.
-- **Not tracked here**: LinearMouse uses its own JSON
-  (`private_dot_config/linearmouse/linearmouse.json`), not `defaults`.
-  BetterDisplay is deliberately skipped — its real config is keyed per-monitor by
-  hardware tag-id/EDID and isn't portable between machines.
+- Moom's nested custom controls and palette are kept in
+  `.chezmoitemplates/moom-settings.json`; the defaults script merges only those
+  curated keys, preserving window geometry and update state on each Mac.
+- LinearMouse's device/pointer/scroll configuration is tracked directly as
+  `private_dot_config/linearmouse/linearmouse.json`; its two portable UI prefs
+  are handled by the defaults script. BetterDisplay is deliberately skipped —
+  its real config is keyed per-monitor by hardware tag-id/EDID and isn't
+  portable between machines.
 - **Spotlight categories gotcha**: the disabled categories are stored in
   `com.apple.Spotlight` → `EnabledPreferenceRules`, which (despite the name) is
   the list of categories turned **OFF** — verified empirically: enabling a

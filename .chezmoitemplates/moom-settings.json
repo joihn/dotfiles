@@ -1,0 +1,289 @@
+{
+  "Custom Controls (4001)": [
+    {
+      "Identifier": "A695514E-20B3-438D-8CDB-B40B54FAF6F2",
+      "Children": [
+        {
+          "Activate Applications": false,
+          "Stubborn": false,
+          "Auto-Trigger Display Count": 1,
+          "Action": 1001,
+          "Auto-Trigger: Wake": false,
+          "Apply to Overlapping Windows": true,
+          "Apply to Active Display": false,
+          "Snapshot": [
+            {
+              "Window Frame": "{{ "{{" }}0, 50}, {1370, 1235}}",
+              "Window Subrole": "AXStandardWindow",
+              "Screen Frame": "{{ "{{" }}0, 0}, {2056, 1329}}",
+              "Window Title": "Untitled",
+              "Application Name": "Safari",
+              "Available Screen Frame": "{{ "{{" }}0, 50}, {2056, 1235}}",
+              "Bundle Identifier": "com.apple.safari"
+            },
+            {
+              "Window Frame": "{{ "{{" }}1371, 50}, {685, 1235}}",
+              "Window Subrole": "AXStandardWindow",
+              "Screen Frame": "{{ "{{" }}0, 0}, {2056, 1329}}",
+              "Window Title": "Dictionary",
+              "Application Name": "Dictionary",
+              "Available Screen Frame": "{{ "{{" }}0, 50}, {2056, 1235}}",
+              "Bundle Identifier": "com.apple.dictionary"
+            }
+          ],
+          "Generic": true,
+          "Snapshot Screens": [
+            "{{ "{{" }}0, 0}, {2056, 1329}}"
+          ],
+          "Auto-Trigger": false,
+          "Title": "Sidebar",
+          "Hide Other Applications": false,
+          "Identifier": "DEA7F468-8A15-4DDE-BC05-79095D727737"
+        },
+        {
+          "Activate Applications": false,
+          "Stubborn": false,
+          "Auto-Trigger Display Count": 1,
+          "Action": 1001,
+          "Auto-Trigger: Wake": false,
+          "Apply to Overlapping Windows": true,
+          "Apply to Active Display": false,
+          "Snapshot": [
+            {
+              "Window Frame": "{{ "{{" }}0, 50}, {1370, 1235}}",
+              "Window Subrole": "AXStandardWindow",
+              "Screen Frame": "{{ "{{" }}0, 0}, {2056, 1329}}",
+              "Window Title": "Untitled",
+              "Application Name": "Safari",
+              "Available Screen Frame": "{{ "{{" }}0, 50}, {2056, 1235}}",
+              "Bundle Identifier": "com.apple.safari"
+            },
+            {
+              "Window Frame": "{{ "{{" }}1371, 50}, {685, 1235}}",
+              "Window Subrole": "AXStandardWindow",
+              "Screen Frame": "{{ "{{" }}0, 0}, {2056, 1329}}",
+              "Window Title": "Dictionary",
+              "Application Name": "Dictionary",
+              "Available Screen Frame": "{{ "{{" }}0, 50}, {2056, 1235}}",
+              "Bundle Identifier": "com.apple.dictionary"
+            }
+          ],
+          "Generic": true,
+          "Snapshot Screens": [
+            "{{ "{{" }}0, 0}, {2056, 1329}}"
+          ],
+          "Auto-Trigger": false,
+          "Title": "Sidebar",
+          "Hide Other Applications": false,
+          "Identifier": "E9B860FD-4EB0-4D86-A582-19A71D45D9B2"
+        },
+        {
+          "Configuration Grid": {
+            "Configuration Grid: Rows": 4,
+            "Configuration Grid: Columns": 6
+          },
+          "Identifier": "5A7CAC92-50B4-44C8-ADFA-B19E7BE3DECE",
+          "Action": 19,
+          "Relative Frame": "{{ "{{" }}0, 0}, {0.33333333333333331, 1}}"
+        },
+        {
+          "Configuration Grid": {
+            "Configuration Grid: Rows": 4,
+            "Configuration Grid: Columns": 6
+          },
+          "Identifier": "9E8E59C4-C758-49CD-BC9C-61B7F5BBE93C",
+          "Hot Key": {
+            "Visual Representation": "⌥U",
+            "Identifier": "9E8E59C4-C758-49CD-BC9C-61B7F5BBE93C",
+            "Key Code": 32,
+            "Modifier Flags": 524576
+          },
+          "Action": 19,
+          "Relative Frame": "{{ "{{" }}0, 0}, {1, 1}}"
+        },
+        {
+          "Configuration Grid": {
+            "Configuration Grid: Rows": 4,
+            "Configuration Grid: Columns": 6
+          },
+          "Identifier": "632BD99C-B930-4927-9E5A-7A7D230B1756",
+          "Hot Key": {
+            "Visual Representation": "⌥L",
+            "Identifier": "632BD99C-B930-4927-9E5A-7A7D230B1756",
+            "Key Code": 37,
+            "Modifier Flags": 524576
+          },
+          "Action": 19,
+          "Relative Frame": "{{ "{{" }}0.5, 0}, {0.5, 1}}"
+        },
+        {
+          "Configuration Grid": {
+            "Configuration Grid: Rows": 4,
+            "Configuration Grid: Columns": 6
+          },
+          "Identifier": "5FE021B8-20B0-4662-9E90-3F065136047F",
+          "Hot Key": {
+            "Visual Representation": "⌥H",
+            "Identifier": "5FE021B8-20B0-4662-9E90-3F065136047F",
+            "Key Code": 4,
+            "Modifier Flags": 524576
+          },
+          "Action": 19,
+          "Relative Frame": "{{ "{{" }}0, 0}, {0.5, 1}}"
+        },
+        {
+          "Identifier": "E0F37BB5-42CB-4E86-BEAA-0C26EBDD25A9",
+          "Action": 61
+        },
+        {
+          "Activate Applications": false,
+          "Stubborn": false,
+          "Auto-Trigger Display Count": 1,
+          "Action": 1001,
+          "Auto-Trigger: Wake": false,
+          "Apply to Overlapping Windows": true,
+          "Apply to Active Display": false,
+          "Snapshot": [
+            {
+              "Window Frame": "{{ "{{" }}0, 50}, {1028, 1235}}",
+              "Window Subrole": "AXStandardWindow",
+              "Screen Frame": "{{ "{{" }}0, 0}, {2056, 1329}}",
+              "Window Title": "1.txt",
+              "Application Name": "TextEdit",
+              "Available Screen Frame": "{{ "{{" }}0, 50}, {2056, 1235}}",
+              "Bundle Identifier": "com.apple.textedit"
+            },
+            {
+              "Window Frame": "{{ "{{" }}1029, 50}, {1027, 1235}}",
+              "Window Subrole": "AXStandardWindow",
+              "Screen Frame": "{{ "{{" }}0, 0}, {2056, 1329}}",
+              "Window Title": "2.txt",
+              "Application Name": "TextEdit",
+              "Available Screen Frame": "{{ "{{" }}0, 50}, {2056, 1235}}",
+              "Bundle Identifier": "com.apple.textedit"
+            }
+          ],
+          "Generic": true,
+          "Snapshot Screens": [
+            "{{ "{{" }}0, 0}, {2056, 1329}}"
+          ],
+          "Auto-Trigger": false,
+          "Title": "Left & Right",
+          "Hide Other Applications": false,
+          "Identifier": "5A8AB839-B6B6-4367-98BF-757DD09B3DA2"
+        },
+        {
+          "Activate Applications": false,
+          "Stubborn": false,
+          "Auto-Trigger Display Count": 1,
+          "Action": 1001,
+          "Auto-Trigger: Wake": false,
+          "Apply to Overlapping Windows": true,
+          "Apply to Active Display": false,
+          "Snapshot": [
+            {
+              "Window Frame": "{{ "{{" }}0, 668}, {2056, 617}}",
+              "Window Subrole": "AXStandardWindow",
+              "Screen Frame": "{{ "{{" }}0, 0}, {2056, 1329}}",
+              "Window Title": "Desktop",
+              "Application Name": "Finder",
+              "Available Screen Frame": "{{ "{{" }}0, 50}, {2056, 1235}}",
+              "Bundle Identifier": "com.apple.finder"
+            },
+            {
+              "Window Frame": "{{ "{{" }}0, 50}, {2056, 617}}",
+              "Window Subrole": "AXStandardWindow",
+              "Screen Frame": "{{ "{{" }}0, 0}, {2056, 1329}}",
+              "Window Title": "Documents",
+              "Application Name": "Finder",
+              "Available Screen Frame": "{{ "{{" }}0, 50}, {2056, 1235}}",
+              "Bundle Identifier": "com.apple.finder"
+            }
+          ],
+          "Generic": true,
+          "Snapshot Screens": [
+            "{{ "{{" }}0, 0}, {2056, 1329}}"
+          ],
+          "Auto-Trigger": false,
+          "Title": "Top & Bottom",
+          "Hide Other Applications": false,
+          "Identifier": "7E66340F-055C-4A63-A4E5-298FC66D2CAA"
+        },
+        {
+          "Identifier": "57AB3178-136D-46BB-970B-4FEE9F3491B8",
+          "Children": [
+            {
+              "Identifier": "512B199F-F8CC-410D-B7CC-5E9F5A1412D4",
+              "Action": 19,
+              "Title": "Left Third",
+              "Relative Frame": "{{ "{{" }}0, 0}, {0.33333333333333331, 1}}",
+              "Configuration Grid": {
+                "Configuration Grid: Rows": 1,
+                "Configuration Grid: Columns": 3
+              }
+            },
+            {
+              "Identifier": "783F06F3-C784-4E99-8FEA-19D117AFC3F9",
+              "Action": 19,
+              "Title": "Middle Third",
+              "Relative Frame": "{{ "{{" }}0.33333333333333331, 0}, {0.33333333333333331, 1}}",
+              "Configuration Grid": {
+                "Configuration Grid: Rows": 1,
+                "Configuration Grid: Columns": 3
+              }
+            },
+            {
+              "Identifier": "B02F7772-3844-432F-A343-34A936643E72",
+              "Action": 19,
+              "Title": "Right Third",
+              "Relative Frame": "{{ "{{" }}0.66666666666666663, 0}, {0.33333333333333337, 1}}",
+              "Configuration Grid": {
+                "Configuration Grid: Rows": 1,
+                "Configuration Grid: Columns": 3
+              }
+            },
+            {
+              "Identifier": "533AA310-41DE-4231-92BB-EDDFB4FB2193",
+              "Action": 0
+            },
+            {
+              "Identifier": "4974D02E-9A75-4F7A-82BD-842D21C9B9ED",
+              "Hot Key": {
+                "Visual Representation": "⌥Space",
+                "Identifier": "4974D02E-9A75-4F7A-82BD-842D21C9B9ED",
+                "Key Code": 49,
+                "Modifier Flags": 524576
+              },
+              "Action": 41,
+              "Move Direction": 5,
+              "Resize Proportionally": true,
+              "Loop Through Displays": true
+            }
+          ],
+          "Action": 10001,
+          "Title": "More Examples",
+          "Chain Mode": 0
+        }
+      ],
+      "Action": 10001,
+      "Title": "Examples",
+      "Chain Mode": 0
+    }
+  ],
+  "Palette": {
+    "5-3": 5,
+    "4-2": "DEA7F468-8A15-4DDE-BC05-79095D727737",
+    "3-4": "5A7CAC92-50B4-44C8-ADFA-B19E7BE3DECE",
+    "5-2": "5A8AB839-B6B6-4367-98BF-757DD09B3DA2",
+    "6-3": 3,
+    "7-3": 7,
+    "6-2": "7E66340F-055C-4A63-A4E5-298FC66D2CAA",
+    "5-4": 2,
+    "4-3": 9,
+    "3-2": "E0F37BB5-42CB-4E86-BEAA-0C26EBDD25A9",
+    "7-2": "57AB3178-136D-46BB-970B-4FEE9F3491B8"
+  },
+  "Palette: Hidden Items": [
+    3
+  ]
+}
