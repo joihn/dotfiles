@@ -247,6 +247,100 @@ alias ccc="kitten clipboard"
 ccc2(){ echo -n $1 | kitten clipboard; }
 alias cccimg="kitten clipboard -m image/png"
 
+# Kitty only injects shell integration into shells it starts directly. Enable it
+# explicitly in tmux, subshells, and `exec zsh` sessions as well.
+if [[ -n "${KITTY_INSTALLATION_DIR:-}" && -z "${_ksi_state+x}" ]]; then
+  export KITTY_SHELL_INTEGRATION="enabled"
+  autoload -Uz -- "$KITTY_INSTALLATION_DIR/shell-integration/zsh/kitty-integration"
+  kitty-integration
+  unfunction kitty-integration
+fi
+
+# Remember each command. When copy_last is entered, capture the previous
+# command's exact terminal output before Kitty marks copy_last as the new one.
+typeset -g _copy_last_command=''
+typeset -g _copy_last_output=''
+typeset -gi _copy_last_capture_status=1
+typeset -gi _copy_last_was_last_command=0
+
+_copy_last_preexec() {
+  emulate -L zsh -o pipefail
+
+  if [[ "$1" == copy_last || "$1" == copy_last[[:space:]]* ]]; then
+    # Repeated copy_last calls should keep copying the same command and output.
+    if (( ! _copy_last_was_last_command )); then
+      # The sentinel prevents command substitution from stripping trailing
+      # newlines from the captured output.
+      _copy_last_output="$(
+        if [[ -n "${TMUX:-}" ]]; then
+          # tmux consumes OSC 133 command markers itself, so read its marked
+          # pane lines rather than asking the outer Kitty window.
+          command tmux capture-pane -p -F -S - -t "$TMUX_PANE" 2>/dev/null |
+            command awk '
+              {
+                flags = $1
+                sub(/^[DHOPWX-]+ /, "")
+                if (flags ~ /O/) {
+                  delete output
+                  count = 0
+                  capturing = found = 1
+                }
+                if (capturing && flags ~ /P/ && flags !~ /O/)
+                  capturing = 0
+                if (capturing)
+                  output[++count] = $0
+              }
+              END {
+                if (!found)
+                  exit 3
+                for (line = 1; line <= count; line++)
+                  print output[line]
+              }
+            '
+        else
+          command kitten @ --password=copy-last-output \
+            get-text --extent=last_cmd_output --self 2>/dev/null
+        fi
+        local capture_status=$?
+        print -rn -- x
+        exit $capture_status
+      )"
+      _copy_last_capture_status=$?
+      _copy_last_output="${_copy_last_output%x}"
+    fi
+    _copy_last_was_last_command=1
+  else
+    _copy_last_command="$1"
+    _copy_last_capture_status=1
+    _copy_last_was_last_command=0
+  fi
+}
+
+autoload -Uz add-zsh-hook
+add-zsh-hook preexec _copy_last_preexec
+# This hook must run before Kitty's hook, which marks the new command boundary.
+preexec_functions=(_copy_last_preexec ${preexec_functions:#_copy_last_preexec})
+
+copy_last() {
+  emulate -L zsh
+
+  if [[ -z "$_copy_last_command" ]]; then
+    print -u2 -r -- 'copy_last: no previous command found'
+    return 1
+  fi
+
+  if (( _copy_last_capture_status != 0 )); then
+    print -u2 -r -- 'copy_last: could not read the previous output from Kitty'
+    print -u2 -r -- 'Reload kitty.conf (or restart Kitty), then try again.'
+    return 1
+  fi
+
+  {
+    print -r -- "$ $_copy_last_command"
+    print -rn -- "$_copy_last_output"
+  } | command kitten clipboard
+}
+
 
 mkcd ()
 {

@@ -24,6 +24,10 @@ return {
       'nvim-mini/mini.nvim',
     },
     opts = {
+      -- Keep Markdown rendered while selecting text; show the source only while editing.
+      render_modes = { 'n', 'v', 'V', '\22', 's', 'S', '\19', 'c', 't' },
+      -- Do not reveal Markdown syntax merely because the cursor is on its line.
+      anti_conceal = { enabled = false },
       heading = { enabled = false },
       paragraph = { enabled = false },
       code = { enabled = false },
