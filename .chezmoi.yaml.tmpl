@@ -5,3 +5,11 @@ git:
   autoPush: true
 data:
   DISPLAY_VAR: {{ env "DISPLAY" | default ":1" | quote }}
+
+merge:
+  command: nvim
+  args:
+    - -d
+    - {{ printf "%q" "{{ .Destination }}" }}
+    - {{ printf "%q" "{{ .Source }}" }}
+    - {{ printf "%q" "{{ .Target }}" }}
