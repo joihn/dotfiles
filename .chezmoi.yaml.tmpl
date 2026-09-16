@@ -7,9 +7,31 @@ data:
   DISPLAY_VAR: {{ env "DISPLAY" | default ":1" | quote }}
 
 merge:
-  command: nvim
+  command: sh
   args:
-    - -d
+    - -c
+    - |
+      if [ -t 0 ]; then
+        printf '%s\n' \
+          '' \
+          'Chezmoi merge - Neovim' \
+          '  Left:   Destination = your live file' \
+          '  Middle: Source      = chezmoi repo file (edit this)' \
+          '  Right:  Target      = rendered source (reference)' \
+          '' \
+          '  Ctrl-w h/l    Switch panels' \
+          '  ]c / [c       Next / previous difference' \
+          '  :diffget 1    In middle: take current block from left' \
+          '  :w then :qa   Save source and exit' \
+          '  :cq           Abort merge with an error' \
+          '' \
+          'After merging: chezmoi diff <file>, then chezmoi apply <file>' \
+          ''
+        printf 'Press Enter to open Neovim (Ctrl-C to cancel)... '
+        IFS= read -r chezmoi_merge_reply || exit 1
+      fi
+      exec nvim -d -- "$@"
+    - chezmoi-merge
     - {{ printf "%q" "{{ .Destination }}" }}
     - {{ printf "%q" "{{ .Source }}" }}
     - {{ printf "%q" "{{ .Target }}" }}
