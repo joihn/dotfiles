@@ -730,20 +730,11 @@ if [[ "$MACHINE" == "mac_pro" ]]; then
   # bun
   export BUN_INSTALL="$HOME/.bun"
   export PATH="$BUN_INSTALL/bin:$PATH"
-  
-  # ZSCALER CERTIFICATE CONFIGURATION START
-  # Added by zscaler-cert-fix-minimal.sh on Fri Aug 21 10:10:51 CEST 2026
-  # This section can be safely removed by running the rollback script
-  export AWS_CA_BUNDLE=/Users/maximegardoni/zscaler-ca-bundle.pem
-  export REQUESTS_CA_BUNDLE=/Users/maximegardoni/zscaler-ca-bundle.pem
-  export NODE_EXTRA_CA_CERTS=/Users/maximegardoni/zscaler-ca-bundle.pem
-  export HOMEBREW_SSL_CERT_FILE=/Users/maximegardoni/zscaler-ca-bundle.pem
-  export CURL_CA_BUNDLE=/Users/maximegardoni/zscaler-ca-bundle.pem
-  export SSL_CERT_FILE=/Users/maximegardoni/zscaler-ca-bundle.pem
-  export WGET_CA_BUNDLE=/Users/maximegardoni/zscaler-ca-bundle.pem
-  export CACERTS_PATH=/Users/maximegardoni/zscaler-ca-bundle.pem
-  # ZSCALER CERTIFICATE CONFIGURATION END
 fi
+
+
+
+
 
 if [[ "$MACHINE" == "workstation" ]]; then
   # The next line updates PATH for the Google Cloud SDK.
@@ -778,6 +769,7 @@ if [[ "$MACHINE" == "workstation" ]]; then
   export AUTOFIX_MODEL_ARTIFACT_PATH="$HOME/autofix_model"
 
   [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+
 fi
 
 
@@ -798,6 +790,101 @@ export CODEBOARDING_TELEMETRY=false
 # .codex/locals.config.toml  is NOT synced
 codex() {
   command codex --profile locals "$@"
+}
+
+# Create a sibling Git worktree for a new branch, then enter it.
+worktree() {
+  local use_current=0
+  local branch=""
+  local repo_root repo_parent repo_name target base remote_default default_name
+
+  while (( $# )); do
+    case "$1" in
+      --current)
+        (( use_current )) && {
+          print -u2 "worktree: --current may only be given once"
+          return 2
+        }
+        use_current=1
+        ;;
+      -h|--help)
+        print "usage: worktree [--current] <branch-name>"
+        return 0
+        ;;
+      -*)
+        print -u2 "worktree: unknown option: $1"
+        return 2
+        ;;
+      *)
+        [[ -n "$branch" ]] && {
+          print -u2 "usage: worktree [--current] <branch-name>"
+          return 2
+        }
+        branch="$1"
+        ;;
+    esac
+    shift
+  done
+
+  if [[ -z "$branch" ]]; then
+    print -u2 "usage: worktree [--current] <branch-name>"
+    return 2
+  fi
+
+  repo_root="$(git rev-parse --show-toplevel 2>/dev/null)" || {
+    print -u2 "worktree: not inside a Git repository"
+    return 1
+  }
+
+  git check-ref-format --branch "$branch" >/dev/null 2>&1 || {
+    print -u2 "worktree: invalid branch name: $branch"
+    return 2
+  }
+
+  repo_parent="${repo_root:h}"
+  repo_name="${repo_root:t}"
+  target="$repo_parent/$repo_name-${branch//\//-}"
+
+  if (( use_current )); then
+    base="$(git -C "$repo_root" symbolic-ref --quiet --short HEAD)" || {
+      print -u2 "worktree: HEAD is detached; --current requires a checked-out branch"
+      return 1
+    }
+  else
+    remote_default="$(git -C "$repo_root" symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null)" || remote_default=""
+    default_name="${remote_default#origin/}"
+
+    if [[ "$default_name" == main || "$default_name" == master ]]; then
+      if git -C "$repo_root" show-ref --verify --quiet "refs/heads/$default_name"; then
+        base="$default_name"
+      elif git -C "$repo_root" show-ref --verify --quiet "refs/remotes/$remote_default"; then
+        base="$remote_default"
+      fi
+    fi
+
+    if [[ -z "$base" ]]; then
+      if git -C "$repo_root" show-ref --verify --quiet refs/heads/main; then
+        base=main
+      elif git -C "$repo_root" show-ref --verify --quiet refs/heads/master; then
+        base=master
+      elif git -C "$repo_root" show-ref --verify --quiet refs/remotes/origin/main; then
+        base=origin/main
+      elif git -C "$repo_root" show-ref --verify --quiet refs/remotes/origin/master; then
+        base=origin/master
+      else
+        print -u2 "worktree: could not find main or master; use --current to branch from the current branch"
+        return 1
+      fi
+    fi
+  fi
+
+  if [[ -e "$target" ]]; then
+    print -u2 "worktree: target already exists: $target"
+    return 1
+  fi
+
+  git -C "$repo_root" worktree add -b "$branch" "$target" "$base" || return
+  cd "$target"
 }
 
 # herdr: report this pane's directory as the $cwd sidebar token (agent panel).
