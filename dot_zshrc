@@ -730,6 +730,19 @@ if [[ "$MACHINE" == "mac_pro" ]]; then
   # bun
   export BUN_INSTALL="$HOME/.bun"
   export PATH="$BUN_INSTALL/bin:$PATH"
+  # ZSCALER CERTIFICATE CONFIGURATION START
+  # Added by zscaler-cert-fix-minimal.sh on Fri Aug 21 10:10:51 CEST 2026
+  # This section can be safely removed by running the rollback script
+  export AWS_CA_BUNDLE=/Users/maximegardoni/zscaler-ca-bundle.pem
+  export REQUESTS_CA_BUNDLE=/Users/maximegardoni/zscaler-ca-bundle.pem
+  export NODE_EXTRA_CA_CERTS=/Users/maximegardoni/zscaler-ca-bundle.pem
+  export HOMEBREW_SSL_CERT_FILE=/Users/maximegardoni/zscaler-ca-bundle.pem
+  export CURL_CA_BUNDLE=/Users/maximegardoni/zscaler-ca-bundle.pem
+  export SSL_CERT_FILE=/Users/maximegardoni/zscaler-ca-bundle.pem
+  export WGET_CA_BUNDLE=/Users/maximegardoni/zscaler-ca-bundle.pem
+  export CACERTS_PATH=/Users/maximegardoni/zscaler-ca-bundle.pem
+  # ZSCALER CERTIFICATE CONFIGURATION END
+
 fi
 
 
