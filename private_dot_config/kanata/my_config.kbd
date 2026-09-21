@@ -138,7 +138,7 @@ _  _    lmet   lalt          (t! unmeta @cap-spc)  _     _     _
   _    _    _    _    _    _    _    _    _    _    _    _    _    _
   _    _    _    _    _    _    _    M--  M-= M-z   M-S-z    _    _    _
   _    _    _    _    _    _    bspc C-S-tab C-tab del _ _    _
-  _    _    _    _    _    _    _    A-home A-end A-pgup A-pgdn _ _
+  _    _    _    _    _    _    _    A-home A-end pgup pgdn _ _
 fn  _    _    _              _              _    _    _
 )
 
