@@ -1,40 +1,81 @@
 #!/bin/bash
 
-# clipfile - Copy a file to clipboard on macOS so it can be pasted in Finder or as an attachment
+# clipfile - Copy files to the macOS clipboard for pasting in Finder or as attachments
 
 if [ $# -eq 0 ]; then
-    echo "Usage: clipfile <file>"
-    echo "Copies a file to the clipboard so you can paste it in Finder or attach it in apps like Slack"
+    echo "Usage: clipfile <file> [file ...]"
+    echo "Copies files to the clipboard so you can paste them in Finder or attach them in apps like Slack"
     exit 1
 fi
 
-FILE="$1"
+ABSOLUTE_PATHS=()
+for FILE in "$@"; do
+    if [ ! -e "$FILE" ]; then
+        echo "Error: File '$FILE' does not exist" >&2
+        exit 1
+    fi
 
-if [ ! -e "$FILE" ]; then
-    echo "Error: File '$FILE' does not exist"
-    exit 1
-fi
+    case "$FILE" in
+        /*) ABSOLUTE_PATHS+=("$FILE") ;;
+        *) ABSOLUTE_PATHS+=("$PWD/$FILE") ;;
+    esac
+done
 
-# Get absolute path
-ABSOLUTE_PATH=$(cd "$(dirname "$FILE")" && pwd)/$(basename "$FILE")
-
-# Copy file to clipboard using AppleScript with proper file list format for macOS Sequoia
-osascript <<EOF 2>/dev/null
+# Pass paths as arguments so filenames are never interpreted as AppleScript source.
+if ! osascript - "${ABSOLUTE_PATHS[@]}" <<'APPLESCRIPT' >/dev/null
 use framework "Foundation"
 use framework "AppKit"
 
-set filePath to "$ABSOLUTE_PATH"
-set fileURL to current application's NSURL's fileURLWithPath:filePath
-set pasteboard to current application's NSPasteboard's generalPasteboard()
-pasteboard's clearContents()
-pasteboard's writeObjects:{fileURL}
-EOF
+on run filePaths
+    set fileURLs to current application's NSMutableArray's array()
+    repeat with filePath in filePaths
+        set fileURL to current application's NSURL's fileURLWithPath:(filePath as text)
+        fileURLs's addObject:fileURL
+    end repeat
 
-if [ $? -eq 0 ]; then
-    echo "✓ File copied to clipboard: $(basename "$FILE")"
-    echo "You can now paste it in Finder (Cmd+V) or attach it in Slack"
-else
-    echo "Error: Failed to copy file to clipboard"
+    set pasteboard to current application's NSPasteboard's generalPasteboard()
+    pasteboard's clearContents()
+    set didWrite to pasteboard's writeObjects:fileURLs
+    if not (didWrite as boolean) then error "Failed to write files to the clipboard"
+
+    -- Let macOS finish persisting every item before this process exits.
+    -- Exiting immediately can leave only the first file on the general pasteboard.
+    delay 0.5
+end run
+APPLESCRIPT
+then
+    echo "Error: Failed to copy files to clipboard" >&2
     exit 1
 fi
 
+# Check from a separate process, after the writer exits, just as a browser does.
+if ! osascript - "${ABSOLUTE_PATHS[@]}" <<'APPLESCRIPT' >/dev/null
+use framework "Foundation"
+use framework "AppKit"
+
+on run filePaths
+    set pasteboard to current application's NSPasteboard's generalPasteboard()
+    set fileItems to pasteboard's pasteboardItems()
+    set actualCount to fileItems's |count|() as integer
+    if actualCount is not (count of filePaths) then error "Clipboard did not retain all files"
+
+    repeat with i from 1 to count of filePaths
+        set fileItem to fileItems's objectAtIndex:(i - 1)
+        set actualURL to fileItem's stringForType:"public.file-url"
+        set expectedURL to current application's NSURL's fileURLWithPath:(item i of filePaths as text)
+        if actualURL is missing value then error "Clipboard is missing a file URL"
+        if (actualURL as text) is not (expectedURL's absoluteString() as text) then error "Clipboard file list changed"
+    end repeat
+end run
+APPLESCRIPT
+then
+    echo "Error: Could not verify all files on the clipboard; please try again" >&2
+    exit 1
+fi
+
+if [ $# -eq 1 ]; then
+    echo "✓ File copied to clipboard: ${1##*/}"
+else
+    echo "✓ $# files copied to clipboard"
+fi
+echo "You can now paste them in Finder (Cmd+V) or attach them in apps such as Gmail"
