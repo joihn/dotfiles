@@ -284,7 +284,7 @@
   "workbench.quickOpen.closeOnFocusLost" : false,
   "workbench.tree.expandMode": "doubleClick",
   "gitlens.ai.model": "gitkraken",
-  "gitlens.ai.gitkraken.model": "gemini:gemini-2.0-flash",
+  "gitlens.ai.gitkraken.model": "gemini:gemini-3.8-flash",
   "gitlens.graph.minimap.enabled": false,
   
 
@@ -403,7 +403,9 @@
 "terminal.integrated.fontSize": 13,
 "snyk.features.codeSecurity": true,
 "snyk.securityAtInception.autoConfigureSnykMcpServer": "",
-"snyk.securityAtInception.executionFrequency": ""
+"snyk.securityAtInception.executionFrequency": "",
+"gitlens.graph.details.location": "auto",
+"window.zoomLevel": 1
 
   
 }
