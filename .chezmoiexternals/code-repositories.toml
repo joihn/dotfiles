@@ -1,0 +1,8 @@
+# Keep code checkouts in each machine's own ~/code directory.
+# Add another entry here to deploy another repository in the same way.
+["code/special-paste-from-finder"]
+    type = "git-repo"
+    url = "https://github.com/joihn/special-paste-from-finder.git"
+    # Check on each deployment, with a one-second minimum between pulls.
+    refreshPeriod = "1s"
+    pull.args = ["--ff-only"]
