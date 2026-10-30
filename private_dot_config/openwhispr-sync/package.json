@@ -1,0 +1,8 @@
+{
+  "name": "chezmoi-openwhispr-preferences",
+  "private": true,
+  "version": "1.0.0",
+  "dependencies": {
+    "classic-level": "3.0.0"
+  }
+}

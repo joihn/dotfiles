@@ -16,3 +16,12 @@ Applications/myqr.app
 # Handy's runtime directory can contain API keys, transcripts, and recordings.
 # Its curated settings are applied by run_onchange_after_apply-handy-settings.
 Library/Application Support/com.pais.handy
+
+# OpenWhispr runtime data contains encrypted keys, account state and recordings.
+# Only private_dot_config/openwhispr-sync/preferences.json is exported.
+Library/Application Support/open-whispr
+Library/Caches/chezmoi-openwhispr
+{{ if ne .chezmoi.os "darwin" }}
+.config/openwhispr-sync
+.local/bin/openwhispr-prefs
+{{ end }}

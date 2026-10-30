@@ -254,6 +254,66 @@ Handy keeps its settings in
 - API keys, `history.db`, recordings, and downloaded models are intentionally
   excluded from the public repository.
 
+### OpenWhispr
+
+OpenWhispr is installed by the macOS Brewfile. Its curated preferences are shared
+through `private_dot_config/openwhispr-sync/preferences.json`. The macOS
+`run_onchange_after_apply-openwhispr-settings.sh.tmpl` hook merges them into the
+app's local Chromium settings and updates only named, non-secret `.env` fields.
+
+On each Mac:
+
+1. Run `chezmoi update` (or `chezmoi apply` for an existing checkout).
+2. On a fresh installation, launch OpenWhispr once, then quit it and rerun
+   `chezmoi apply`. The hook will explain this if its settings database is absent.
+3. Enter your OpenAI key locally in OpenWhispr, and grant macOS Microphone and
+   Accessibility permissions on that Mac. These never travel through dotfiles.
+
+Quit OpenWhispr before applying or capturing preferences; the helper fails safely
+if it is running. It uses a pinned `classic-level` dependency installed with
+`npm ci --ignore-scripts` into a local cache, outside the repository. Node is
+already tracked in the Brewfile. Local backups before apply remain under the
+ignored OpenWhispr runtime directory, in `chezmoi-backups/`.
+
+To save later UI changes back to the shared snapshot:
+
+```sh
+# Quit OpenWhispr first.
+openwhispr-prefs capture
+# Review/commit/push the changed preferences.json in the chezmoi repo.
+chezmoi apply
+# On the other Mac, quit OpenWhispr and run:
+chezmoi update
+```
+
+This is a curated snapshot, not automatic live or bidirectional syncing. Use Git
+to resolve concurrent changes to the snapshot. `openwhispr-prefs check` verifies
+local preferences against the deployed snapshot; `openwhispr-prefs apply`
+reapplies it without running unrelated chezmoi scripts.
+
+The whitelist covers transcription provider/model, languages, shortcuts, toggle
+mode, icon placement, microphone preference by label, privacy, retention, and
+selected appearance/clipboard/notification options. It explicitly excludes API
+keys (including encrypted key files), accounts/tokens, onboarding, transcripts,
+recordings, dictionaries/prompts/snippets, file paths, and device-specific IDs.
+The complete runtime directory is ignored by both chezmoi and Git. No full
+`.env`, LevelDB database, or SQLite database is tracked.
+
+Microphones are matched by the saved label (currently BOYA CM40). Each Mac keeps
+its own device ID; OpenWhispr resolves a unique matching label after starting.
+If the selected microphone is absent, the stock app falls back to the system
+input. An ordered BOYA → built-in fallback is not supported by OpenWhispr 1.11.
+Keep Wispr Flow closed if it uses the same Cmd Shift J shortcut.
+
+The helper is compatible with the inspected OpenWhispr 1.11 storage layout.
+After a major OpenWhispr settings migration, check compatibility before applying.
+Privacy/preservation tests use isolated fixture data:
+
+```sh
+NODE_PATH="$HOME/Library/Caches/chezmoi-openwhispr/node_modules" \
+  node .chezmoitemplates/openwhispr-preferences.test.cjs
+```
+
 ### Default apps — "Open with" (`duti`)
 
 File-type and URL-scheme handlers are **not** `defaults` keys — they live in the

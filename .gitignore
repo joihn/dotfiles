@@ -1,0 +1,7 @@
+# Never add OpenWhispr runtime data or credentials, even encrypted credentials.
+**/open-whispr/
+**/open-whispr-*/
+**/chezmoi-openwhispr/
+**/openwhispr-sync/node_modules/
+**/openwhispr-sync/.env*
+**/openwhispr-sync/secure-keys/

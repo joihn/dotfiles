@@ -1,0 +1,31 @@
+#!/bin/sh
+# Credentials and runtime databases never belong in the chezmoi source tree.
+set -eu
+case "$(uname -s)" in Darwin) ;; *) echo 'OpenWhispr preference sync is macOS-only.' >&2; exit 1 ;; esac
+PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
+export PATH
+mode="${1:-check}"
+case "$mode" in apply|check|capture) ;; *) echo 'Usage: openwhispr-prefs apply|check|capture' >&2; exit 1 ;; esac
+config_dir="$HOME/.config/openwhispr-sync"
+runtime_dir="$HOME/Library/Caches/chezmoi-openwhispr"
+if pgrep -x OpenWhispr >/dev/null 2>&1; then
+    echo 'Quit OpenWhispr, then rerun this command or chezmoi apply.' >&2
+    exit 1
+fi
+if [ ! -f "$HOME/Library/Application Support/open-whispr/Local Storage/leveldb/CURRENT" ]; then
+    echo 'Launch OpenWhispr once, quit it, then rerun chezmoi apply.' >&2
+    exit 1
+fi
+command -v node >/dev/null 2>&1 || { echo 'Node.js is required (installed by the tracked Brewfile).' >&2; exit 1; }
+mkdir -p "$runtime_dir"
+chmod 700 "$runtime_dir"
+if ! cmp -s "$config_dir/package-lock.json" "$runtime_dir/package-lock.json" ||
+   ! NODE_PATH="$runtime_dir/node_modules" node -e 'require("classic-level")' >/dev/null 2>&1; then
+    cp "$config_dir/package.json" "$config_dir/package-lock.json" "$runtime_dir/"
+    npm ci --prefix "$runtime_dir" --ignore-scripts --no-audit --no-fund
+fi
+preferences="$config_dir/preferences.json"
+if [ "$mode" = capture ]; then
+    preferences="$(chezmoi source-path)/private_dot_config/openwhispr-sync/preferences.json"
+fi
+NODE_PATH="$runtime_dir/node_modules" node "$config_dir/preferences.cjs" "$mode" "$preferences"

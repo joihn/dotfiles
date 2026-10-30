@@ -1,0 +1,10 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/bin/sh
+# Reapply only when the portable snapshot or its helper changes.
+# Preferences: {{ include "private_dot_config/openwhispr-sync/preferences.json" | sha256sum }}
+# Helper: {{ include "private_dot_config/openwhispr-sync/preferences.cjs" | sha256sum }}
+# Dependencies: {{ include "private_dot_config/openwhispr-sync/package-lock.json" | sha256sum }}
+# Launcher: {{ include "dot_local/bin/executable_openwhispr-prefs" | sha256sum }}
+set -eu
+"$HOME/.local/bin/openwhispr-prefs" apply
+{{ end -}}
