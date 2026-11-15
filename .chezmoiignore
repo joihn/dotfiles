@@ -25,3 +25,9 @@ Library/Caches/chezmoi-openwhispr
 .config/openwhispr-sync
 .local/bin/openwhispr-prefs
 {{ end }}
+
+# Thaw settings are applied by the curated hook; raw state stays on each Mac.
+Library/Preferences/com.stonerl.Thaw*.plist
+Library/Application Support/Thaw
+Library/Caches/com.stonerl.Thaw
+Library/Logs/Thaw

@@ -1,0 +1,124 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/bin/sh
+
+# Curated Thaw 2.1 preferences. Never import the full preferences plist:
+# it includes display UUIDs, cached item titles and transient runtime state.
+# Quit Thaw before applying; restart it afterwards to load these settings.
+set -eu
+
+if pgrep -x Thaw >/dev/null 2>&1; then
+    echo "Thaw is running; quit it and rerun chezmoi apply." >&2
+    exit 1
+else
+    process_status=$?
+    if [ "$process_status" -ne 1 ]; then
+        echo "Cannot check whether Thaw is running; no settings were changed." >&2
+        exit 1
+    fi
+fi
+
+# Per-key writes preserve all untracked preferences on this Mac.
+defaults write com.stonerl.Thaw ShowIceIcon -bool true
+defaults write com.stonerl.Thaw ShowOnHover -bool false
+defaults write com.stonerl.Thaw UseOptionClickToShowAlwaysHiddenSection -bool true
+defaults write com.stonerl.Thaw UseDoubleClickToShowAlwaysHiddenSection -bool true
+defaults write com.stonerl.Thaw NewItemsSection -string "hidden"
+
+# Thaw stores these small Codable JSON objects as NSData, not strings.
+# Keep their contents readable in Git; od converts UTF-8 to defaults' hex form.
+write_json_data() {
+    defaults write com.stonerl.Thaw "$1" -data "$(printf '%s' "$2" | od -An -v -tx1 | tr -d ' \n')"
+}
+
+write_json_data IceIcon '{
+  "hidden": {
+    "catalog": {
+      "_0": "IceCubeStroke"
+    }
+  },
+  "name": "Ice Cube",
+  "visible": {
+    "catalog": {
+      "_0": "IceCubeFill"
+    }
+  }
+}'
+
+write_json_data GlobalDisplayConfiguration '{
+  "alwaysShowHiddenItems": false,
+  "gridColumns": 4,
+  "iceBarLayout": 0,
+  "iceBarLocation": 0,
+  "itemSpacingOffset": 0,
+  "useIceBar": false,
+  "useThawBarForAlwaysHidden": false
+}'
+
+write_json_data NewItemsPlacementData '{
+  "anchorIdentifier": "com.apple.controlcenter:Battery",
+  "relation": "rightOfAnchor",
+  "sectionKey": "hidden"
+}'
+
+# Stable bundle/item identifiers only. Preserve this Mac's untracked entries
+# (including temporary item IDs) while moving each managed ID to its section.
+# Foundation writes this one key through the macOS preferences API; it never
+# replaces the full domain or bypasses the preferences cache.
+osascript -l JavaScript <<'THAW_LAYOUT'
+ObjC.import('Foundation');
+var store = $.NSUserDefaults.alloc.initWithSuiteName('com.stonerl.Thaw');
+var key = 'MenuBarItemManager.savedSectionOrder';
+var current = ObjC.deepUnwrap(store.objectForKey(key)) || {};
+var desired = {
+    "visible": [
+        "com.if.Amphetamine:Amphetamine",
+        "studio.techflow.badgeify:Item-0",
+        "com.symless.synergy:Item-0",
+        "pro.betterdisplay.BetterDisplay:Item-0",
+        "com.apple.controlcenter:WiFi",
+        "com.apple.controlcenter:Bluetooth",
+        "com.apple.controlcenter:Sound",
+        "com.apple.controlcenter:NowPlaying",
+        "com.stonerl.Thaw:Thaw.ControlItem.Visible",
+        "com.apple.controlcenter:BentoBox-0",
+        "com.apple.controlcenter:Clock"
+    ],
+    "hidden": [
+        "com.contextsformac.Contexts:Item-0",
+        "com.denzam.SystemEQ:Item-0",
+        "com.openai.codex:Item-0",
+        "com.raycast.macos:Item-0",
+        "com.pais.handy:Item-0",
+        "com.todesktop.230313mzl4w4u92:Item-0",
+        "io.agentsview.desktop:Item-0",
+        "com.electron.ollama:Item-0",
+        "com.superultra.Homerow:Item-0",
+        "com.lujjjh.LinearMouse:Item-0",
+        "app.tuple.app:TupleStatusBarItem",
+        "us.zoom.xos:Item-0",
+        "com.raycast.macos:raycastIcon",
+        "com.zscaler.zscaler:Item-0",
+        "com.electron.wispr-flow:Item-0",
+        "cc.ffitch.shottr:Item-0",
+        "com.manytricks.Moom:com.manytricks.Moom.StatusItem",
+        "com.jamf.connect:Item-0",
+        "com.okta.mobile:Item-0",
+        "org.p0deje.Maccy:Item-0",
+        "com.apple.controlcenter:Battery",
+        "com.apphousekitchen.aldente-pro:Item-0"
+    ],
+    "alwaysHidden": []
+};
+var managed = [].concat(desired.visible, desired.hidden, desired.alwaysHidden);
+Object.keys(desired).forEach(function(section) {
+    var local = current[section] || [];
+    current[section] = desired[section].concat(local.filter(function(id) {
+        return managed.indexOf(id) === -1;
+    }));
+});
+store.setObjectForKey($(current), key);
+if (!store.synchronize) {
+    throw new Error('Could not save Thaw section preferences');
+}
+THAW_LAYOUT
+{{ end -}}

@@ -223,6 +223,35 @@ used. To capture a rebuilt bundle later:
 chezmoi add --exact ~/Applications/myqr.app ~/Applications/myocr.app
 ```
 
+### Thaw
+
+Thaw is installed by the macOS Brewfile. Its explicitly saved portable settings
+are applied by `run_onchange_after_apply-thaw-settings.sh.tmpl`, using per-key
+updates against `com.stonerl.Thaw` (native `defaults` and Foundation APIs).
+
+The snapshot includes the built-in Ice Cube icon, hover and always-hidden reveal
+choices, the global Thaw Bar configuration, new-item placement, and the reviewed
+stable identifiers for the visible/hidden sections. Existing per-display
+overrides stay local; the global configuration is the template for new displays.
+Temporary UUID item identifiers and localized/unstable item names are excluded
+from the snapshot and preserved locally, so those items may need positioning
+separately on each Mac. Stable managed IDs move to their tracked section; other
+local section entries are retained.
+
+On the other Mac, quit Thaw, run `chezmoi update`, then reopen Thaw. Grant macOS
+permissions separately on that Mac. The hook refuses to write while Thaw runs,
+and changes only the listed keys, preserving all other local preferences.
+
+This is a curated snapshot, not live two-way sync. To share later changes, quit
+Thaw and update only the relevant values in the hook after inspecting them with
+`defaults read com.stonerl.Thaw <key>`. Review the diff before committing and
+pushing it; then quit Thaw on the other Mac and run `chezmoi update`.
+
+Never add the full Thaw plist or Application Support directory. Raw preferences,
+profiles, helper state, cached item titles, display UUIDs, window positions,
+onboarding, permissions, update state, and diagnostic logs remain local. Git
+and chezmoi ignore the raw preference files and runtime directories.
+
 ### Wispr Flow
 
 Wispr Flow keeps its local state in `~/Library/Application Support/Wispr Flow`.

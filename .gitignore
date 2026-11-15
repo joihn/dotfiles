@@ -5,3 +5,8 @@
 **/openwhispr-sync/node_modules/
 **/openwhispr-sync/.env*
 **/openwhispr-sync/secure-keys/
+
+# Thaw runtime state can include private menu titles and hardware identifiers.
+**/*com.stonerl.Thaw*.plist*
+**/Thaw/
+**/private_Thaw/
