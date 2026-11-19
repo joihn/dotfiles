@@ -31,3 +31,15 @@ Library/Preferences/com.stonerl.Thaw*.plist
 Library/Application Support/Thaw
 Library/Caches/com.stonerl.Thaw
 Library/Logs/Thaw
+
+# FluidVoice's reviewed preferences are applied by the macOS settings hook.
+# Raw state can contain API keys, private prompts, conversations and recordings.
+Library/Preferences/com.FluidApp.app*.plist*
+Library/Application Support/FluidVoice
+Library/Application Support/FluidAudio
+Library/Application Support/FluidIntelligence
+Library/Application Support/com.FluidApp.app
+Library/Application Support/FluidVoice LiteLLM Relay
+Library/Caches/com.FluidApp.app
+Library/Logs/FluidVoice
+Library/Saved Application State/com.FluidApp.app.savedState

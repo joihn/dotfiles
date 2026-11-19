@@ -1,0 +1,47 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/bin/sh
+
+# FluidVoice 1.6.13: reviewed portable preferences only.
+# Never import the full plist or app backup: provider records can contain keys,
+# and other preferences contain chats, private prompts and hardware IDs.
+# Quit FluidVoice before applying; reopen it afterwards to load these settings.
+set -eu
+
+if pgrep -x FluidVoice >/dev/null 2>&1; then
+    echo "FluidVoice is running; quit it and rerun chezmoi apply." >&2
+    exit 1
+else
+    process_status=$?
+    if [ "$process_status" -ne 1 ]; then
+        echo "Cannot check whether FluidVoice is running; no settings were changed." >&2
+        exit 1
+    fi
+fi
+
+# Write only these keys through macOS preferences services. All other keys stay
+# local, including credentials, provider routing and microphone choices.
+defaults write com.FluidApp.app AccentColorOption -string "Blue"
+defaults write com.FluidApp.app DictationPromptOff -bool false
+defaults write com.FluidApp.app DictationScreenContextEnabled -bool true
+defaults write com.FluidApp.app EditModeReadsScreen -bool false
+defaults write com.FluidApp.app EnableDebugLogs -bool false
+defaults write com.FluidApp.app FileTranscriptionSpeakerLabelsEnabled -bool true
+defaults write com.FluidApp.app MeetingAudioRetentionPolicy -string "days7"
+defaults write com.FluidApp.app OverlayBottomOffset -float 50.0
+defaults write com.FluidApp.app PrivateAIProviderContextTokenLimit -int 4096
+defaults write com.FluidApp.app PromptModeShortcutEnabled -bool false
+defaults write com.FluidApp.app ReturnDictationToStartingField -bool true
+defaults write com.FluidApp.app SaveAudioWithTranscriptionHistory -bool false
+defaults write com.FluidApp.app SecondaryDictationPromptOff -bool true
+defaults write com.FluidApp.app SelectedSpeechModel -string "fluid-parakeet-pro"
+defaults write com.FluidApp.app ShareAnonymousAnalytics -bool false
+defaults write com.FluidApp.app TextInsertionMode -string "reliablePaste"
+
+# FluidVoice encodes shortcut objects as JSON stored in NSData, not strings.
+write_json_data() {
+    defaults write com.FluidApp.app "$1" -data "$(printf '%s' "$2" | od -An -v -tx1 | tr -d ' \n')"
+}
+
+write_json_data HotkeyShortcutKey '{"kind":"keyboard","keyCode":38,"modifierFlagsRawValue":1179658}'
+write_json_data PrimaryDictationShortcuts '[{"kind":"keyboard","keyCode":38,"modifierFlagsRawValue":1179658}]'
+{{ end -}}

@@ -252,23 +252,43 @@ profiles, helper state, cached item titles, display UUIDs, window positions,
 onboarding, permissions, update state, and diagnostic logs remain local. Git
 and chezmoi ignore the raw preference files and runtime directories.
 
-### Wispr Flow
+### FluidVoice
 
-Wispr Flow keeps its local state in `~/Library/Application Support/Wispr Flow`.
-The user-facing settings and shortcuts are inside `config.json`, but that file
-also contains identity, device, usage, and cache data, so it is deliberately not
-tracked wholesale.
+FluidVoice is installed by the macOS-only `fluidvoice` Homebrew cask.
+`run_onchange_after_apply-fluidvoice-settings.sh.tmpl` applies a reviewed snapshot
+of portable preferences to the `com.FluidApp.app` defaults domain. It uses
+per-key writes through macOS preferences services, preserving all other local
+values. The hook renders empty on Linux.
 
-- `.chezmoitemplates/wispr-flow-settings.json` contains the portable, curated
-  preference and shortcut snapshot.
-- `run_onchange_after_apply-wispr-flow-settings.sh.tmpl` recursively merges that
-  fragment into Flow's `config.json`, preserving all untracked local state. It
-  can initialize the file before Flow's first launch.
-- Quit Wispr Flow before `chezmoi apply`. The script fails safely when Flow is
-  running so the app cannot overwrite the update concurrently.
-- Auth/session data (`session.json`), transcripts/history (`flow.sqlite*`),
-  device-specific audio choices, window geometry, counters, and timestamps are
-  intentionally excluded.
+The snapshot includes the primary dictation shortcuts, speech model, appearance,
+text insertion, screen-context switches, recording retention, and privacy
+preferences present on the source Mac (inspected with FluidVoice 1.6.13).
+Shortcuts remain JSON-encoded NSData, as expected by FluidVoice.
+
+Quit FluidVoice, run `chezmoi update` (or `chezmoi apply` with local source changes),
+then reopen FluidVoice. The hook refuses to write while the app runs or if the
+process check fails. Configure providers/API keys, microphone selection, macOS
+permissions, and launch-at-login separately on each Mac. Download the selected
+speech model through FluidVoice if it is not already available.
+
+This is a curated snapshot, not live two-way sync. To share later UI changes,
+quit FluidVoice, inspect the relevant keys with
+`defaults read com.FluidApp.app <key>`, update only the reviewed values in the
+hook, then review, commit, and push the diff. On the other Mac, quit FluidVoice
+and run `chezmoi update`.
+
+Never add the full plist, exported app backup, or Application Support data.
+Provider records can contain API keys and private URLs. Providers/model routing,
+chat sessions, custom prompts and dictionaries, transcripts, recordings,
+analytics identity, onboarding/update state, device IDs, and window geometry
+remain local. Git and chezmoi ignore FluidVoice's raw preferences and runtime
+directories. No credentials are read or exported by the hook.
+
+Run the privacy/preservation tests from the repository root on macOS:
+
+```sh
+python3 .chezmoitemplates/fluidvoice-settings.test.py
+```
 
 ### Handy
 
@@ -332,7 +352,6 @@ Microphones are matched by the saved label (currently BOYA CM40). Each Mac keeps
 its own device ID; OpenWhispr resolves a unique matching label after starting.
 If the selected microphone is absent, the stock app falls back to the system
 input. An ordered BOYA → built-in fallback is not supported by OpenWhispr 1.11.
-Keep Wispr Flow closed if it uses the same Cmd Shift J shortcut.
 
 The helper is compatible with the inspected OpenWhispr 1.11 storage layout.
 After a major OpenWhispr settings migration, check compatibility before applying.

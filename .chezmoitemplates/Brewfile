@@ -72,6 +72,7 @@ cask "codex"
 cask "contexts"
 cask "cursor"
 cask "firefox"
+cask "fluidvoice"
 cask "font-meslo-lg-nerd-font"
 cask "forklift"
 cask "gpg-suite"
@@ -97,7 +98,6 @@ cask "visual-studio-code"
 cask "vivaldi"
 cask "vlc"
 cask "warp"
-cask "wispr-flow"
 
 # App Store apps: `mas` is installed above. Run `mas list` and add lines like:
 #   mas "Things", id: 904280696

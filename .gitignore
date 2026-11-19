@@ -10,3 +10,19 @@
 **/*com.stonerl.Thaw*.plist*
 **/Thaw/
 **/private_Thaw/
+
+# FluidVoice mixes preferences with credentials, chat state and device IDs.
+**/*com.FluidApp.app*.plist*
+**/FluidVoice/
+**/private_FluidVoice/
+**/FluidAudio/
+**/private_FluidAudio/
+**/FluidIntelligence/
+**/private_FluidIntelligence/
+**/com.FluidApp.app/
+**/private_com.FluidApp.app/
+**/FluidVoice LiteLLM Relay/
+**/private_FluidVoice LiteLLM Relay/
+**/Caches/com.FluidApp.app/
+**/Logs/FluidVoice/
+**/Saved Application State/com.FluidApp.app.savedState/
